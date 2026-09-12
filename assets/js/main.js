@@ -36,7 +36,11 @@ function applyLang(next, { store = true } = {}) {
     if (attr) el.setAttribute(attr, val);
     else el.textContent = val;
   });
-  $$('.lang__btn').forEach((b) => b.classList.toggle('is-active', b.dataset.lang === lang));
+  $$('.lang__btn').forEach((b) => {
+    const on = b.dataset.lang === lang;
+    b.classList.toggle('is-active', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
   if (store) { try { localStorage.setItem('alphamitz-lang', lang); } catch (e) { /* private mode */ } }
   if (lastDiagnosis) renderDiagnosis(lastDiagnosis.query, { silent: true });
 }
@@ -173,6 +177,10 @@ function onScrollFrame() {
     const bottom = top + s.offsetHeight;
     if (mid >= top && mid < bottom) { current = s; break; }
   }
+  if (current && stickyFocus && current.id !== 'laboratorio' && current.id !== 'contacto') {
+    stickyFocus = null;
+    if (net && !hoverFocus) net.setFocus(null);
+  }
   if (current) {
     const light = current.dataset.sceneTheme === 'light';
     if (light !== themeIsLight) {
@@ -236,6 +244,7 @@ window.addEventListener('resize', () => { requestFrame(); if (net) net.resize();
 
   function select(btn, { move = true } = {}) {
     tabs.forEach((t) => { t.classList.toggle('is-active', t === btn); t.setAttribute('aria-selected', String(t === btn)); });
+    if (btn.id) panel.setAttribute('aria-labelledby', btn.id);
     const key = `fn.${btn.dataset.domain}.copy`;
     panel.classList.add('is-swapping');
     setTimeout(() => {

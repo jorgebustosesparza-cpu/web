@@ -162,9 +162,9 @@
 
     <div class="header__actions">
       <div class="lang" role="group" aria-label="Idioma">
-        <button type="button" class="lang__btn is-active" data-lang="es">ES</button>
+        <button type="button" class="lang__btn is-active" data-lang="es" aria-pressed="true">ES</button>
         <span class="lang__sep" aria-hidden="true">/</span>
-        <button type="button" class="lang__btn" data-lang="en">EN</button>
+        <button type="button" class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
       <a class="btn btn--ghost header__cta" href="#contacto" data-magnetic>
         <span data-i18n="nav.cta">Agenda una llamada</span>
@@ -229,13 +229,13 @@
     <div class="hero__explorer reveal" data-reveal data-reveal-delay="4">
       <p class="hero__explorer-hint mono" data-i18n="hero.explore">Explora la red por función de negocio</p>
       <div class="functions" role="tablist" aria-label="Funciones de negocio">
-        <button class="function is-active" role="tab" aria-selected="true" data-domain="sales" data-i18n="fn.sales.name">Ventas</button>
-        <button class="function" role="tab" aria-selected="false" data-domain="marketing" data-i18n="fn.marketing.name">Marketing</button>
-        <button class="function" role="tab" aria-selected="false" data-domain="operations" data-i18n="fn.operations.name">Operaciones</button>
-        <button class="function" role="tab" aria-selected="false" data-domain="support" data-i18n="fn.support.name">Soporte</button>
-        <button class="function" role="tab" aria-selected="false" data-domain="knowledge" data-i18n="fn.knowledge.name">Conocimiento</button>
+        <button class="function is-active" role="tab" aria-selected="true" id="fn-sales" data-domain="sales" data-i18n="fn.sales.name">Ventas</button>
+        <button class="function" role="tab" aria-selected="false" id="fn-marketing" data-domain="marketing" data-i18n="fn.marketing.name">Marketing</button>
+        <button class="function" role="tab" aria-selected="false" id="fn-operations" data-domain="operations" data-i18n="fn.operations.name">Operaciones</button>
+        <button class="function" role="tab" aria-selected="false" id="fn-support" data-domain="support" data-i18n="fn.support.name">Soporte</button>
+        <button class="function" role="tab" aria-selected="false" id="fn-knowledge" data-domain="knowledge" data-i18n="fn.knowledge.name">Conocimiento</button>
       </div>
-      <div class="function-panel" id="functionPanel" role="tabpanel" aria-live="polite">
+      <div class="function-panel" id="functionPanel" role="tabpanel" aria-labelledby="fn-sales" aria-live="polite">
         <p class="function-panel__text" id="functionText" data-i18n="fn.sales.copy">
           Agentes de IA califican prospectos, resumen conversaciones, actualizan el CRM y sacan a la luz oportunidades.
         </p>
@@ -576,7 +576,7 @@
 </section>
 
 <!-- ══ LABORATORIO ══ -->
-<section class="section lab" id="laboratorio" data-scene-presence="0.72" data-scene-theme="dark" data-scene-phase="0.7">
+<section class="section lab" id="laboratorio" data-scene-presence="0.6" data-scene-theme="dark" data-scene-phase="0.7">
   <div class="wrap">
     <header class="section__head">
       <p class="eyebrow" data-reveal><span class="eyebrow__num mono">06</span><span data-i18n="lab.eyebrow">Diagnóstico interactivo</span></p>
@@ -707,6 +707,17 @@
   </div>
 </footer>
 
+<script>
+/* safety net: never leave a visitor staring at the loader if a script fails */
+setTimeout(function () {
+  document.body.classList.remove('is-loading');
+  if (!document.body.classList.contains('loaded')) {
+    document.body.classList.add('loaded');
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
+    var t = document.querySelector('.hero__title'); if (t) t.classList.add('is-in');
+  }
+}, 6000);
+</script>
 <script src="assets/js/i18n.js"></script>
 <script type="module" src="assets/js/main.js"></script>
 <noscript>
