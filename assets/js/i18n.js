@@ -1,4 +1,4 @@
-/* Alphamitz · content layer (ES default, EN alternate).
+/* Alphamilz · content layer (ES default, EN alternate).
    Keys map 1:1 to [data-i18n] attributes in index.html. */
 window.ALPHA_I18N = (function () {
   const es = {
@@ -104,7 +104,7 @@ window.ALPHA_I18N = (function () {
     'lab.note': 'Este diagnóstico es una lectura inicial generada en tu navegador. El mapa real lo construimos contigo, con acceso a tus procesos y datos.',
 
     'faq.eyebrow': 'Preguntas frecuentes', 'faq.title': 'Lo que suelen preguntarnos.',
-    'faq.q1': '¿Qué hace exactamente Alphamitz?',
+    'faq.q1': '¿Qué hace exactamente Alphamilz?',
     'faq.a1': 'Implementamos inteligencia artificial aplicada a negocios: identificamos dónde la IA genera valor real, diseñamos el sistema, lo integramos con tus herramientas actuales y acompañamos al equipo hasta que está en producción.',
     'faq.q2': '¿Qué es una web optimizada para búsqueda en LLM?',
     'faq.a2': 'Es un sitio construido para ser entendido y citado por modelos como ChatGPT, Gemini, Claude o Perplexity: contenido claro y verificable, datos estructurados, arquitectura semántica, respuestas directas a preguntas reales y archivos como llms.txt que describen el negocio para agentes.',
@@ -227,7 +227,7 @@ window.ALPHA_I18N = (function () {
     'lab.note': 'This diagnostic is an initial read generated in your browser. We build the real map with you, with access to your processes and data.',
 
     'faq.eyebrow': 'Frequently asked', 'faq.title': 'What people usually ask us.',
-    'faq.q1': 'What exactly does Alphamitz do?',
+    'faq.q1': 'What exactly does Alphamilz do?',
     'faq.a1': 'We implement applied AI for business: we identify where AI creates real value, design the system, integrate it with your current tools and stay with the team until it runs in production.',
     'faq.q2': 'What is a website optimized for LLM search?',
     'faq.a2': 'A site built to be understood and cited by models like ChatGPT, Gemini, Claude or Perplexity: clear verifiable content, structured data, semantic architecture, direct answers to real questions, and files such as llms.txt that describe the business to agents.',

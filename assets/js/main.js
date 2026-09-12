@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Alphamitz · interface orchestration
+   Alphamilz · interface orchestration
    Scroll story · language · reveals · diagnostic lab · WebGL bridge
    ═══════════════════════════════════════════════════════════════ */
 const I18N = window.ALPHA_I18N || { es: {}, en: {}, diagnose: () => ({ title: '', cards: [], domain: null }) };
@@ -19,8 +19,8 @@ let stickyFocus = null;      // focus set by the diagnostic
 
 /* ── language ────────────────────────────────────────────────── */
 const TITLES = {
-  es: 'Alphamitz · IA aplicada a negocios | Implementación, agentes y automatización',
-  en: 'Alphamitz · Applied AI for business | Implementation, agents and automation'
+  es: 'Alphamilz · IA aplicada a negocios | Implementación, agentes y automatización',
+  en: 'Alphamilz · Applied AI for business | Implementation, agents and automation'
 };
 
 function applyLang(next, { store = true } = {}) {
@@ -41,7 +41,7 @@ function applyLang(next, { store = true } = {}) {
     b.classList.toggle('is-active', on);
     b.setAttribute('aria-pressed', String(on));
   });
-  if (store) { try { localStorage.setItem('alphamitz-lang', lang); } catch (e) { /* private mode */ } }
+  if (store) { try { localStorage.setItem('alphamilz-lang', lang); } catch (e) { /* private mode */ } }
   if (lastDiagnosis) renderDiagnosis(lastDiagnosis.query, { silent: true });
 }
 
@@ -49,7 +49,7 @@ function applyLang(next, { store = true } = {}) {
   let start = null;
   const param = new URLSearchParams(location.search).get('lang');
   if (param) start = param.toLowerCase().slice(0, 2);
-  if (!start) { try { start = localStorage.getItem('alphamitz-lang'); } catch (e) { /* ignore */ } }
+  if (!start) { try { start = localStorage.getItem('alphamilz-lang'); } catch (e) { /* ignore */ } }
   if (!start) start = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
   if (start !== 'es') applyLang(start, { store: false });
 })();
@@ -465,7 +465,7 @@ function canRunWebGL() {
     if (active) net.setFocus(active.dataset.domain);
     setTimeout(() => { if (net && !hoverFocus && !stickyFocus) net.setFocus(null); }, 2600);
   } catch (err) {
-    console.warn('[alphamitz] WebGL scene unavailable:', err);
+    console.warn('[alphamilz] WebGL scene unavailable:', err);
     body.classList.add('no-webgl');
     requestFrame();
   }

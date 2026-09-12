@@ -1,4 +1,4 @@
-# Alphamitz · abierto a buscadores y a agentes de IA
+# Alphamilz · abierto a buscadores y a agentes de IA
 User-agent: *
 Allow: /
 
@@ -18,4 +18,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://alphamitz.com/sitemap.xml
+Sitemap: https://alphamilz.com/sitemap.xml

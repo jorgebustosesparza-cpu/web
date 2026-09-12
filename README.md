@@ -1,6 +1,6 @@
-# Alphamitz · sitio web
+# Alphamilz · sitio web
 
-Sitio de una sola página para **Alphamitz**, agencia de inteligencia artificial aplicada a
+Sitio de una sola página para **Alphamilz**, agencia de inteligencia artificial aplicada a
 negocios. Español por defecto, inglés con un clic. Sin framework, sin build step: son archivos
 estáticos que se pueden publicar en cualquier hosting (Netlify, Vercel, Cloudflare Pages,
 GitHub Pages, un bucket de S3 o un Nginx).
@@ -41,14 +41,12 @@ Estos son los únicos puntos que dependen de datos reales de la agencia:
    partir de la imagen que compartiste. Si tienes el SVG original, reemplaza ese archivo
    (mismo `viewBox` o ajusta el que traiga) y el mismo path dentro de `index.html`
    (aparece en el header, el footer, el preloader y el favicon).
-2. **Nombre.** En todo el sitio se escribe `alphamitz`, tal como se lee en el logotipo
-   adjunto. Si la grafía correcta es otra, búscala y cámbiala: aparece en `index.html`
-   (marca, `<title>`, JSON-LD), `llms.txt` y `README.md`.
-3. **Contacto.** Sustituye `hola@alphamitz.com`, el número de WhatsApp `wa.me/000000000000`
-   y el enlace de LinkedIn. Están en el header, el laboratorio, el CTA final y el footer.
-4. **Dominio.** Cambia `https://alphamitz.com/` por el dominio real en `index.html`
-   (canonical, Open Graph, hreflang y JSON-LD), `sitemap.xml`, `robots.txt` y `llms.txt`.
-5. **Portada social.** `assets/img/og-cover.png` (1200×630) ya está generada; reemplázala si
+2. **Nombre y dominio.** El sitio usa `Alphamilz` y `https://alphamilz.com/` en canonical,
+   Open Graph, hreflang y JSON-LD. Si el dominio de producción fuera otro, hay que
+   cambiarlo también en `sitemap.xml`, `robots.txt` y `llms.txt`.
+3. **Redes.** El footer trae correo, WhatsApp y teléfono reales. Si quieres LinkedIn o
+   Instagram, dime las URL y las agrego en la columna de contacto.
+4. **Portada social.** `assets/img/og-cover.png` (1200×630) ya está generada; reemplázala si
    cambia el mensaje principal.
 
 ## Cómo está construido
