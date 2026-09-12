@@ -1,4 +1,4 @@
-/* Alphamitz — content layer (ES default, EN alternate).
+/* Alphamitz · content layer (ES default, EN alternate).
    Keys map 1:1 to [data-i18n] attributes in index.html. */
 window.ALPHA_I18N = (function () {
   const es = {
@@ -247,7 +247,7 @@ window.ALPHA_I18N = (function () {
     'footer.built': 'Built for humans and for models.'
   };
 
-  /* Diagnosis engine — keyword driven, runs entirely client side. */
+  /* Diagnosis engine · keyword driven, runs entirely client side. */
   const topics = [
     { id: 'support', domain: 'support',
       strong: ['soporte','atencion','ticket','helpdesk','postventa','whatsapp','queja'],

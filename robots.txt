@@ -1,4 +1,4 @@
-# Alphamitz — abierto a buscadores y a agentes de IA
+# Alphamitz · abierto a buscadores y a agentes de IA
 User-agent: *
 Allow: /
 

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Alphamitz — evolving business intelligence network.
+   Alphamitz · evolving business intelligence network.
    One Points cloud (nodes), one LineSegments (connections),
    one Points cloud (data in transit) and a few glass agents.
    Everything morphs procedurally between four layouts.

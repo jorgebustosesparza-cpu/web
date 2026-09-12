@@ -1,4 +1,4 @@
-# Alphamitz — sitio web
+# Alphamitz · sitio web
 
 Sitio de una sola página para **Alphamitz**, agencia de inteligencia artificial aplicada a
 negocios. Español por defecto, inglés con un clic. Sin framework, sin build step: son archivos

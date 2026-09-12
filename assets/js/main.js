@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Alphamitz — interface orchestration
+   Alphamitz · interface orchestration
    Scroll story · language · reveals · diagnostic lab · WebGL bridge
    ═══════════════════════════════════════════════════════════════ */
 const I18N = window.ALPHA_I18N || { es: {}, en: {}, diagnose: () => ({ title: '', cards: [], domain: null }) };
@@ -19,8 +19,8 @@ let stickyFocus = null;      // focus set by the diagnostic
 
 /* ── language ────────────────────────────────────────────────── */
 const TITLES = {
-  es: 'Alphamitz — IA aplicada a negocios | Implementación, agentes y automatización',
-  en: 'Alphamitz — Applied AI for business | Implementation, agents and automation'
+  es: 'Alphamitz · IA aplicada a negocios | Implementación, agentes y automatización',
+  en: 'Alphamitz · Applied AI for business | Implementation, agents and automation'
 };
 
 function applyLang(next, { store = true } = {}) {
