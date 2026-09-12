@@ -1,0 +1,13 @@
+{
+  "name": "Alphamitz",
+  "short_name": "Alphamitz",
+  "description": "IA aplicada a negocios: implementación, agentes, automatización y video con IA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08090C",
+  "theme_color": "#0A0C10",
+  "lang": "es",
+  "icons": [
+    { "src": "/assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

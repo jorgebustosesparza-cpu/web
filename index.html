@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alphamitz — IA aplicada a negocios | Implementación, agentes y automatización</title>
+<meta name="description" content="Alphamitz diseña e implementa sistemas de inteligencia artificial para empresas: agentes de IA, automatización de WhatsApp, correo, llamadas y procesos, sitios web optimizados para búsqueda en LLM y producción de video con IA.">
+<link rel="canonical" href="https://alphamitz.com/">
+<meta name="author" content="Alphamitz">
+<meta name="theme-color" content="#0A0C10">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Alphamitz">
+<meta property="og:locale" content="es_MX">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://alphamitz.com/">
+<meta property="og:title" content="Alphamitz — IA que trabaja para tu empresa">
+<meta property="og:description" content="Diseñamos e implementamos sistemas de IA prácticos que automatizan trabajo, conectan el conocimiento, mejoran decisiones y ayudan a tu equipo a avanzar más rápido.">
+<meta property="og:image" content="https://alphamitz.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alphamitz — IA que trabaja para tu empresa">
+<meta name="twitter:description" content="IA aplicada a negocios: agentes, automatización, conocimiento conectado y video con IA.">
+<meta name="twitter:image" content="https://alphamitz.com/assets/img/og-cover.png">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/favicon.svg">
+<link rel="manifest" href="site.webmanifest">
+<link rel="alternate" hreflang="es" href="https://alphamitz.com/">
+<link rel="alternate" hreflang="en" href="https://alphamitz.com/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://alphamitz.com/">
+
+<link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="modulepreload" href="assets/js/scene.js">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://alphamitz.com/#organization",
+      "name": "Alphamitz",
+      "alternateName": "Alphamitz — Applied AI for Business",
+      "url": "https://alphamitz.com/",
+      "logo": "https://alphamitz.com/assets/img/isotype.svg",
+      "description": "Consultora de inteligencia artificial aplicada a negocios. Implementamos agentes de IA, automatizaciones, sitios optimizados para búsqueda en LLM y video generado con IA.",
+      "email": "hola@alphamitz.com",
+      "knowsAbout": ["Inteligencia artificial aplicada","Agentes de IA","Automatización de procesos","RAG y bases de conocimiento","Generative Engine Optimization","Video generado con IA"],
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://alphamitz.com/#website",
+      "url": "https://alphamitz.com/",
+      "name": "Alphamitz",
+      "publisher": { "@id": "https://alphamitz.com/#organization" },
+      "inLanguage": ["es","en"]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://alphamitz.com/#service",
+      "name": "Alphamitz",
+      "parentOrganization": { "@id": "https://alphamitz.com/#organization" },
+      "serviceType": "Implementación de inteligencia artificial para empresas",
+      "areaServed": "Global",
+      "availableLanguage": ["es","en"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de IA aplicada",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Implementación de IA en la empresa", "description": "Diagnóstico, diseño e integración de sistemas de IA con las herramientas que ya usa tu equipo." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webs optimizadas para búsqueda en LLM", "description": "Sitios estructurados para que ChatGPT, Gemini, Claude y Perplexity encuentren, entiendan y citen tu negocio." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatizaciones", "description": "WhatsApp, correo, llamadas y procesos internos operando de forma automática y auditable." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Video con IA", "description": "Producción de video generativo para campañas, producto y contenido a escala." } }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://alphamitz.com/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "¿Qué hace exactamente Alphamitz?", "acceptedAnswer": { "@type": "Answer", "text": "Implementamos inteligencia artificial aplicada a negocios: identificamos dónde la IA genera valor real, diseñamos el sistema, lo integramos con tus herramientas actuales y acompañamos al equipo hasta que está en producción." } },
+        { "@type": "Question", "name": "¿Qué es una web optimizada para búsqueda en LLM?", "acceptedAnswer": { "@type": "Answer", "text": "Es un sitio construido para ser entendido y citado por modelos de lenguaje como ChatGPT, Gemini, Claude o Perplexity: contenido claro y verificable, datos estructurados con Schema.org, arquitectura semántica, respuestas directas a preguntas reales y archivos como llms.txt que describen el negocio para agentes." } },
+        { "@type": "Question", "name": "¿Qué procesos se pueden automatizar con IA?", "acceptedAnswer": { "@type": "Answer", "text": "Atención por WhatsApp, respuesta y clasificación de correo, llamadas de seguimiento y calificación, captura de datos en el CRM, generación de reportes, revisión de documentos, aprobaciones internas y cualquier flujo repetitivo con reglas claras." } },
+        { "@type": "Question", "name": "¿Cuánto tarda una implementación?", "acceptedAnswer": { "@type": "Answer", "text": "Un diagnóstico toma de una a dos semanas. El primer sistema en producción suele tomar entre cuatro y ocho semanas, dependiendo de las integraciones y del nivel de acceso a los datos." } },
+        { "@type": "Question", "name": "¿Necesito tener mis datos ordenados para empezar?", "acceptedAnswer": { "@type": "Answer", "text": "No. Parte del trabajo es conectar información dispersa en documentos, conversaciones y sistemas para convertirla en una capa de conocimiento consultable. Empezamos con lo que existe hoy." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body class="is-loading">
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<!-- ══ PRELOADER ══ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <svg class="preloader__mark" viewBox="0 0 2000 1540" aria-hidden="true">
+      <path class="pl-path" fill-rule="evenodd" clip-rule="evenodd"
+        d="M1245 8 C1085 130 915 345 745 610 C530 950 265 1310 25 1540 L1995 1512 C1885 1245 1700 940 1505 715 C1360 548 1190 452 1000 424 Z M1000 424 L618 1148 H1358 Z"/>
+    </svg>
+    <div class="preloader__meta">
+      <span class="preloader__label" data-i18n="loader.label">Inicializando red</span>
+      <span class="preloader__count" id="preloaderCount">0</span>
+    </div>
+    <div class="preloader__bar"><i id="preloaderBar"></i></div>
+  </div>
+</div>
+
+<!-- ══ WEBGL STAGE ══ -->
+<div class="stage" id="stage">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="stage__fallback" id="stageFallback" aria-hidden="true">
+    <svg class="stage__still" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <g class="still-links" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M250 180 L410 120 L560 210 M410 120 L430 300 L300 380 M430 300 L610 350 L760 250 M610 350 L640 520 L800 560 M760 250 L900 180 L1040 260 M900 180 L940 350 M1040 260 L1090 430 M640 520 L470 560 M300 380 L180 470 M560 210 L610 350 M940 350 L1090 430 M940 350 L800 560"/>
+      </g>
+      <g class="still-nodes">
+        <circle cx="250" cy="180" r="3.5"/><circle cx="560" cy="210" r="3"/><circle cx="300" cy="380" r="3"/>
+        <circle cx="610" cy="350" r="4"/><circle cx="760" cy="250" r="3"/><circle cx="470" cy="560" r="2.5"/>
+        <circle cx="180" cy="470" r="2.5"/><circle cx="1040" cy="260" r="3"/><circle cx="800" cy="560" r="3"/>
+      </g>
+      <g class="still-hot">
+        <circle cx="410" cy="120" r="5"/><circle cx="430" cy="300" r="4.5"/><circle cx="640" cy="520" r="4"/>
+        <circle cx="900" cy="180" r="4.5"/><circle cx="940" cy="350" r="4"/><circle cx="1090" cy="430" r="3.5"/>
+      </g>
+    </svg>
+  </div>
+  <div class="stage__grain" aria-hidden="true"></div>
+  <div class="stage__vignette" aria-hidden="true"></div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+<!-- ══ HEADER ══ -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a class="brand" href="#top" aria-label="Alphamitz — inicio">
+      <span class="brand__mark">
+        <svg viewBox="0 0 2000 1540" aria-hidden="true" focusable="false">
+          <path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"
+            d="M1245 8 C1085 130 915 345 745 610 C530 950 265 1310 25 1540 L1995 1512 C1885 1245 1700 940 1505 715 C1360 548 1190 452 1000 424 Z M1000 424 L618 1148 H1358 Z"/>
+        </svg>
+      </span>
+      <span class="brand__word">alphamitz</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a class="nav__link" href="#servicios"><span data-i18n="nav.services">Servicios</span></a>
+      <a class="nav__link" href="#historia"><span data-i18n="nav.story">Transformación</span></a>
+      <a class="nav__link" href="#agentes"><span data-i18n="nav.agents">Agentes</span></a>
+      <a class="nav__link" href="#enfoque"><span data-i18n="nav.approach">Enfoque</span></a>
+      <a class="nav__link" href="#laboratorio"><span data-i18n="nav.lab">Diagnóstico</span></a>
+    </nav>
+
+    <div class="header__actions">
+      <div class="lang" role="group" aria-label="Idioma">
+        <button type="button" class="lang__btn is-active" data-lang="es">ES</button>
+        <span class="lang__sep" aria-hidden="true">/</span>
+        <button type="button" class="lang__btn" data-lang="en">EN</button>
+      </div>
+      <a class="btn btn--ghost header__cta" href="#contacto" data-magnetic>
+        <span data-i18n="nav.cta">Agenda una llamada</span>
+      </a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu__inner">
+    <nav class="menu__nav" aria-label="Navegación móvil">
+      <a href="#servicios"><em>01</em><span data-i18n="nav.services">Servicios</span></a>
+      <a href="#historia"><em>02</em><span data-i18n="nav.story">Transformación</span></a>
+      <a href="#resultados"><em>03</em><span data-i18n="nav.outcomes">Resultados</span></a>
+      <a href="#agentes"><em>04</em><span data-i18n="nav.agents">Agentes</span></a>
+      <a href="#enfoque"><em>05</em><span data-i18n="nav.approach">Enfoque</span></a>
+      <a href="#laboratorio"><em>06</em><span data-i18n="nav.lab">Diagnóstico</span></a>
+    </nav>
+    <div class="menu__foot">
+      <a href="mailto:hola@alphamitz.com">hola@alphamitz.com</a>
+      <a href="#contacto" class="btn btn--solid"><span data-i18n="nav.cta">Agenda una llamada</span></a>
+    </div>
+  </div>
+</div>
+
+<main id="contenido">
+<span id="top"></span>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero" data-scene-presence="1" data-scene-theme="dark" data-scene-phase="0">
+  <div class="hero__inner">
+    <div class="hero__head">
+      <p class="eyebrow reveal" data-reveal>
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span data-i18n="hero.eyebrow">Inteligencia artificial aplicada a negocios</span>
+      </p>
+
+      <h1 class="hero__title reveal" data-reveal data-reveal-delay="1">
+        <span class="line" data-i18n="hero.title1">IA que trabaja</span>
+        <span class="line"><span data-i18n="hero.title2">para</span> <em data-i18n="hero.title3">tu empresa</em>.</span>
+      </h1>
+
+      <p class="hero__lede reveal" data-reveal data-reveal-delay="2" data-i18n="hero.lede">
+        Diseñamos e implementamos sistemas de IA prácticos que automatizan trabajo, conectan el conocimiento,
+        mejoran decisiones y ayudan a tu equipo a avanzar más rápido.
+      </p>
+
+      <div class="hero__actions reveal" data-reveal data-reveal-delay="3">
+        <a class="btn btn--solid" href="#servicios" data-magnetic>
+          <span data-i18n="hero.cta1">Explora lo que la IA puede hacer</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn--line" href="#contacto" data-magnetic>
+          <span data-i18n="hero.cta2">Habla con un experto en IA</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__explorer reveal" data-reveal data-reveal-delay="4">
+      <p class="hero__explorer-hint mono" data-i18n="hero.explore">Explora la red por función de negocio</p>
+      <div class="functions" role="tablist" aria-label="Funciones de negocio">
+        <button class="function is-active" role="tab" aria-selected="true" data-domain="sales" data-i18n="fn.sales.name">Ventas</button>
+        <button class="function" role="tab" aria-selected="false" data-domain="marketing" data-i18n="fn.marketing.name">Marketing</button>
+        <button class="function" role="tab" aria-selected="false" data-domain="operations" data-i18n="fn.operations.name">Operaciones</button>
+        <button class="function" role="tab" aria-selected="false" data-domain="support" data-i18n="fn.support.name">Soporte</button>
+        <button class="function" role="tab" aria-selected="false" data-domain="knowledge" data-i18n="fn.knowledge.name">Conocimiento</button>
+      </div>
+      <div class="function-panel" id="functionPanel" role="tabpanel" aria-live="polite">
+        <p class="function-panel__text" id="functionText" data-i18n="fn.sales.copy">
+          Agentes de IA califican prospectos, resumen conversaciones, actualizan el CRM y sacan a la luz oportunidades.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__foot">
+    <a class="scroll-cue" href="#servicios" aria-label="Desplázate">
+      <span class="scroll-cue__line" aria-hidden="true"></span>
+      <span class="mono" data-i18n="hero.scroll">Desplaza</span>
+    </a>
+    <p class="hero__proof mono">
+      <span data-i18n="hero.proof1">Automatizaciones en WhatsApp, correo y llamadas</span>
+      <b aria-hidden="true">·</b>
+      <span data-i18n="hero.proof2">Webs que los LLM entienden</span>
+      <b aria-hidden="true">·</b>
+      <span data-i18n="hero.proof3">Video con IA</span>
+    </p>
+  </div>
+</section>
+
+<!-- ══ SERVICIOS ══ -->
+<section class="section services" id="servicios" data-scene-offset="6" data-scene-presence="0.42" data-scene-theme="dark" data-scene-phase="0.06">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow" data-reveal><span class="eyebrow__num mono">01</span><span data-i18n="services.eyebrow">Lo que hacemos</span></p>
+      <h2 class="section__title" data-reveal data-i18n="services.title">Cuatro formas de poner la IA a trabajar.</h2>
+      <p class="section__lede" data-reveal data-i18n="services.lede">
+        No vendemos tecnología suelta. Instalamos sistemas que resuelven un problema medible dentro de tu operación.
+      </p>
+    </header>
+
+    <ol class="svc">
+      <li class="svc__row" data-reveal data-domain="operations">
+        <span class="svc__num mono">01</span>
+        <div class="svc__body">
+          <h3 class="svc__title" data-i18n="svc.1.title">Implementación de IA en tu empresa</h3>
+          <p class="svc__copy" data-i18n="svc.1.copy">
+            Diagnóstico, diseño e integración. Identificamos dónde la IA genera valor real, construimos el sistema
+            y lo conectamos con las herramientas que tu equipo ya usa.
+          </p>
+          <ul class="chips">
+            <li data-i18n="svc.1.t1">Diagnóstico de oportunidades</li>
+            <li data-i18n="svc.1.t2">Arquitectura e integración</li>
+            <li data-i18n="svc.1.t3">Puesta en producción</li>
+            <li data-i18n="svc.1.t4">Adopción del equipo</li>
+          </ul>
+        </div>
+        <span class="svc__glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </li>
+
+      <li class="svc__row" data-reveal data-domain="knowledge">
+        <span class="svc__num mono">02</span>
+        <div class="svc__body">
+          <h3 class="svc__title" data-i18n="svc.2.title">Webs optimizadas para búsqueda en LLM</h3>
+          <p class="svc__copy" data-i18n="svc.2.copy">
+            Tus clientes ya preguntan en ChatGPT, Gemini, Claude y Perplexity. Construimos sitios estructurados para
+            que esos modelos encuentren, entiendan y recomienden tu negocio.
+          </p>
+          <ul class="chips">
+            <li data-i18n="svc.2.t1">Datos estructurados</li>
+            <li data-i18n="svc.2.t2">Arquitectura semántica</li>
+            <li data-i18n="svc.2.t3">Contenido citable</li>
+            <li data-i18n="svc.2.t4">llms.txt y agentes</li>
+          </ul>
+        </div>
+        <span class="svc__glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </li>
+
+      <li class="svc__row" data-reveal data-domain="support">
+        <span class="svc__num mono">03</span>
+        <div class="svc__body">
+          <h3 class="svc__title" data-i18n="svc.3.title">Automatizaciones que operan solas</h3>
+          <p class="svc__copy" data-i18n="svc.3.copy">
+            WhatsApp, correo, llamadas y procesos internos. Flujos que responden, clasifican, registran y dan
+            seguimiento las 24 horas, con trazabilidad y control humano donde importa.
+          </p>
+          <ul class="chips">
+            <li data-i18n="svc.3.t1">WhatsApp</li>
+            <li data-i18n="svc.3.t2">Correo</li>
+            <li data-i18n="svc.3.t3">Llamadas</li>
+            <li data-i18n="svc.3.t4">Procesos internos</li>
+          </ul>
+        </div>
+        <span class="svc__glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </li>
+
+      <li class="svc__row" data-reveal data-domain="marketing">
+        <span class="svc__num mono">04</span>
+        <div class="svc__body">
+          <h3 class="svc__title" data-i18n="svc.4.title">Video con IA</h3>
+          <p class="svc__copy" data-i18n="svc.4.copy">
+            Producción generativa para campañas, producto y contenido a escala. Del guion a la pieza final,
+            con consistencia de marca y volumen que antes era imposible.
+          </p>
+          <ul class="chips">
+            <li data-i18n="svc.4.t1">Campañas</li>
+            <li data-i18n="svc.4.t2">Producto</li>
+            <li data-i18n="svc.4.t3">Contenido a escala</li>
+            <li data-i18n="svc.4.t4">Identidad consistente</li>
+          </ul>
+        </div>
+        <span class="svc__glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══ HISTORIA / SCROLL NARRATIVE ══ -->
+<section class="story" id="historia" data-scene-offset="-7" data-scene-presence="0.95" data-scene-theme="dark" data-scene-phase="0.5">
+  <div class="story__track" id="storyTrack">
+    <div class="story__sticky">
+      <div class="wrap story__grid">
+        <div class="story__side">
+          <p class="eyebrow"><span class="eyebrow__num mono">02</span><span data-i18n="story.eyebrow">La transformación</span></p>
+          <ol class="story__index" aria-hidden="true">
+            <li data-chapter="0"><span class="mono">01</span><em data-i18n="story.1.tag">Fragmentado</em></li>
+            <li data-chapter="1"><span class="mono">02</span><em data-i18n="story.2.tag">Conectado</em></li>
+            <li data-chapter="2"><span class="mono">03</span><em data-i18n="story.3.tag">Agentes</em></li>
+            <li data-chapter="3"><span class="mono">04</span><em data-i18n="story.4.tag">Coordinado</em></li>
+          </ol>
+          <div class="story__progress" aria-hidden="true"><i id="storyProgress"></i></div>
+        </div>
+
+        <div class="story__stage">
+          <article class="chapter is-active" data-chapter="0">
+            <h2 class="chapter__title" data-i18n="story.1.title">Tu operación, hoy.</h2>
+            <p class="chapter__copy" data-i18n="story.1.copy">
+              Herramientas que no se hablan. Datos en hojas de cálculo, conversaciones en WhatsApp, documentos
+              en tres nubes distintas y procesos que dependen de que alguien se acuerde. Todo funciona, pero
+              nada está conectado.
+            </p>
+            <ul class="chapter__meta mono">
+              <li data-i18n="story.1.m1">Información dispersa</li>
+              <li data-i18n="story.1.m2">Trabajo repetitivo</li>
+              <li data-i18n="story.1.m3">Decisiones lentas</li>
+            </ul>
+          </article>
+
+          <article class="chapter" data-chapter="1">
+            <h2 class="chapter__title" data-i18n="story.2.title">La IA conecta lo que ya tienes.</h2>
+            <p class="chapter__copy" data-i18n="story.2.copy">
+              Primero se tienden los puentes: sistemas que empiezan a hablar entre sí, información que viaja sola
+              y tareas repetitivas que dejan de ocupar a tu gente. Sin reemplazar tu stack, integrándolo.
+            </p>
+            <ul class="chapter__meta mono">
+              <li data-i18n="story.2.m1">Integraciones</li>
+              <li data-i18n="story.2.m2">Flujo de datos</li>
+              <li data-i18n="story.2.m3">Automatización</li>
+            </ul>
+          </article>
+
+          <article class="chapter" data-chapter="2">
+            <h2 class="chapter__title" data-i18n="story.3.title">Agentes operando en toda la organización.</h2>
+            <p class="chapter__copy" data-i18n="story.3.copy">
+              Unidades autónomas que reciben información, razonan sobre la tarea, actúan sobre tus sistemas y
+              devuelven un resultado verificable. Trabajan en paralelo, sin horario, con supervisión humana.
+            </p>
+            <ul class="chapter__meta mono">
+              <li data-i18n="story.3.m1">Reciben contexto</li>
+              <li data-i18n="story.3.m2">Razonan</li>
+              <li data-i18n="story.3.m3">Ejecutan y reportan</li>
+            </ul>
+          </article>
+
+          <article class="chapter" data-chapter="3">
+            <h2 class="chapter__title" data-i18n="story.4.title">Un sistema que aprende contigo.</h2>
+            <p class="chapter__copy" data-i18n="story.4.copy">
+              Lo que era un conjunto de herramientas sueltas se vuelve una sola inteligencia operativa: coordinada,
+              medible y capaz de mejorar con cada interacción de tu equipo.
+            </p>
+            <ul class="chapter__meta mono">
+              <li data-i18n="story.4.m1">Conocimiento vivo</li>
+              <li data-i18n="story.4.m2">Operación medible</li>
+              <li data-i18n="story.4.m3">Mejora continua</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESULTADOS ══ -->
+<section class="section outcomes" id="resultados" data-scene-presence="0.4" data-scene-theme="light" data-scene-phase="0.82">
+  <div class="wrap">
+    <header class="section__head section__head--split">
+      <div>
+        <p class="eyebrow" data-reveal><span class="eyebrow__num mono">03</span><span data-i18n="outcomes.eyebrow">Resultados de negocio</span></p>
+        <h2 class="section__title" data-reveal data-i18n="outcomes.title">Lo que cambia cuando la IA entra bien.</h2>
+      </div>
+      <p class="section__lede" data-reveal data-i18n="outcomes.lede">
+        Medimos el impacto donde se nota: horas recuperadas, procesos que ya no se caen y decisiones que
+        se toman con datos en lugar de intuición.
+      </p>
+    </header>
+
+    <div class="outcome-grid">
+      <article class="outcome outcome--wide" data-reveal data-domain="operations">
+        <span class="outcome__num mono">01</span>
+        <h3 data-i18n="out.1.title">Automatiza el trabajo repetitivo</h3>
+        <p data-i18n="out.1.copy">Menos procesos manuales y menos carga operativa para tu equipo.</p>
+        <span class="outcome__line" aria-hidden="true"></span>
+      </article>
+      <article class="outcome" data-reveal data-domain="knowledge">
+        <span class="outcome__num mono">02</span>
+        <h3 data-i18n="out.2.title">Conecta tu conocimiento</h3>
+        <p data-i18n="out.2.copy">Convierte la información dispersa de la empresa en inteligencia accesible.</p>
+        <span class="outcome__line" aria-hidden="true"></span>
+      </article>
+      <article class="outcome" data-reveal data-domain="sales">
+        <span class="outcome__num mono">03</span>
+        <h3 data-i18n="out.3.title">Construye agentes de IA</h3>
+        <p data-i18n="out.3.copy">Sistemas que razonan, ejecutan acciones y colaboran con tu equipo.</p>
+        <span class="outcome__line" aria-hidden="true"></span>
+      </article>
+      <article class="outcome" data-reveal data-domain="finance">
+        <span class="outcome__num mono">04</span>
+        <h3 data-i18n="out.4.title">Toma mejores decisiones</h3>
+        <p data-i18n="out.4.copy">Transforma los datos del negocio en información accionable.</p>
+        <span class="outcome__line" aria-hidden="true"></span>
+      </article>
+      <article class="outcome outcome--wide" data-reveal data-domain="marketing">
+        <span class="outcome__num mono">05</span>
+        <h3 data-i18n="out.5.title">Avanza más rápido</h3>
+        <p data-i18n="out.5.copy">Herramientas de IA diseñadas alrededor de cómo trabaja realmente tu gente.</p>
+        <span class="outcome__line" aria-hidden="true"></span>
+      </article>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>WhatsApp</span><b>·</b><span>Gmail</span><b>·</b><span>HubSpot</span><b>·</b><span>Notion</span><b>·</b><span>Slack</span><b>·</b><span>Google Sheets</span><b>·</b><span>Drive</span><b>·</b><span>Shopify</span><b>·</b><span>Meta Ads</span><b>·</b><span>Zapier</span><b>·</b><span>n8n</span><b>·</b><span>Salesforce</span><b>·</b><span>ERP</span><b>·</b>
+        <span>WhatsApp</span><b>·</b><span>Gmail</span><b>·</b><span>HubSpot</span><b>·</b><span>Notion</span><b>·</b><span>Slack</span><b>·</b><span>Google Sheets</span><b>·</b><span>Drive</span><b>·</b><span>Shopify</span><b>·</b><span>Meta Ads</span><b>·</b><span>Zapier</span><b>·</b><span>n8n</span><b>·</b><span>Salesforce</span><b>·</b><span>ERP</span><b>·</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AGENTES ══ -->
+<section class="section agents" id="agentes" data-scene-offset="5" data-scene-presence="0.52" data-scene-theme="dark" data-scene-phase="0.62">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow" data-reveal><span class="eyebrow__num mono">04</span><span data-i18n="agents.eyebrow">Ecosistema de agentes</span></p>
+      <h2 class="section__title" data-reveal data-i18n="agents.title">Agentes especializados, conectados a tus herramientas reales.</h2>
+      <p class="section__lede" data-reveal data-i18n="agents.lede">
+        Cada agente tiene un trabajo, un conjunto de permisos y un flujo verificable. Pasa el cursor para
+        ver cómo opera.
+      </p>
+    </header>
+
+    <div class="agent-grid">
+      <article class="agent" data-reveal data-agent="sales" data-domain="sales" tabindex="0">
+        <header class="agent__head">
+          <span class="agent__orb" aria-hidden="true"></span>
+          <h3 data-i18n="ag.1.title">Agente de Ventas</h3>
+        </header>
+        <p class="agent__copy" data-i18n="ag.1.copy">Califica prospectos, resume conversaciones y deja el CRM al día sin que nadie escriba una nota.</p>
+        <ol class="flow" aria-label="Flujo del agente de ventas">
+          <li><span data-i18n="ag.1.s1">CRM</span></li>
+          <li><span data-i18n="ag.1.s2">Correo</span></li>
+          <li><span data-i18n="ag.1.s3">Notas de reunión</span></li>
+        </ol>
+      </article>
+
+      <article class="agent" data-reveal data-agent="support" data-domain="support" tabindex="0">
+        <header class="agent__head">
+          <span class="agent__orb" aria-hidden="true"></span>
+          <h3 data-i18n="ag.2.title">Agente de Soporte</h3>
+        </header>
+        <p class="agent__copy" data-i18n="ag.2.copy">Entiende el contexto del cliente, busca en el conocimiento de la empresa y resuelve lo repetitivo.</p>
+        <ol class="flow" aria-label="Flujo del agente de soporte">
+          <li><span data-i18n="ag.2.s1">Base de conocimiento</span></li>
+          <li><span data-i18n="ag.2.s2">Mensajes del cliente</span></li>
+          <li><span data-i18n="ag.2.s3">Resolución</span></li>
+        </ol>
+      </article>
+
+      <article class="agent" data-reveal data-agent="operations" data-domain="operations" tabindex="0">
+        <header class="agent__head">
+          <span class="agent__orb" aria-hidden="true"></span>
+          <h3 data-i18n="ag.3.title">Agente de Operaciones</h3>
+        </header>
+        <p class="agent__copy" data-i18n="ag.3.copy">Coordina tareas, documentos y aprobaciones entre los sistemas internos del negocio.</p>
+        <ol class="flow" aria-label="Flujo del agente de operaciones">
+          <li><span data-i18n="ag.3.s1">Documentos</span></li>
+          <li><span data-i18n="ag.3.s2">Aprobaciones</span></li>
+          <li><span data-i18n="ag.3.s3">Sistemas internos</span></li>
+        </ol>
+      </article>
+
+      <article class="agent" data-reveal data-agent="analytics" data-domain="finance" tabindex="0">
+        <header class="agent__head">
+          <span class="agent__orb" aria-hidden="true"></span>
+          <h3 data-i18n="ag.4.title">Agente de Analítica</h3>
+        </header>
+        <p class="agent__copy" data-i18n="ag.4.copy">Convierte los datos del negocio en insights y reportes que llegan solos, cuando sirven.</p>
+        <ol class="flow" aria-label="Flujo del agente de analítica">
+          <li><span data-i18n="ag.4.s1">Datos del negocio</span></li>
+          <li><span data-i18n="ag.4.s2">Insights</span></li>
+          <li><span data-i18n="ag.4.s3">Reportes</span></li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ENFOQUE ══ -->
+<section class="section philosophy" id="enfoque" data-scene-presence="0.34" data-scene-theme="light" data-scene-phase="0.95">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num mono">05</span><span data-i18n="phil.eyebrow">Nuestro enfoque</span></p>
+    <h2 class="statement" data-reveal>
+      <span data-i18n="phil.title1">La IA debe resolver problemas de negocio,</span>
+      <em data-i18n="phil.title2">no crear nuevos.</em>
+    </h2>
+    <div class="philosophy__grid">
+      <p class="philosophy__lede" data-reveal data-i18n="phil.lede">
+        Identificamos dónde la IA puede crear apalancamiento real, diseñamos los sistemas correctos, los integramos
+        con tus herramientas actuales y ayudamos a tu equipo a ponerlos a trabajar.
+      </p>
+      <ol class="principles" data-reveal>
+        <li>
+          <h3 data-i18n="phil.p1.t">Primero el problema</h3>
+          <p data-i18n="phil.p1.c">Empezamos por el proceso que duele y por el número que queremos mover, no por el modelo de moda.</p>
+        </li>
+        <li>
+          <h3 data-i18n="phil.p2.t">Dentro de tu stack</h3>
+          <p data-i18n="phil.p2.c">La IA vive donde ya trabaja tu equipo. Sin migraciones innecesarias ni herramientas paralelas.</p>
+        </li>
+        <li>
+          <h3 data-i18n="phil.p3.t">Con humanos en control</h3>
+          <p data-i18n="phil.p3.c">Cada sistema es auditable: qué hizo, con qué información y dónde interviene una persona.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LABORATORIO ══ -->
+<section class="section lab" id="laboratorio" data-scene-presence="0.72" data-scene-theme="dark" data-scene-phase="0.7">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow" data-reveal><span class="eyebrow__num mono">06</span><span data-i18n="lab.eyebrow">Diagnóstico interactivo</span></p>
+      <h2 class="section__title" data-reveal data-i18n="lab.title">Cuéntale a la red tu problema.</h2>
+      <p class="section__lede" data-reveal data-i18n="lab.lede">
+        Escribe un reto concreto de tu operación. La red se reorganiza y te muestra qué tipo de sistema de IA
+        lo resolvería.
+      </p>
+    </header>
+
+    <form class="lab__form" id="labForm" data-reveal autocomplete="off">
+      <label class="sr-only" for="labInput" data-i18n="lab.label">Describe tu reto de negocio</label>
+      <div class="lab__field">
+        <span class="lab__prompt mono" aria-hidden="true">&gt;</span>
+        <input id="labInput" name="challenge" type="text" maxlength="140"
+               placeholder="El soporte a clientes nos consume demasiado tiempo."
+               data-i18n-attr="placeholder" data-i18n="lab.placeholder">
+        <button class="lab__go" type="submit">
+          <span data-i18n="lab.go">Analizar</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <ul class="lab__examples">
+        <li><button type="button" data-example="support" data-i18n="lab.ex1">El soporte a clientes nos consume demasiado tiempo.</button></li>
+        <li><button type="button" data-example="sales" data-i18n="lab.ex2">Ventas pierde horas actualizando el CRM.</button></li>
+        <li><button type="button" data-example="knowledge" data-i18n="lab.ex3">El conocimiento de la empresa está disperso.</button></li>
+        <li><button type="button" data-example="analytics" data-i18n="lab.ex4">Nuestros reportes son casi todos manuales.</button></li>
+      </ul>
+    </form>
+
+    <div class="lab__out" id="labOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="section faq" id="faq" data-scene-presence="0.3" data-scene-theme="dark" data-scene-phase="0.88">
+  <div class="wrap">
+    <header class="section__head section__head--split">
+      <div>
+        <p class="eyebrow" data-reveal><span class="eyebrow__num mono">07</span><span data-i18n="faq.eyebrow">Preguntas frecuentes</span></p>
+        <h2 class="section__title" data-reveal data-i18n="faq.title">Lo que suelen preguntarnos.</h2>
+      </div>
+    </header>
+    <div class="faq__list">
+      <details data-reveal open>
+        <summary><span data-i18n="faq.q1">¿Qué hace exactamente Alphamitz?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a1">Implementamos inteligencia artificial aplicada a negocios: identificamos dónde la IA genera valor real, diseñamos el sistema, lo integramos con tus herramientas actuales y acompañamos al equipo hasta que está en producción.</p>
+      </details>
+      <details data-reveal>
+        <summary><span data-i18n="faq.q2">¿Qué es una web optimizada para búsqueda en LLM?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a2">Es un sitio construido para ser entendido y citado por modelos como ChatGPT, Gemini, Claude o Perplexity: contenido claro y verificable, datos estructurados, arquitectura semántica, respuestas directas a preguntas reales y archivos como llms.txt que describen el negocio para agentes.</p>
+      </details>
+      <details data-reveal>
+        <summary><span data-i18n="faq.q3">¿Qué procesos se pueden automatizar?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a3">Atención por WhatsApp, respuesta y clasificación de correo, llamadas de seguimiento, captura de datos en el CRM, generación de reportes, revisión de documentos, aprobaciones internas y cualquier flujo repetitivo con reglas claras.</p>
+      </details>
+      <details data-reveal>
+        <summary><span data-i18n="faq.q4">¿Cuánto tarda una implementación?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a4">Un diagnóstico toma de una a dos semanas. El primer sistema en producción suele tomar entre cuatro y ocho semanas, según las integraciones y el acceso a los datos.</p>
+      </details>
+      <details data-reveal>
+        <summary><span data-i18n="faq.q5">¿Necesito tener mis datos ordenados para empezar?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a5">No. Parte del trabajo es conectar información dispersa en documentos, conversaciones y sistemas para convertirla en una capa de conocimiento consultable. Empezamos con lo que existe hoy.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="section cta" id="contacto" data-scene-presence="0.85" data-scene-theme="dark" data-scene-phase="1">
+  <div class="wrap cta__inner">
+    <h2 class="cta__title" data-reveal>
+      <span data-i18n="cta.title1">Encuentra dónde la IA puede crear</span>
+      <em data-i18n="cta.title2">apalancamiento</em>
+      <span data-i18n="cta.title3">en tu negocio.</span>
+    </h2>
+    <p class="cta__copy" data-reveal data-i18n="cta.copy">
+      Una sesión de 45 minutos, sin presentación de ventas. Salimos con un mapa de oportunidades priorizado
+      por impacto y esfuerzo.
+    </p>
+    <div class="cta__actions" data-reveal>
+      <a class="btn btn--solid btn--lg" href="mailto:hola@alphamitz.com?subject=Diagn%C3%B3stico%20de%20IA" data-magnetic>
+        <span data-i18n="cta.button">Inicia un diagnóstico de IA</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn--line btn--lg" href="https://wa.me/000000000000" target="_blank" rel="noopener">
+        <span data-i18n="cta.wa">Escríbenos por WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-scene-presence="0.22" data-scene-theme="dark">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <span class="brand__mark brand__mark--lg" aria-hidden="true">
+        <svg viewBox="0 0 2000 1540"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"
+          d="M1245 8 C1085 130 915 345 745 610 C530 950 265 1310 25 1540 L1995 1512 C1885 1245 1700 940 1505 715 C1360 548 1190 452 1000 424 Z M1000 424 L618 1148 H1358 Z"/></svg>
+      </span>
+      <p class="footer__tag" data-i18n="footer.tag">IA aplicada a negocios.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h3 class="mono" data-i18n="footer.nav">Navegación</h3>
+        <a href="#servicios" data-i18n="nav.services">Servicios</a>
+        <a href="#agentes" data-i18n="nav.agents">Agentes</a>
+        <a href="#enfoque" data-i18n="nav.approach">Enfoque</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h3 class="mono" data-i18n="footer.contact">Contacto</h3>
+        <a href="mailto:hola@alphamitz.com">hola@alphamitz.com</a>
+        <a href="https://wa.me/000000000000" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div>
+        <h3 class="mono" data-i18n="footer.machines">Para máquinas</h3>
+        <a href="llms.txt">llms.txt</a>
+        <a href="sitemap.xml">sitemap.xml</a>
+        <a href="robots.txt">robots.txt</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer__legal">
+    <p>© <span id="year">2026</span> Alphamitz. <span data-i18n="footer.rights">Todos los derechos reservados.</span></p>
+    <p class="mono"><span data-i18n="footer.built">Construido para humanos y para modelos.</span></p>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js"></script>
+<script type="module" src="assets/js/main.js"></script>
+<noscript>
+  <style>.preloader{display:none!important}body.is-loading{overflow:auto}[data-reveal]{opacity:1!important;transform:none!important}</style>
+</noscript>
+</body>
+</html>
