@@ -79,7 +79,7 @@ body.scene-ready .stage canvas{opacity:1}
   background:radial-gradient(46% 42% at var(--gx,72%) var(--gy,45%),color-mix(in srgb,var(--accent) 22%,transparent),transparent 70%)}
 .stage__still{position:absolute;inset:0;display:none;place-items:center}
 body.no-webgl .stage__still{display:grid}
-.still__mark{width:min(38vw,340px);color:var(--lime);opacity:.5;filter:drop-shadow(0 0 60px color-mix(in srgb,var(--lime) 45%,transparent));
+.still__mark{width:min(46vw,420px);color:var(--lime);opacity:.5;filter:drop-shadow(0 0 60px color-mix(in srgb,var(--lime) 45%,transparent));
   animation:float 9s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(-10px) rotate(-4deg)}50%{transform:translateY(10px) rotate(4deg)}}
 
@@ -88,7 +88,7 @@ body.no-webgl .stage__still{display:grid}
   transition:opacity .8s var(--ease),visibility .8s}
 body.loaded .preloader{opacity:0;visibility:hidden}
 .preloader__in{display:flex;align-items:center;gap:1rem}
-.preloader__mark{width:34px;color:var(--lime);animation:pulse 1.4s var(--ease) infinite}
+.preloader__mark{width:46px;color:var(--lime);animation:pulse 1.4s var(--ease) infinite}
 @keyframes pulse{0%,100%{opacity:.35;transform:scale(.94)}50%{opacity:1;transform:scale(1)}}
 .preloader__pct{color:var(--ink-3);font-style:normal}
 .preloader__pct i{font-style:normal}
@@ -101,11 +101,11 @@ body.loaded .preloader{opacity:0;visibility:hidden}
 .header.is-solid{background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);border-bottom-color:var(--line-2)}
 .header__in{width:var(--wrap);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
 .brand{display:flex;align-items:center;gap:.55rem}
-.brand__mark{display:block;width:20px;color:var(--ink);transition:color .4s,transform .6s var(--ease)}
+.brand__mark{display:block;width:27px;color:var(--ink);transition:color .4s,transform .6s var(--ease)}
 .brand__mark svg{width:100%;height:auto}
 .brand:hover .brand__mark{color:var(--lime);transform:rotate(-6deg)}
 .brand__word{font-family:var(--sans);font-weight:600;font-size:1.02rem;letter-spacing:-.03em}
-.brand__mark--lg{width:34px;color:var(--lime)}
+.brand__mark--lg{width:46px;color:var(--lime)}
 .nav{display:flex;gap:clamp(1rem,2vw,2rem);font-family:var(--mono);font-size:.75rem;letter-spacing:.02em}
 .nav a{color:var(--ink-2);padding:.3rem 0;position:relative;transition:color .35s}
 .nav a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--lime);
@@ -235,17 +235,27 @@ main{position:relative;z-index:1}
 
 /* ── clientes ──────────────────────────────────────────────── */
 .logos{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(.8rem,2vw,1.6rem);
-  padding-block:clamp(1.5rem,3vw,2.5rem);border-block:1px solid var(--line-2)}
+  padding-block:clamp(2rem,4vw,3.5rem);border-block:1px solid var(--line-2)}
 .logos li{position:relative;padding-right:clamp(1.5rem,5vw,5rem)}
 .logos li:not(:last-child)::after{content:'';position:absolute;right:clamp(.7rem,2.5vw,2.5rem);top:50%;width:4px;height:4px;border-radius:50%;background:var(--lime);opacity:.5;transform:translateY(-50%)}
-.logos span{font-family:var(--mono);font-size:clamp(1.05rem,.8rem + 1.4vw,1.9rem);font-weight:700;letter-spacing:-.04em;
+.logos span{font-family:var(--mono);font-size:clamp(1.1rem,.8rem + 1.7vw,2.3rem);font-weight:700;letter-spacing:-.04em;
   color:var(--ink-3);transition:color .45s var(--ease),text-shadow .45s var(--ease)}
 .logos li:hover span{color:var(--ink);text-shadow:0 0 24px color-mix(in srgb,var(--lime) 55%,transparent)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,2vw,2rem);margin-top:clamp(2.5rem,5vw,4rem)}
-.stats li{display:flex;flex-direction:column;gap:.5rem;padding-top:1.1rem;border-top:1px solid var(--line)}
-.stats b{font-family:var(--mono);font-size:clamp(1.4rem,1rem + 1.6vw,2.4rem);font-weight:700;letter-spacing:-.05em;
-  color:var(--lime);text-transform:none}
-.stats span{color:var(--ink-2);font-size:.875rem;max-width:22ch}
+.price__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.price__grid li{background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);
+  padding:clamp(1.5rem,2.6vw,2.4rem);display:flex;flex-direction:column;transition:background-color .5s var(--ease)}
+.price__grid li:hover{background:#1B2030}
+.price__grid h3{font-size:clamp(1rem,.9rem + .45vw,1.25rem);font-weight:600;letter-spacing:-.035em;color:var(--ink-2)}
+.price__tag{display:flex;align-items:baseline;gap:.5rem;margin-top:1.1rem}
+.price__tag i{font-style:normal;color:var(--ink-3)}
+.price__tag b{font-family:var(--mono);font-size:clamp(2rem,1.3rem + 2.4vw,3.4rem);font-weight:700;letter-spacing:-.06em;
+  color:var(--lime);line-height:1}
+.price__d{margin-top:.9rem;color:var(--ink-2);font-size:.9rem;line-height:1.5;max-width:30ch;flex:1}
+.price__go{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;font-family:var(--mono);font-size:.68rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);transition:color .35s,gap .35s var(--ease)}
+.price__go svg{width:14px;height:14px}
+.price__grid li:hover .price__go{color:var(--lime);gap:.75rem}
+.price__note{margin-top:1.2rem;color:var(--ink-3)}
 
 /* ── proceso ───────────────────────────────────────────────── */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,3vw,3rem)}
@@ -344,7 +354,7 @@ body.wa-on .wa{opacity:1;transform:none;pointer-events:auto}
   .burger{display:block}
   .header__cta{display:none}
   .svc{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(2,1fr)}
+  .price__grid{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr;gap:2rem}
   .footer__in{grid-template-columns:1fr}
   .hero__foot{flex-direction:column;align-items:flex-start;gap:1.6rem}
@@ -355,14 +365,12 @@ body.wa-on .wa{opacity:1;transform:none;pointer-events:auto}
   .hero{padding-block:clamp(5.5rem,11vh,7rem) clamp(1.5rem,3vh,2.5rem)}
   .svc{grid-template-columns:1fr}
   .svc__card{min-height:0}
-  .stats{grid-template-columns:1fr 1fr}
   .footer__cols{grid-template-columns:1fr 1fr}
   .wa__label{display:none}
   .logos{gap:1.2rem 2rem}
 }
 @media (max-width:430px){
   .footer__cols{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr}
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -26,7 +26,8 @@ function waHref(topic) {
 }
 function refreshWa() {
   $$('[data-wa]').forEach((a) => {
-    const topic = a.id === 'needCta' ? waTopic : null;
+    // cada enlace puede fijar su propio tema; el de "necesitas" sigue al pill elegido
+    const topic = a.dataset.topic || (a.id === 'needCta' ? waTopic : null);
     a.setAttribute('href', waHref(topic));
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener');

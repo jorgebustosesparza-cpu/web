@@ -76,9 +76,9 @@
         "@type": "OfferCatalog", "name": "Servicios",
         "itemListElement": [
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Implementación de IA", "description": "Agentes y sistemas de IA integrados a las herramientas de la empresa." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatizaciones", "description": "WhatsApp, correo, llamadas y procesos internos operando de forma automática." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desarrollo de aplicaciones", "description": "Aplicaciones web y móviles a la medida conectadas a la operación del negocio." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webs optimizadas para búsqueda en LLM", "description": "Sitios estructurados para que ChatGPT, Gemini, Claude y Perplexity entiendan y citen el negocio." } },
+          { "@type": "Offer", "priceCurrency": "MXN", "price": "2000", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "2000", "priceCurrency": "MXN" }, "itemOffered": { "@type": "Service", "name": "Automatización de WhatsApp", "description": "WhatsApp, correo, llamadas y procesos internos operando de forma automática. Desde 2,000 MXN." } },
+          { "@type": "Offer", "priceCurrency": "MXN", "price": "9000", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "9000", "priceCurrency": "MXN" }, "itemOffered": { "@type": "Service", "name": "Desarrollo de aplicaciones", "description": "Aplicaciones web y móviles a la medida conectadas a la operación del negocio. Desde 9,000 MXN." } },
+          { "@type": "Offer", "priceCurrency": "MXN", "price": "5000", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "5000", "priceCurrency": "MXN" }, "itemOffered": { "@type": "Service", "name": "Páginas web optimizadas para búsqueda en LLM", "description": "Sitios estructurados para que ChatGPT, Gemini, Claude y Perplexity entiendan y citen el negocio. Desde 5,000 MXN." } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Video con IA", "description": "Producción de video generativo para campañas y contenido a escala." } }
         ]
       }
@@ -89,7 +89,7 @@
       "mainEntity": [
         { "@type": "Question", "name": "¿Por dónde empezamos?", "acceptedAnswer": { "@type": "Answer", "text": "Por una auditoría gratis de 15 minutos. Revisamos tu operación y te decimos qué conviene automatizar primero." } },
         { "@type": "Question", "name": "¿Necesito ordenar mis datos antes?", "acceptedAnswer": { "@type": "Answer", "text": "No. Parte del trabajo es conectar lo que hoy está disperso en documentos, chats y sistemas." } },
-        { "@type": "Question", "name": "¿Cuánto tarda una implementación?", "acceptedAnswer": { "@type": "Answer", "text": "El primer sistema en producción toma entre cuatro y ocho semanas, según las integraciones." } },
+        { "@type": "Question", "name": "¿Cuánto cuesta?", "acceptedAnswer": { "@type": "Answer", "text": "Páginas web desde 5,000 pesos, automatización de WhatsApp desde 2,000 pesos y aplicaciones desde 9,000 pesos. El precio final depende del alcance y sale del diagnóstico, que es gratuito." } },
         { "@type": "Question", "name": "¿Trabajan con mis herramientas?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. La IA vive dentro del stack actual: CRM, correo, WhatsApp, hojas de cálculo y ERP." } }
       ]
     }
@@ -104,8 +104,8 @@
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader__in">
     <span class="preloader__mark" aria-hidden="true">
-      <svg viewBox="0 0 760 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-        d="M430 14 C300 300 140 640 14 978 L512 884 L508 731 H233 Z M458 300 C628 440 726 660 722 926 C656 836 546 794 487 727 C503 582 492 420 458 300 Z"/></svg>
+      <svg viewBox="0 0 1286.5 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+        d="M766.9 0.3C773.9 0.1 788.5 0 788.5 0L788.8 1L643.9 287.5C643.9 287.5 665.9 288 674.5 288.5C683.1 289 685.5 289 695.8 290.4C706.1 291.8 721.4 293.6 736.3 296.8C751.2 300 769.3 304.5 785.3 309.7C801.3 314.9 817.2 321 832.3 327.8C847.4 334.6 861.8 342.1 876 350.3C890.2 358.6 904.6 368.1 917.3 377.3C930 386.5 940.4 395.1 952 405.7C963.6 416.3 977.9 431 987.1 440.8C996.3 450.6 1001.3 457.3 1007.1 464.6C1012.9 471.9 1015.1 474.3 1021.9 484.5C1028.6 494.7 1003.5 439.9 1047.6 525.8C1091.7 611.7 1286.5 999.7 1286.5 999.7C1286.5 999.7 1262.8 1000 1252.1 999.4C1241.4 998.8 1232.9 997.6 1222.5 996.1C1212.1 994.6 1199 992.2 1189.6 990.3C1180.1 988.4 1175.6 987.3 1165.8 984.5C1156 981.7 1142.2 977.6 1131 973.6C1119.8 969.6 1109 965.2 1098.8 960.7C1088.6 956.2 1078.7 951.2 1069.9 946.6C1061.1 942 1054.4 938.2 1046 933C1037.6 927.8 1028 921.5 1019.6 915.6C1011.2 909.7 1003.9 904.3 995.8 897.6C987.6 891 978.6 883.1 970.7 875.7C962.8 868.4 955.3 860.7 948.5 853.5C941.7 846.3 936.7 840.8 929.8 832.3C922.9 823.8 913.8 811.8 907.3 802.6C900.8 793.4 895.6 785.2 890.5 776.9C885.4 768.6 876.7 752.7 876.7 752.7C876.7 752.7 862.6 779.1 857.1 788.5C851.6 797.9 848.2 802.4 843.5 809.1C838.8 815.9 835.9 820.2 828.7 829C821.5 837.8 807.5 854 800.4 861.9C793.3 869.8 792.3 870.4 785.9 876.4C779.5 882.4 772.7 889.1 762.1 897.6C751.5 906.1 734.4 918.9 722.2 927.2C710 935.5 701.6 940.4 688.7 947.2C675.8 954 660 961.7 644.9 967.8C629.8 973.9 610 980.1 597.9 983.9C585.8 987.6 581 988.4 572.1 990.3C563.2 992.2 556.7 993.9 544.4 995.5C532.1 997.1 588.8 999.3 498.1 1000C407.4 1000.8 0.3 1000 0.3 1000L0 999C0 999 310.9 377.4 376.7 246.9C442.5 116.4 388 226.4 394.7 216C401.4 205.6 407.6 196.1 416.6 184.5C425.6 172.9 440.2 156.1 448.8 146.5C457.4 136.9 462 133 468.4 126.9C474.8 120.8 477.7 117.7 487.1 110.1C496.6 102.5 515.1 88.3 525.1 81.1C535.1 73.9 539.2 71.7 547 67C554.8 62.3 564.9 56.7 572.1 52.8C579.3 48.9 581.5 47.7 590.1 43.8C598.7 39.9 610.7 34.3 623.6 29.6C636.5 24.9 656.5 18.7 667.4 15.5C678.3 12.3 679.9 12.1 688.7 10.3C697.5 8.5 710.6 6 720.2 4.5C729.9 3 738.8 2 746.6 1.3C754.4 0.6 759.9 0.5 766.9 0.3Z M643.3 288.8C643.3 288.8 606.9 214.9 645.8 292C684.6 369.1 876.4 751.1 876.4 751.1L409.9 751.4C409.9 751.4 374.5 819.9 413.4 742.8C452.3 665.7 643.3 288.8 643.3 288.8Z"/></svg>
     </span>
     <span class="preloader__pct mono"><i id="preloaderCount">00</i></span>
   </div>
@@ -115,8 +115,8 @@
   <canvas id="scene" aria-hidden="true"></canvas>
   <div class="stage__still" aria-hidden="true">
     <span class="still__mark">
-      <svg viewBox="0 0 760 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-        d="M430 14 C300 300 140 640 14 978 L512 884 L508 731 H233 Z M458 300 C628 440 726 660 722 926 C656 836 546 794 487 727 C503 582 492 420 458 300 Z"/></svg>
+      <svg viewBox="0 0 1286.5 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+        d="M766.9 0.3C773.9 0.1 788.5 0 788.5 0L788.8 1L643.9 287.5C643.9 287.5 665.9 288 674.5 288.5C683.1 289 685.5 289 695.8 290.4C706.1 291.8 721.4 293.6 736.3 296.8C751.2 300 769.3 304.5 785.3 309.7C801.3 314.9 817.2 321 832.3 327.8C847.4 334.6 861.8 342.1 876 350.3C890.2 358.6 904.6 368.1 917.3 377.3C930 386.5 940.4 395.1 952 405.7C963.6 416.3 977.9 431 987.1 440.8C996.3 450.6 1001.3 457.3 1007.1 464.6C1012.9 471.9 1015.1 474.3 1021.9 484.5C1028.6 494.7 1003.5 439.9 1047.6 525.8C1091.7 611.7 1286.5 999.7 1286.5 999.7C1286.5 999.7 1262.8 1000 1252.1 999.4C1241.4 998.8 1232.9 997.6 1222.5 996.1C1212.1 994.6 1199 992.2 1189.6 990.3C1180.1 988.4 1175.6 987.3 1165.8 984.5C1156 981.7 1142.2 977.6 1131 973.6C1119.8 969.6 1109 965.2 1098.8 960.7C1088.6 956.2 1078.7 951.2 1069.9 946.6C1061.1 942 1054.4 938.2 1046 933C1037.6 927.8 1028 921.5 1019.6 915.6C1011.2 909.7 1003.9 904.3 995.8 897.6C987.6 891 978.6 883.1 970.7 875.7C962.8 868.4 955.3 860.7 948.5 853.5C941.7 846.3 936.7 840.8 929.8 832.3C922.9 823.8 913.8 811.8 907.3 802.6C900.8 793.4 895.6 785.2 890.5 776.9C885.4 768.6 876.7 752.7 876.7 752.7C876.7 752.7 862.6 779.1 857.1 788.5C851.6 797.9 848.2 802.4 843.5 809.1C838.8 815.9 835.9 820.2 828.7 829C821.5 837.8 807.5 854 800.4 861.9C793.3 869.8 792.3 870.4 785.9 876.4C779.5 882.4 772.7 889.1 762.1 897.6C751.5 906.1 734.4 918.9 722.2 927.2C710 935.5 701.6 940.4 688.7 947.2C675.8 954 660 961.7 644.9 967.8C629.8 973.9 610 980.1 597.9 983.9C585.8 987.6 581 988.4 572.1 990.3C563.2 992.2 556.7 993.9 544.4 995.5C532.1 997.1 588.8 999.3 498.1 1000C407.4 1000.8 0.3 1000 0.3 1000L0 999C0 999 310.9 377.4 376.7 246.9C442.5 116.4 388 226.4 394.7 216C401.4 205.6 407.6 196.1 416.6 184.5C425.6 172.9 440.2 156.1 448.8 146.5C457.4 136.9 462 133 468.4 126.9C474.8 120.8 477.7 117.7 487.1 110.1C496.6 102.5 515.1 88.3 525.1 81.1C535.1 73.9 539.2 71.7 547 67C554.8 62.3 564.9 56.7 572.1 52.8C579.3 48.9 581.5 47.7 590.1 43.8C598.7 39.9 610.7 34.3 623.6 29.6C636.5 24.9 656.5 18.7 667.4 15.5C678.3 12.3 679.9 12.1 688.7 10.3C697.5 8.5 710.6 6 720.2 4.5C729.9 3 738.8 2 746.6 1.3C754.4 0.6 759.9 0.5 766.9 0.3Z M643.3 288.8C643.3 288.8 606.9 214.9 645.8 292C684.6 369.1 876.4 751.1 876.4 751.1L409.9 751.4C409.9 751.4 374.5 819.9 413.4 742.8C452.3 665.7 643.3 288.8 643.3 288.8Z"/></svg>
     </span>
   </div>
   <div class="stage__dots" aria-hidden="true"></div>
@@ -127,16 +127,16 @@
   <div class="header__in">
     <a class="brand" href="#top" aria-label="Alphamilz, inicio">
       <span class="brand__mark">
-        <svg viewBox="0 0 760 1000" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-          d="M430 14 C300 300 140 640 14 978 L512 884 L508 731 H233 Z M458 300 C628 440 726 660 722 926 C656 836 546 794 487 727 C503 582 492 420 458 300 Z"/></svg>
+        <svg viewBox="0 0 1286.5 1000" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+          d="M766.9 0.3C773.9 0.1 788.5 0 788.5 0L788.8 1L643.9 287.5C643.9 287.5 665.9 288 674.5 288.5C683.1 289 685.5 289 695.8 290.4C706.1 291.8 721.4 293.6 736.3 296.8C751.2 300 769.3 304.5 785.3 309.7C801.3 314.9 817.2 321 832.3 327.8C847.4 334.6 861.8 342.1 876 350.3C890.2 358.6 904.6 368.1 917.3 377.3C930 386.5 940.4 395.1 952 405.7C963.6 416.3 977.9 431 987.1 440.8C996.3 450.6 1001.3 457.3 1007.1 464.6C1012.9 471.9 1015.1 474.3 1021.9 484.5C1028.6 494.7 1003.5 439.9 1047.6 525.8C1091.7 611.7 1286.5 999.7 1286.5 999.7C1286.5 999.7 1262.8 1000 1252.1 999.4C1241.4 998.8 1232.9 997.6 1222.5 996.1C1212.1 994.6 1199 992.2 1189.6 990.3C1180.1 988.4 1175.6 987.3 1165.8 984.5C1156 981.7 1142.2 977.6 1131 973.6C1119.8 969.6 1109 965.2 1098.8 960.7C1088.6 956.2 1078.7 951.2 1069.9 946.6C1061.1 942 1054.4 938.2 1046 933C1037.6 927.8 1028 921.5 1019.6 915.6C1011.2 909.7 1003.9 904.3 995.8 897.6C987.6 891 978.6 883.1 970.7 875.7C962.8 868.4 955.3 860.7 948.5 853.5C941.7 846.3 936.7 840.8 929.8 832.3C922.9 823.8 913.8 811.8 907.3 802.6C900.8 793.4 895.6 785.2 890.5 776.9C885.4 768.6 876.7 752.7 876.7 752.7C876.7 752.7 862.6 779.1 857.1 788.5C851.6 797.9 848.2 802.4 843.5 809.1C838.8 815.9 835.9 820.2 828.7 829C821.5 837.8 807.5 854 800.4 861.9C793.3 869.8 792.3 870.4 785.9 876.4C779.5 882.4 772.7 889.1 762.1 897.6C751.5 906.1 734.4 918.9 722.2 927.2C710 935.5 701.6 940.4 688.7 947.2C675.8 954 660 961.7 644.9 967.8C629.8 973.9 610 980.1 597.9 983.9C585.8 987.6 581 988.4 572.1 990.3C563.2 992.2 556.7 993.9 544.4 995.5C532.1 997.1 588.8 999.3 498.1 1000C407.4 1000.8 0.3 1000 0.3 1000L0 999C0 999 310.9 377.4 376.7 246.9C442.5 116.4 388 226.4 394.7 216C401.4 205.6 407.6 196.1 416.6 184.5C425.6 172.9 440.2 156.1 448.8 146.5C457.4 136.9 462 133 468.4 126.9C474.8 120.8 477.7 117.7 487.1 110.1C496.6 102.5 515.1 88.3 525.1 81.1C535.1 73.9 539.2 71.7 547 67C554.8 62.3 564.9 56.7 572.1 52.8C579.3 48.9 581.5 47.7 590.1 43.8C598.7 39.9 610.7 34.3 623.6 29.6C636.5 24.9 656.5 18.7 667.4 15.5C678.3 12.3 679.9 12.1 688.7 10.3C697.5 8.5 710.6 6 720.2 4.5C729.9 3 738.8 2 746.6 1.3C754.4 0.6 759.9 0.5 766.9 0.3Z M643.3 288.8C643.3 288.8 606.9 214.9 645.8 292C684.6 369.1 876.4 751.1 876.4 751.1L409.9 751.4C409.9 751.4 374.5 819.9 413.4 742.8C452.3 665.7 643.3 288.8 643.3 288.8Z"/></svg>
       </span>
       <span class="brand__word">alpha milz</span>
     </a>
 
     <nav class="nav" aria-label="Navegación principal">
       <a href="#servicios" data-i18n="nav.services">Servicios</a>
+      <a href="#precios" data-i18n="price.eyebrow">Precios</a>
       <a href="#clientes" data-i18n="nav.work">Clientes</a>
-      <a href="#proceso" data-i18n="nav.process">Proceso</a>
       <a href="#enfoque" data-i18n="nav.approach">Enfoque</a>
     </nav>
 
@@ -158,10 +158,11 @@
   <nav class="menu__nav" aria-label="Navegación móvil">
     <a href="#servicios"><i class="mono">01</i><span data-i18n="nav.services">Servicios</span></a>
     <a href="#necesitas"><i class="mono">02</i><span data-i18n="need.eyebrow">A la medida</span></a>
-    <a href="#clientes"><i class="mono">03</i><span data-i18n="nav.work">Clientes</span></a>
-    <a href="#proceso"><i class="mono">04</i><span data-i18n="nav.process">Proceso</span></a>
-    <a href="#enfoque"><i class="mono">05</i><span data-i18n="nav.approach">Enfoque</span></a>
-    <a href="#contacto"><i class="mono">06</i><span data-i18n="nav.contact">Contacto</span></a>
+    <a href="#precios"><i class="mono">03</i><span data-i18n="price.eyebrow">Precios</span></a>
+    <a href="#clientes"><i class="mono">04</i><span data-i18n="nav.work">Clientes</span></a>
+    <a href="#proceso"><i class="mono">05</i><span data-i18n="nav.process">Proceso</span></a>
+    <a href="#enfoque"><i class="mono">06</i><span data-i18n="nav.approach">Enfoque</span></a>
+    <a href="#contacto"><i class="mono">07</i><span data-i18n="nav.contact">Contacto</span></a>
   </nav>
   <a class="pill pill--lime menu__cta" href="#contacto" data-wa>
     <span data-i18n="nav.cta">Auditoría gratis</span>
@@ -171,7 +172,7 @@
 <main id="contenido">
 <span id="top"></span>
 
-<section class="hero" id="hero" data-accent="#A6F700" data-x="4.3" data-y="0.05" data-scale="0.9" data-dim="1">
+<section class="hero" id="hero" data-accent="#A6F700" data-x="3.9" data-y="0.05" data-scale="0.9" data-dim="1">
   <div class="wrap hero__in">
     <p class="eyebrow" data-reveal><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Agencia de IA aplicada</span></p>
     <h1 class="hero__title">
@@ -278,20 +279,54 @@
   </div>
 </section>
 
-<section class="sec work" id="clientes" data-accent="#6CB7FF" data-x="4.8" data-y="0" data-scale="0.4" data-dim="0.42">
+<section class="sec price" id="precios" data-accent="#8645F9" data-x="4.6" data-y="0.1" data-scale="0.44" data-dim="0.34">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">03</i><span data-i18n="nav.work">Clientes</span></p>
+    <header class="sec__head">
+      <p class="eyebrow" data-reveal><i class="num mono">03</i><span data-i18n="price.eyebrow">Precios</span></p>
+      <h2 class="sec__title" data-reveal data-i18n="price.title">Sin cotizaciones misteriosas</h2>
+      <p class="sec__lede" data-reveal data-i18n="price.lede">Precios de arranque. El alcance final sale del diagnóstico, que no cuesta nada.</p>
+    </header>
+    <ul class="price__grid">
+      <li data-reveal>
+        <h3 data-i18n="price.1.t">Páginas web</h3>
+        <p class="price__tag"><i class="mono" data-i18n="price.from">desde</i><b data-i18n="price.1.v">$5,000</b></p>
+        <p class="price__d" data-i18n="price.1.d">Sitio a la medida, listo para buscadores y para LLM.</p>
+        <a class="price__go" href="#contacto" data-wa data-topic="una página web" aria-label="Cotizar página web por WhatsApp">
+          <span data-i18n="price.cta">Cotizar por WhatsApp</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+      <li data-reveal>
+        <h3 data-i18n="price.2.t">Automatización de WhatsApp</h3>
+        <p class="price__tag"><i class="mono" data-i18n="price.from">desde</i><b data-i18n="price.2.v">$2,000</b></p>
+        <p class="price__d" data-i18n="price.2.d">Responde, da seguimiento y registra sin que nadie esté encima.</p>
+        <a class="price__go" href="#contacto" data-wa data-topic="automatizar WhatsApp" aria-label="Cotizar automatización de WhatsApp">
+          <span data-i18n="price.cta">Cotizar por WhatsApp</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+      <li data-reveal>
+        <h3 data-i18n="price.3.t">Aplicaciones</h3>
+        <p class="price__tag"><i class="mono" data-i18n="price.from">desde</i><b data-i18n="price.3.v">$9,000</b></p>
+        <p class="price__d" data-i18n="price.3.d">Web o móvil, conectada a la operación que ya tienes.</p>
+        <a class="price__go" href="#contacto" data-wa data-topic="una aplicación" aria-label="Cotizar aplicación por WhatsApp">
+          <span data-i18n="price.cta">Cotizar por WhatsApp</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+    </ul>
+    <p class="price__note mono" data-reveal data-i18n="price.note">Pesos mexicanos. IVA no incluido.</p>
+  </div>
+</section>
+
+<section class="sec work" id="clientes" data-accent="#6CB7FF" data-x="-4.4" data-y="0" data-scale="0.4" data-dim="0.4">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><i class="num mono">04</i><span data-i18n="nav.work">Clientes</span></p>
     <ul class="logos" data-reveal>
       <li><span>OXXO</span></li>
       <li><span>Del Sol</span></li>
       <li><span>Buffalo Wild Wings</span></li>
       <li><span>7-Eleven</span></li>
-    </ul>
-    <ul class="stats" data-reveal>
-      <li><b class="mono" data-i18n="stats.1v">1-2 sem</b><span data-i18n="stats.1">Diagnóstico</span></li>
-      <li><b class="mono" data-i18n="stats.2v">4-8 sem</b><span data-i18n="stats.2">Primer sistema en producción</span></li>
-      <li><b class="mono" data-i18n="stats.3v">24/7</b><span data-i18n="stats.3">Operación automatizada</span></li>
-      <li><b class="mono" data-i18n="stats.4v">100%</b><span data-i18n="stats.4">Sobre tus herramientas actuales</span></li>
     </ul>
   </div>
 </section>
@@ -299,7 +334,7 @@
 <section class="sec process" id="proceso" data-accent="#A6F700" data-x="-4.2" data-y="0.1" data-scale="0.5" data-dim="0.5">
   <div class="wrap">
     <header class="sec__head">
-      <p class="eyebrow" data-reveal><i class="num mono">04</i><span data-i18n="process.eyebrow">Proceso</span></p>
+      <p class="eyebrow" data-reveal><i class="num mono">05</i><span data-i18n="process.eyebrow">Proceso</span></p>
       <h2 class="sec__title" data-reveal data-i18n="process.title">Cómo entramos</h2>
     </header>
     <ol class="steps">
@@ -307,27 +342,24 @@
         <span class="steps__n mono">01</span>
         <h3 data-i18n="p1.t">Diagnóstico</h3>
         <p data-i18n="p1.d">Una sesión. Salimos con el mapa de lo que sí conviene automatizar.</p>
-        <span class="steps__m mono" data-i18n="p1.m">1 a 2 semanas</span>
-      </li>
+        </li>
       <li data-reveal>
         <span class="steps__n mono">02</span>
         <h3 data-i18n="p2.t">Diseño e integración</h3>
         <p data-i18n="p2.d">Construimos sobre las herramientas que tu equipo ya usa.</p>
-        <span class="steps__m mono" data-i18n="p2.m">2 a 4 semanas</span>
-      </li>
+        </li>
       <li data-reveal>
         <span class="steps__n mono">03</span>
         <h3 data-i18n="p3.t">Producción</h3>
         <p data-i18n="p3.d">Lo dejamos corriendo, medido y con tu gente capacitada.</p>
-        <span class="steps__m mono" data-i18n="p3.m">4 a 8 semanas</span>
-      </li>
+        </li>
     </ol>
   </div>
 </section>
 
 <section class="sec phil" id="enfoque" data-accent="#EAF3FF" data-x="3.6" data-y="0" data-scale="0.72" data-dim="0.85">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">05</i><span data-i18n="phil.eyebrow">Enfoque</span></p>
+    <p class="eyebrow" data-reveal><i class="num mono">06</i><span data-i18n="phil.eyebrow">Enfoque</span></p>
     <h2 class="statement" data-reveal>
       <span data-i18n="phil.t1">La IA debe resolver problemas,</span>
       <b class="brk" data-i18n="phil.t2">no crear nuevos.</b>
@@ -340,7 +372,7 @@
 
 <section class="sec faq" id="faq" data-accent="#5200FF" data-x="-3.8" data-y="0" data-scale="0.44" data-dim="0.4">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">06</i><span data-i18n="faq.eyebrow">Dudas</span></p>
+    <p class="eyebrow" data-reveal><i class="num mono">07</i><span data-i18n="faq.eyebrow">Dudas</span></p>
     <h2 class="sec__title" data-reveal data-i18n="faq.title">Lo que nos preguntan</h2>
     <div class="faq__list">
       <details data-reveal open>
@@ -352,8 +384,8 @@
         <p data-i18n="faq.a2">No. Parte del trabajo es conectar lo que hoy está disperso en documentos, chats y sistemas.</p>
       </details>
       <details data-reveal>
-        <summary><span data-i18n="faq.q3">¿Cuánto tarda?</span><i aria-hidden="true"></i></summary>
-        <p data-i18n="faq.a3">El primer sistema en producción toma entre cuatro y ocho semanas, según integraciones.</p>
+        <summary><span data-i18n="faq.q3">¿Cuánto cuesta?</span><i aria-hidden="true"></i></summary>
+        <p data-i18n="faq.a3">Páginas web desde $5,000, automatización de WhatsApp desde $2,000 y aplicaciones desde $9,000 pesos. El precio final depende del alcance.</p>
       </details>
       <details data-reveal>
         <summary><span data-i18n="faq.q4">¿Trabajan con mis herramientas?</span><i aria-hidden="true"></i></summary>
@@ -385,8 +417,8 @@
   <div class="wrap footer__in">
     <div class="footer__brand">
       <span class="brand__mark brand__mark--lg" aria-hidden="true">
-        <svg viewBox="0 0 760 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-          d="M430 14 C300 300 140 640 14 978 L512 884 L508 731 H233 Z M458 300 C628 440 726 660 722 926 C656 836 546 794 487 727 C503 582 492 420 458 300 Z"/></svg>
+        <svg viewBox="0 0 1286.5 1000"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+          d="M766.9 0.3C773.9 0.1 788.5 0 788.5 0L788.8 1L643.9 287.5C643.9 287.5 665.9 288 674.5 288.5C683.1 289 685.5 289 695.8 290.4C706.1 291.8 721.4 293.6 736.3 296.8C751.2 300 769.3 304.5 785.3 309.7C801.3 314.9 817.2 321 832.3 327.8C847.4 334.6 861.8 342.1 876 350.3C890.2 358.6 904.6 368.1 917.3 377.3C930 386.5 940.4 395.1 952 405.7C963.6 416.3 977.9 431 987.1 440.8C996.3 450.6 1001.3 457.3 1007.1 464.6C1012.9 471.9 1015.1 474.3 1021.9 484.5C1028.6 494.7 1003.5 439.9 1047.6 525.8C1091.7 611.7 1286.5 999.7 1286.5 999.7C1286.5 999.7 1262.8 1000 1252.1 999.4C1241.4 998.8 1232.9 997.6 1222.5 996.1C1212.1 994.6 1199 992.2 1189.6 990.3C1180.1 988.4 1175.6 987.3 1165.8 984.5C1156 981.7 1142.2 977.6 1131 973.6C1119.8 969.6 1109 965.2 1098.8 960.7C1088.6 956.2 1078.7 951.2 1069.9 946.6C1061.1 942 1054.4 938.2 1046 933C1037.6 927.8 1028 921.5 1019.6 915.6C1011.2 909.7 1003.9 904.3 995.8 897.6C987.6 891 978.6 883.1 970.7 875.7C962.8 868.4 955.3 860.7 948.5 853.5C941.7 846.3 936.7 840.8 929.8 832.3C922.9 823.8 913.8 811.8 907.3 802.6C900.8 793.4 895.6 785.2 890.5 776.9C885.4 768.6 876.7 752.7 876.7 752.7C876.7 752.7 862.6 779.1 857.1 788.5C851.6 797.9 848.2 802.4 843.5 809.1C838.8 815.9 835.9 820.2 828.7 829C821.5 837.8 807.5 854 800.4 861.9C793.3 869.8 792.3 870.4 785.9 876.4C779.5 882.4 772.7 889.1 762.1 897.6C751.5 906.1 734.4 918.9 722.2 927.2C710 935.5 701.6 940.4 688.7 947.2C675.8 954 660 961.7 644.9 967.8C629.8 973.9 610 980.1 597.9 983.9C585.8 987.6 581 988.4 572.1 990.3C563.2 992.2 556.7 993.9 544.4 995.5C532.1 997.1 588.8 999.3 498.1 1000C407.4 1000.8 0.3 1000 0.3 1000L0 999C0 999 310.9 377.4 376.7 246.9C442.5 116.4 388 226.4 394.7 216C401.4 205.6 407.6 196.1 416.6 184.5C425.6 172.9 440.2 156.1 448.8 146.5C457.4 136.9 462 133 468.4 126.9C474.8 120.8 477.7 117.7 487.1 110.1C496.6 102.5 515.1 88.3 525.1 81.1C535.1 73.9 539.2 71.7 547 67C554.8 62.3 564.9 56.7 572.1 52.8C579.3 48.9 581.5 47.7 590.1 43.8C598.7 39.9 610.7 34.3 623.6 29.6C636.5 24.9 656.5 18.7 667.4 15.5C678.3 12.3 679.9 12.1 688.7 10.3C697.5 8.5 710.6 6 720.2 4.5C729.9 3 738.8 2 746.6 1.3C754.4 0.6 759.9 0.5 766.9 0.3Z M643.3 288.8C643.3 288.8 606.9 214.9 645.8 292C684.6 369.1 876.4 751.1 876.4 751.1L409.9 751.4C409.9 751.4 374.5 819.9 413.4 742.8C452.3 665.7 643.3 288.8 643.3 288.8Z"/></svg>
       </span>
       <p data-i18n="footer.tag">IA aplicada a negocios.</p>
     </div>
@@ -394,8 +426,8 @@
       <div>
         <h3 class="mono" data-i18n="footer.nav">Sitio</h3>
         <a href="#servicios" data-i18n="nav.services">Servicios</a>
+        <a href="#precios" data-i18n="price.eyebrow">Precios</a>
         <a href="#clientes" data-i18n="nav.work">Clientes</a>
-        <a href="#proceso" data-i18n="nav.process">Proceso</a>
         <a href="#faq">FAQ</a>
       </div>
       <div>

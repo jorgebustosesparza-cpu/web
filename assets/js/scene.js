@@ -9,24 +9,64 @@ const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 const BASE_TINT = new THREE.Color('#E8EFF8');
 const lerp = (a, b, t) => a + (b - a) * t;
 
-/* Isotipo Alphamilz en coordenadas de path (y invertida para three) */
+/* Isotipo Alphamilz, trazado del original. Coordenadas del path con la
+   y invertida, porque en SVG crece hacia abajo y en three hacia arriba. */
 function markShapes() {
-  const blade = new THREE.Shape();
-  blade.moveTo(430, -14);
-  blade.bezierCurveTo(300, -300, 140, -640, 14, -978);
-  blade.lineTo(512, -884);
-  blade.lineTo(508, -731);
-  blade.lineTo(233, -731);
-  blade.closePath();
+  const s = new THREE.Shape();
+  s.moveTo(766.9, -0.3);
+  s.bezierCurveTo(778.3, 0.3, 788.8, -1, 788.8, -1);
+  s.lineTo(643.9, -287.5);
+  s.bezierCurveTo(643.9, -287.5, 680.4, -288.8, 695.8, -290.4);
+  s.bezierCurveTo(711.2, -291.9, 721.4, -293.6, 736.3, -296.8);
+  s.bezierCurveTo(751.2, -300, 769.3, -304.5, 785.3, -309.7);
+  s.bezierCurveTo(801.3, -314.9, 817.2, -321, 832.3, -327.8);
+  s.bezierCurveTo(847.4, -334.6, 861.8, -342.1, 876, -350.3);
+  s.bezierCurveTo(890.2, -358.6, 904.6, -368.1, 917.3, -377.3);
+  s.bezierCurveTo(930, -386.5, 940.4, -395.1, 952, -405.7);
+  s.bezierCurveTo(963.6, -416.3, 975.5, -427.7, 987.1, -440.8);
+  s.bezierCurveTo(998.8, -453.9, 1011.8, -470.3, 1021.9, -484.5);
+  s.bezierCurveTo(1032, -498.7, 1003.5, -439.9, 1047.6, -525.8);
+  s.bezierCurveTo(1091.7, -611.7, 1286.5, -999.7, 1286.5, -999.7);
+  s.bezierCurveTo(1286.5, -999.7, 1242.6, -998.6, 1222.5, -996.1);
+  s.bezierCurveTo(1202.4, -993.6, 1186.4, -990.4, 1165.8, -984.5);
+  s.bezierCurveTo(1145.2, -978.6, 1118.8, -969.3, 1098.8, -960.7);
+  s.bezierCurveTo(1078.8, -952.1, 1063.2, -943.5, 1046, -933);
+  s.bezierCurveTo(1028.8, -922.5, 1012, -910.9, 995.8, -897.6);
+  s.bezierCurveTo(979.5, -884.4, 963.3, -869.3, 948.5, -853.5);
+  s.bezierCurveTo(933.8, -837.7, 919.3, -819.4, 907.3, -802.6);
+  s.bezierCurveTo(895.3, -785.8, 876.7, -752.7, 876.7, -752.7);
+  s.bezierCurveTo(876.7, -752.7, 865.1, -775.8, 857.1, -788.5);
+  s.bezierCurveTo(849.1, -801.2, 838.2, -816.8, 828.7, -829);
+  s.bezierCurveTo(819.3, -841.2, 811.5, -850.5, 800.4, -861.9);
+  s.bezierCurveTo(789.3, -873.3, 775.1, -886.7, 762.1, -897.6);
+  s.bezierCurveTo(749.1, -908.5, 734.4, -918.9, 722.2, -927.2);
+  s.bezierCurveTo(710, -935.5, 701.6, -940.4, 688.7, -947.2);
+  s.bezierCurveTo(675.8, -954, 660, -961.7, 644.9, -967.8);
+  s.bezierCurveTo(629.8, -973.9, 614.6, -979.3, 597.9, -983.9);
+  s.bezierCurveTo(581.1, -988.5, 561, -992.8, 544.4, -995.5);
+  s.bezierCurveTo(527.8, -998.2, 588.8, -999.3, 498.1, -1000);
+  s.bezierCurveTo(407.4, -1000.8, 0.3, -1000, 0.3, -1000);
+  s.bezierCurveTo(0.3, -1000, 307.3, -382.8, 376.7, -246.9);
+  s.bezierCurveTo(446.1, -111, 404.6, -201.2, 416.6, -184.5);
+  s.bezierCurveTo(428.6, -167.8, 437.1, -158.9, 448.8, -146.5);
+  s.bezierCurveTo(460.6, -134.1, 474.4, -121, 487.1, -110.1);
+  s.bezierCurveTo(499.8, -99.2, 510.9, -90.6, 525.1, -81.1);
+  s.bezierCurveTo(539.3, -71.5, 555.7, -61.4, 572.1, -52.8);
+  s.bezierCurveTo(588.5, -44.2, 607.7, -35.8, 623.6, -29.6);
+  s.bezierCurveTo(639.5, -23.4, 651.3, -19.7, 667.4, -15.5);
+  s.bezierCurveTo(683.5, -11.3, 703.6, -7, 720.2, -4.5);
+  s.bezierCurveTo(736.8, -2, 755.5, -0.9, 766.9, -0.3);
+  s.closePath();
 
-  const wing = new THREE.Shape();
-  wing.moveTo(458, -300);
-  wing.bezierCurveTo(628, -440, 726, -660, 722, -926);
-  wing.bezierCurveTo(656, -836, 546, -794, 487, -727);
-  wing.bezierCurveTo(503, -582, 492, -420, 458, -300);
-  wing.closePath();
+  const hole = new THREE.Path();
+  hole.moveTo(643.3, -288.8);
+  hole.lineTo(876.4, -751.1);
+  hole.lineTo(409.9, -751.4);
+  hole.lineTo(643.3, -288.8);
+  hole.closePath();
+  s.holes.push(hole);
 
-  return [blade, wing];
+  return [s];
 }
 
 /* Entorno de reflejos: degradado de marca en una textura equirectangular */
@@ -116,7 +156,7 @@ export function createScene(canvas, options = {}) {
     curveSegments: tier === 0 ? 10 : 20
   });
   geo.center();
-  geo.scale(0.0052, 0.0052, 0.0052);
+  geo.scale(0.0042, 0.0042, 0.0042);
   geo.computeVertexNormals();
 
   const markMat = new THREE.MeshPhysicalMaterial({

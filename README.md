@@ -75,15 +75,17 @@ marcados con `data-wa` se arman solos con el mensaje correcto según el idioma y
 
 ## Antes de publicar
 
-1. **Logotipo.** `assets/img/isotype.svg` es una reconstrucción vectorial del isotipo hecha a
-   partir del toolkit. Si tienes el SVG original, reemplaza ese archivo y los paths inline de
-   `index.html` (header, footer, preloader y la escena 3D en `scene.js`).
+1. **Logotipo.** `assets/img/isotype.svg` está trazado directamente del PNG original, así que
+   coincide con la marca. Si algún día cambia el logotipo, hay que regenerar ese archivo, los
+   cuatro paths inline de `index.html` y la forma de `markShapes()` en `scene.js`.
 2. **Logos de clientes.** OXXO, Del Sol, Buffalo Wild Wings y 7-Eleven aparecen como nombres
    tipográficos. Si tienes autorización para usar sus logotipos, mándalos en SVG y los
    cambiamos en la lista `.logos` de `index.html`.
-3. **Dominio.** Está puesto `https://alphamilz.com/` en canonical, Open Graph, hreflang,
+3. **Precios.** Están en `assets/js/i18n.js` (claves `price.*`), en el bloque JSON-LD de
+   `index.html` y en `llms.txt`. Si cambian, hay que tocar los tres.
+4. **Dominio.** Está puesto `https://alphamilz.com/` en canonical, Open Graph, hreflang,
    JSON-LD, `sitemap.xml`, `robots.txt` y `llms.txt`.
-4. **Redes.** Si quieres LinkedIn o Instagram en el footer, hay lugar en la columna de contacto.
+5. **Redes.** Si quieres LinkedIn o Instagram en el footer, hay lugar en la columna de contacto.
 
 ## Accesibilidad
 
