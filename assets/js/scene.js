@@ -1,644 +1,287 @@
 /* ═══════════════════════════════════════════════════════════════
-   Alphamilz · evolving business intelligence network.
-   One Points cloud (nodes), one LineSegments (connections),
-   one Points cloud (data in transit) and a few glass agents.
-   Everything morphs procedurally between four layouts.
+   Alphamilz · escena 3D
+   El isotipo extruido en vidrio, girando con el scroll, más un
+   pequeño ecosistema de objetos que acompañan a cada sección.
    ═══════════════════════════════════════════════════════════════ */
 import * as THREE from '../vendor/three.module.min.js';
 
-export const DOMAINS = ['customers', 'sales', 'marketing', 'operations', 'finance', 'support', 'knowledge'];
-
-/* ── helpers ─────────────────────────────────────────────────── */
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const BASE_TINT = new THREE.Color('#E8EFF8');
 const lerp = (a, b, t) => a + (b - a) * t;
-const smooth = (t) => { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
+
+/* Isotipo Alphamilz en coordenadas de path (y invertida para three) */
+function markShapes() {
+  const blade = new THREE.Shape();
+  blade.moveTo(430, -14);
+  blade.bezierCurveTo(300, -300, 140, -640, 14, -978);
+  blade.lineTo(512, -884);
+  blade.lineTo(508, -731);
+  blade.lineTo(233, -731);
+  blade.closePath();
+
+  const wing = new THREE.Shape();
+  wing.moveTo(458, -300);
+  wing.bezierCurveTo(628, -440, 726, -660, 722, -926);
+  wing.bezierCurveTo(656, -836, 546, -794, 487, -727);
+  wing.bezierCurveTo(503, -582, 492, -420, 458, -300);
+  wing.closePath();
+
+  return [blade, wing];
 }
 
-const NODE_VERT = `
-attribute float aSize;
-attribute float aAct;
-attribute float aSeed;
-uniform float uTime;
-uniform float uPixel;
-uniform float uFocusDist;
-varying float vAct;
-varying float vBlur;
-void main(){
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  float dist = max(-mv.z, 1.0);
-  float blur = clamp(abs(dist - uFocusDist) / 34.0, 0.0, 1.0);
-  vBlur = blur;
-  vAct = aAct;
-  float breathe = 0.88 + 0.12 * sin(uTime * 1.6 + aSeed * 21.0);
-  gl_PointSize = aSize * breathe * (1.0 + aAct * 1.15) * (1.0 + blur * 0.85) * (230.0 / dist) * uPixel;
-  gl_Position = projectionMatrix * mv;
-}`;
+/* Entorno de reflejos: degradado de marca en una textura equirectangular */
+function brandEnvironment(renderer) {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = 256;
+  const g = c.getContext('2d');
+  g.fillStyle = '#05060A';
+  g.fillRect(0, 0, 512, 256);
+  // bandas de estudio: el contraste duro es lo que hace que el cromo lea como cromo
+  const bands = [
+    [0, 34, '#0A0D18'], [34, 26, '#F4FAFF'], [60, 18, '#0A0D18'],
+    [78, 40, '#C8D6E8'], [118, 22, '#5200FF'], [140, 30, '#0A0D18'],
+    [170, 26, '#A6F700'], [196, 22, '#141826'], [218, 38, '#2A3044']
+  ];
+  for (const [y0, h, col] of bands) { g.fillStyle = col; g.fillRect(0, y0, 512, h); }
+  // vetas verticales: dan variación a las caras planas del isotipo
+  g.globalAlpha = 0.5;
+  for (let i = 0; i < 9; i++) {
+    const x = (i * 57 + 12) % 512;
+    g.fillStyle = i % 3 === 0 ? '#FFFFFF' : i % 3 === 1 ? '#0A0D18' : '#7A8CA8';
+    g.fillRect(x, 0, 6 + (i % 3) * 5, 256);
+  }
+  g.globalAlpha = 1;
+  // reflejos puntuales, como luces de estudio
+  const spots = [[110, 44, 52], [330, 92, 74], [455, 40, 38], [210, 176, 46]];
+  for (const [x, y, r] of spots) {
+    const sg = g.createRadialGradient(x, y, 0, x, y, r);
+    sg.addColorStop(0, 'rgba(255,255,255,.95)');
+    sg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = sg;
+    g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = pmrem.fromEquirectangular(tex).texture;
+  tex.dispose(); pmrem.dispose();
+  return env;
+}
 
-const NODE_FRAG = `
-precision mediump float;
-uniform vec3 uBase;
-uniform vec3 uAccent;
-uniform float uOpacity;
-varying float vAct;
-varying float vBlur;
-void main(){
-  vec2 c = gl_PointCoord - 0.5;
-  float d = length(c);
-  if (d > 0.5) discard;
-  float core = smoothstep(0.5, 0.05, d);
-  float halo = smoothstep(0.5, 0.0, d);
-  float shape = mix(core, halo * 0.6, vBlur);
-  vec3 col = mix(uBase, uAccent, clamp(vAct * 1.15, 0.0, 1.0));
-  float a = shape * (0.20 + 0.55 * vAct) * uOpacity * (1.0 - vBlur * 0.55);
-  gl_FragColor = vec4(col, a);
-}`;
-
-const LINE_VERT = `
-attribute float aAlpha;
-varying float vAlpha;
-varying float vFog;
-void main(){
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vFog = clamp((-mv.z - 18.0) / 52.0, 0.0, 1.0);
-  vAlpha = aAlpha;
-  gl_Position = projectionMatrix * mv;
-}`;
-
-const LINE_FRAG = `
-precision mediump float;
-uniform vec3 uColor;
-uniform float uOpacity;
-varying float vAlpha;
-varying float vFog;
-void main(){
-  gl_FragColor = vec4(uColor, vAlpha * uOpacity * (1.0 - vFog * 0.75));
-}`;
-
-const FLOW_VERT = `
-attribute float aSize;
-attribute float aLife;
-uniform float uPixel;
-varying float vLife;
-void main(){
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  float dist = max(-mv.z, 1.0);
-  vLife = aLife;
-  gl_PointSize = aSize * (230.0 / dist) * uPixel;
-  gl_Position = projectionMatrix * mv;
-}`;
-
-const FLOW_FRAG = `
-precision mediump float;
-uniform vec3 uColor;
-uniform float uOpacity;
-varying float vLife;
-void main(){
-  vec2 c = gl_PointCoord - 0.5;
-  float d = length(c);
-  if (d > 0.5) discard;
-  float shape = smoothstep(0.5, 0.0, d);
-  float fade = sin(vLife * 3.14159);
-  gl_FragColor = vec4(uColor, shape * fade * uOpacity);
-}`;
-
-const GLASS_VERT = `
-varying vec3 vNormal;
-varying vec3 vView;
-void main(){
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vNormal = normalize(normalMatrix * normalize(position));
-  vView = normalize(-mv.xyz);
-  gl_Position = projectionMatrix * mv;
-}`;
-
-const GLASS_FRAG = `
-precision mediump float;
-uniform vec3 uColor;
-uniform vec3 uRim;
-uniform float uOpacity;
-varying vec3 vNormal;
-varying vec3 vView;
-void main(){
-  float f = pow(1.0 - clamp(dot(normalize(vNormal), normalize(vView)), 0.0, 1.0), 2.6);
-  vec3 col = mix(uColor, uRim, f * 0.55);
-  gl_FragColor = vec4(col, (0.012 + f * 0.72) * uOpacity);
-}`;
-
-/* ── main factory ────────────────────────────────────────────── */
-export function createNetwork(canvas, options = {}) {
+export function createScene(canvas, options = {}) {
   const reduced = !!options.reducedMotion;
   let W = window.innerWidth, H = window.innerHeight;
+  const tier = W < 700 ? 0 : W < 1180 ? 1 : 2;
 
-  const tier = W < 680 ? 0 : W < 1180 ? 1 : 2;
-  const NODES = [150, 230, 310][tier];
-  const MAX_LINKS = [420, 760, 1100][tier];
-  const FLOWS = reduced ? 0 : [70, 140, 210][tier];
-  const AGENTS = tier === 0 ? 3 : 5;
-
-  // Every material here is a custom ShaderMaterial that writes final colours
-  // directly, so we keep THREE.Color values in sRGB and ask the renderer not to
-  // re-encode them. Without this, linear values land in an sRGB buffer and the
-  // additive passes drift towards yellow-green.
-  THREE.ColorManagement.enabled = false;
   const renderer = new THREE.WebGLRenderer({
-    canvas, antialias: tier > 0, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true
+    canvas, antialias: true, alpha: true, powerPreference: 'high-performance', stencil: false
   });
-  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
   renderer.setClearColor(0x000000, 0);
-  let dpr = Math.min(window.devicePixelRatio || 1, tier === 0 ? 1.75 : 2);
+  let dpr = Math.min(window.devicePixelRatio || 1, tier === 0 ? 1.6 : 1.9);
   renderer.setPixelRatio(dpr);
   renderer.setSize(W, H, false);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
 
   const scene = new THREE.Scene();
-  const world = new THREE.Group();
-  scene.add(world);
+  const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
+  camera.position.set(0, 0, 16);
 
-  const camera = new THREE.PerspectiveCamera(46, W / H, 0.1, 220);
-  camera.position.set(0, 0, 52);
+  const env = brandEnvironment(renderer);
+  scene.environment = env;
 
-  /* ── palette ─────────────────────────────────────────────── */
-  const PAL = {
-    darkBase: new THREE.Color('#EDEAE2'),
-    darkAccent: new THREE.Color('#6E94FF'),
-    darkLine: new THREE.Color('#8EA6D8'),
-    lightBase: new THREE.Color('#14181F'),
-    lightAccent: new THREE.Color('#2A4FD8'),
-    lightLine: new THREE.Color('#4A5468')
-  };
-  const cBase = new THREE.Color(), cAccent = new THREE.Color(), cLine = new THREE.Color();
+  /* ── luces ─────────────────────────────────────────────────── */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const key = new THREE.DirectionalLight(0xffffff, 2.1);
+  key.position.set(4, 6, 8);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xA6F700, 3.2);
+  rim.position.set(-6, -2, -4);
+  scene.add(rim);
+  const back = new THREE.DirectionalLight(0xffffff, 1.4);
+  back.position.set(-2, 5, -7);
+  scene.add(back);
+  const fill = new THREE.PointLight(0x5200FF, 60, 40);
+  fill.position.set(-5, 4, 6);
+  scene.add(fill);
 
-  /* ── node model ──────────────────────────────────────────── */
-  const rnd = mulberry32(20260912);
-  const domainOf = new Uint8Array(NODES);
-  const isAgent = new Uint8Array(NODES);
-  const seeds = new Float32Array(NODES);
-  const baseSize = new Float32Array(NODES);
-
-  const L = [new Float32Array(NODES * 3), new Float32Array(NODES * 3), new Float32Array(NODES * 3), new Float32Array(NODES * 3)];
-  const focusTarget = new Float32Array(NODES * 3);
-  const positions = new Float32Array(NODES * 3);
-  const sizes = new Float32Array(NODES);
-  const acts = new Float32Array(NODES);
-  const actTarget = new Float32Array(NODES);
-
-  const nDomains = DOMAINS.length;
-  // fragmented cluster anchors (wide, uneven, disconnected)
-  const frag = [], ring = [], ringWide = [];
-  for (let d = 0; d < nDomains; d++) {
-    const a = (d / nDomains) * Math.PI * 2 + rnd() * 0.9;
-    const r = 19 + rnd() * 13;
-    frag.push([Math.cos(a) * r, Math.sin(a) * r * 0.6 + (rnd() - 0.5) * 8, (rnd() - 0.5) * 22]);
-    const a2 = (d / nDomains) * Math.PI * 2 - 0.35;
-    ring.push([Math.cos(a2) * 17, Math.sin(a2) * 11.5, Math.sin(a2 * 2.1) * 5]);
-    ringWide.push([Math.cos(a2) * 22.5, Math.sin(a2) * 15, Math.cos(a2 * 1.7) * 7]);
-  }
-
-  for (let i = 0; i < NODES; i++) {
-    const d = i % nDomains;
-    domainOf[i] = d;
-    seeds[i] = rnd();
-    isAgent[i] = (i % 9 === 3) ? 1 : 0;
-    baseSize[i] = (isAgent[i] ? 2.5 : 1.15 + rnd() * 1.05) * (tier === 0 ? 0.9 : 1);
-
-    const g = () => (rnd() + rnd() + rnd() - 1.5) * 1.25; // soft gaussian
-
-    // 0 · fragmented
-    let k = i * 3;
-    L[0][k] = frag[d][0] + g() * 4.6;
-    L[0][k + 1] = frag[d][1] + g() * 4.2;
-    L[0][k + 2] = frag[d][2] + g() * 4.0;
-
-    // 1 · connected
-    L[1][k] = ring[d][0] + g() * 3.2;
-    L[1][k + 1] = ring[d][1] + g() * 3.0;
-    L[1][k + 2] = ring[d][2] + g() * 2.6;
-
-    // 2 · agents at work
-    if (isAgent[i]) {
-      const a = rnd() * Math.PI * 2, r = 5.5 + rnd() * 2.6;
-      L[2][k] = Math.cos(a) * r;
-      L[2][k + 1] = Math.sin(a) * r * 0.8;
-      L[2][k + 2] = (rnd() - 0.5) * 5;
-    } else {
-      L[2][k] = ringWide[d][0] + g() * 3.1;
-      L[2][k + 1] = ringWide[d][1] + g() * 2.9;
-      L[2][k + 2] = ringWide[d][2] + g() * 2.6;
-    }
-
-    // 3 · coordinated organism (fibonacci shell, banded by domain)
-    const t = (i + 0.5) / NODES;
-    const phi = Math.acos(1 - 2 * t);
-    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-    const R = isAgent[i] ? 7.4 : 13.4 + Math.sin(d * 1.7 + i * 0.13) * 1.1;
-    L[3][k] = Math.sin(phi) * Math.cos(theta) * R;
-    L[3][k + 1] = Math.sin(phi) * Math.sin(theta) * R * 0.82;
-    L[3][k + 2] = Math.cos(phi) * R * 0.9;
-
-    positions[k] = L[0][k]; positions[k + 1] = L[0][k + 1]; positions[k + 2] = L[0][k + 2];
-    sizes[i] = baseSize[i];
-    acts[i] = 0.08;
-  }
-
-  // focus constellation: a readable ring in front of the camera
-  for (let i = 0; i < NODES; i++) {
-    const a = (i / NODES) * Math.PI * 2 * 3.0;
-    const r = 6.5 + (i % 5) * 1.15;
-    focusTarget[i * 3] = Math.cos(a) * r;
-    focusTarget[i * 3 + 1] = Math.sin(a) * r * 0.72;
-    focusTarget[i * 3 + 2] = 4 + Math.sin(i * 0.7) * 2.2;
-  }
-
-  /* ── node object ─────────────────────────────────────────── */
-  const nodeGeo = new THREE.BufferGeometry();
-  nodeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  nodeGeo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
-  nodeGeo.setAttribute('aAct', new THREE.BufferAttribute(acts, 1));
-  nodeGeo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
-  const nodeMat = new THREE.ShaderMaterial({
-    uniforms: {
-      uTime: { value: 0 }, uPixel: { value: dpr }, uFocusDist: { value: 52 },
-      uBase: { value: cBase }, uAccent: { value: cAccent }, uOpacity: { value: 1 }
-    },
-    vertexShader: NODE_VERT, fragmentShader: NODE_FRAG,
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+  /* ── isotipo extruido ──────────────────────────────────────── */
+  const geo = new THREE.ExtrudeGeometry(markShapes(), {
+    depth: 150,
+    bevelEnabled: true,
+    bevelThickness: 44,
+    bevelSize: 30,
+    bevelSegments: tier === 0 ? 2 : 4,
+    curveSegments: tier === 0 ? 10 : 20
   });
-  const nodePoints = new THREE.Points(nodeGeo, nodeMat);
-  nodePoints.frustumCulled = false;
-  world.add(nodePoints);
+  geo.center();
+  geo.scale(0.0052, 0.0052, 0.0052);
+  geo.computeVertexNormals();
 
-  /* ── links ───────────────────────────────────────────────── */
-  const linkPairs = new Int32Array(MAX_LINKS * 2);
-  let linkCount = 0;
-  const linkPos = new Float32Array(MAX_LINKS * 6);
-  const linkAlpha = new Float32Array(MAX_LINKS * 2);
-  const linkGeo = new THREE.BufferGeometry();
-  linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3));
-  linkGeo.setAttribute('aAlpha', new THREE.BufferAttribute(linkAlpha, 1));
-  const linkMat = new THREE.ShaderMaterial({
-    uniforms: { uColor: { value: cLine }, uOpacity: { value: 0.55 } },
-    vertexShader: LINE_VERT, fragmentShader: LINE_FRAG,
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+  const markMat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#DCE6F2'),
+    metalness: 1,
+    roughness: 0.055,
+    clearcoat: 1,
+    clearcoatRoughness: 0.06,
+    iridescence: 0.55,
+    iridescenceIOR: 1.6,
+    iridescenceThicknessRange: [120, 520],
+    envMapIntensity: 1.9
   });
-  const links = new THREE.LineSegments(linkGeo, linkMat);
-  links.frustumCulled = false;
-  world.add(links);
+  const mark = new THREE.Mesh(geo, markMat);
+  scene.add(mark);
 
-  /* ── data in transit ─────────────────────────────────────── */
-  const flowPos = new Float32Array(Math.max(FLOWS, 1) * 3);
-  const flowSize = new Float32Array(Math.max(FLOWS, 1));
-  const flowLife = new Float32Array(Math.max(FLOWS, 1));
-  const flowLink = new Int32Array(Math.max(FLOWS, 1));
-  const flowT = new Float32Array(Math.max(FLOWS, 1));
-  const flowSpeed = new Float32Array(Math.max(FLOWS, 1));
-  for (let i = 0; i < FLOWS; i++) {
-    flowLink[i] = -1; flowT[i] = rnd();
-    flowSpeed[i] = 0.28 + rnd() * 0.5;
-    flowSize[i] = 1.5 + rnd() * 1.8;
-  }
-  const flowGeo = new THREE.BufferGeometry();
-  flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
-  flowGeo.setAttribute('aSize', new THREE.BufferAttribute(flowSize, 1));
-  flowGeo.setAttribute('aLife', new THREE.BufferAttribute(flowLife, 1));
-  const flowMat = new THREE.ShaderMaterial({
-    uniforms: { uColor: { value: new THREE.Color('#9CB6FF') }, uPixel: { value: dpr }, uOpacity: { value: 1 } },
-    vertexShader: FLOW_VERT, fragmentShader: FLOW_FRAG,
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+  /* halo detrás del isotipo */
+  const haloMat = new THREE.SpriteMaterial({
+    color: new THREE.Color('#A6F700'),
+    transparent: true, opacity: 0.42, depthWrite: false, blending: THREE.AdditiveBlending,
+    map: (() => {
+      const c = document.createElement('canvas'); c.width = c.height = 128;
+      const g = c.getContext('2d');
+      const rg = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+      rg.addColorStop(0, 'rgba(255,255,255,1)');
+      rg.addColorStop(0.35, 'rgba(255,255,255,.35)');
+      rg.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(c);
+    })()
   });
-  const flows = new THREE.Points(flowGeo, flowMat);
-  flows.frustumCulled = false;
-  if (FLOWS) world.add(flows);
+  const halo = new THREE.Sprite(haloMat);
+  halo.scale.set(16, 16, 1);
+  halo.position.z = -3;
+  scene.add(halo);
 
-  /* ── glass agents ────────────────────────────────────────── */
-  const agentGeo = new THREE.OctahedronGeometry(1.15, 0);
-  const agentEdges = new THREE.EdgesGeometry(agentGeo);
-  const agentMeshes = [];
-  for (let i = 0; i < AGENTS; i++) {
-    const mat = new THREE.ShaderMaterial({
-      uniforms: {
-        uColor: { value: new THREE.Color('#5C86FF') },
-        uRim: { value: new THREE.Color('#EDE8DB') },
-        uOpacity: { value: 0 }
-      },
-      vertexShader: GLASS_VERT, fragmentShader: GLASS_FRAG,
-      transparent: true, depthWrite: false, side: THREE.DoubleSide
+  /* ── satélites: pequeños objetos de marca ──────────────────── */
+  const SAT = tier === 0 ? 3 : tier === 1 ? 5 : 7;
+  const satGeos = [
+    new THREE.IcosahedronGeometry(0.42, 0),
+    new THREE.TorusGeometry(0.36, 0.13, 12, 32),
+    new THREE.BoxGeometry(0.6, 0.6, 0.6),
+    new THREE.OctahedronGeometry(0.44, 0),
+    new THREE.CapsuleGeometry(0.2, 0.4, 4, 12)
+  ];
+  const satColors = ['#A6F700', '#5200FF', '#8645F9', '#6CB7FF', '#EAF3FF'];
+  const sats = [];
+  for (let i = 0; i < SAT; i++) {
+    const g = satGeos[i % satGeos.length];
+    const m = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(satColors[i % satColors.length]),
+      metalness: 0.15, roughness: 0.18, transmission: 0.75, thickness: 1.1,
+      ior: 1.4, clearcoat: 1, envMapIntensity: 1.2, transparent: true
     });
-    const m = new THREE.Mesh(agentGeo, mat);
-    const wire = new THREE.LineSegments(agentEdges, new THREE.LineBasicMaterial({
-      transparent: true, depthWrite: false, opacity: 0
-    }));
-    m.add(wire);
-    m.userData = { a: (i / AGENTS) * Math.PI * 2, r: 9.4 + (i % 2) * 1.8, s: 0.8 + (i % 3) * 0.22, wire };
-    m.frustumCulled = false;
-    world.add(m);
-    agentMeshes.push(m);
+    const mesh = new THREE.Mesh(g, m);
+    const a = (i / SAT) * Math.PI * 2;
+    mesh.userData = {
+      a, r: 5.6 + (i % 3) * 1.8, y: (i % 2 ? 1 : -1) * (1.4 + (i % 3) * 0.9),
+      sp: 0.12 + (i % 4) * 0.05, spin: 0.2 + (i % 3) * 0.18
+    };
+    scene.add(mesh);
+    sats.push(mesh);
   }
 
-  /* ── state ───────────────────────────────────────────────── */
-  const state = {
-    phase: 0, phaseT: 0,
-    theme: 0, themeT: 0,
-    focus: -1, focusMix: 0, focusMixT: 0,
-    pointer: { x: 0, y: 0 }, ptr: { x: 0, y: 0 },
-    offsetX: 0, offsetXT: 0,
-    burst: 0,
-    quality: 1,
-    opacity: 0, opacityT: 1, presence: 1, presenceT: 1
+  /* ── estado ────────────────────────────────────────────────── */
+  const st = {
+    prog: 0, progT: 0,
+    accent: new THREE.Color('#A6F700'), accentT: new THREE.Color('#A6F700'),
+    ox: 0, oxT: 0, oy: 0, oyT: 0, sc: 1, scT: 1,
+    ptr: { x: 0, y: 0 }, ptrT: { x: 0, y: 0 },
+    opacity: 0, opacityT: 1, dim: 1, dimT: 1,
+    burst: 0
   };
-  let linksDirty = true, lastBuild = -1, lastBuildTime = -9, running = true, raf = 0;
+  let running = true, raf = 0, degraded = false, frames = 0, acc = 0;
   const clock = new THREE.Clock();
-
-  /* ── link construction ───────────────────────────────────── */
-  function buildLinks() {
-    const p = state.phase;
-    const crossOK = p > 0.24 || state.focusMix > 0.3;
-    const k = p < 0.2 ? 2 : p < 0.5 ? 3 : 4;
-    const maxDist = (p < 0.2 ? 9 : 16 + p * 12) ** 2;
-    const seen = new Set();
-    let n = 0;
-    const cand = [];
-    for (let i = 0; i < NODES && n < MAX_LINKS; i++) {
-      cand.length = 0;
-      const ix = positions[i * 3], iy = positions[i * 3 + 1], iz = positions[i * 3 + 2];
-      for (let j = 0; j < NODES; j++) {
-        if (j === i) continue;
-        if (!crossOK && domainOf[j] !== domainOf[i]) continue;
-        const dx = positions[j * 3] - ix, dy = positions[j * 3 + 1] - iy, dz = positions[j * 3 + 2] - iz;
-        const d2 = dx * dx + dy * dy + dz * dz;
-        if (d2 > maxDist) continue;
-        cand.push(d2, j);
-      }
-      // partial selection of the k nearest
-      for (let s = 0; s < k && n < MAX_LINKS; s++) {
-        let bi = -1, bd = Infinity;
-        for (let c = 0; c < cand.length; c += 2) if (cand[c] < bd) { bd = cand[c]; bi = c; }
-        if (bi < 0) break;
-        const j = cand[bi + 1];
-        cand[bi] = Infinity;
-        const key = i < j ? i * NODES + j : j * NODES + i;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        linkPairs[n * 2] = i; linkPairs[n * 2 + 1] = j;
-        n++;
-      }
-    }
-    linkCount = n;
-    linkGeo.setDrawRange(0, linkCount * 2);
-    linksDirty = false;
-  }
-
-  /* ── per frame ───────────────────────────────────────────── */
-  function updatePositions(dt, time) {
-    const p = state.phase;
-    const seg = clamp(p, 0, 0.9999) * 3;
-    const si = Math.floor(seg);
-    const st = smooth(seg - si);
-    const A = L[si], B = L[Math.min(si + 1, 3)];
-    const fm = state.focusMix;
-    const drift = reduced ? 0 : 1;
-    const chaos = 1 - smooth(p);          // fragmented layouts jitter more
-    const amp = 0.55 + chaos * 0.75;
-
-    for (let i = 0; i < NODES; i++) {
-      const k = i * 3;
-      let x = lerp(A[k], B[k], st);
-      let y = lerp(A[k + 1], B[k + 1], st);
-      let z = lerp(A[k + 2], B[k + 2], st);
-
-      if (fm > 0.001) {
-        const match = domainOf[i] === state.focus;
-        if (match) {
-          const f = fm * 0.78;
-          x = lerp(x, focusTarget[k], f);
-          y = lerp(y, focusTarget[k + 1], f);
-          z = lerp(z, focusTarget[k + 2], f);
-        } else {
-          const push = 1 + fm * 0.26;
-          x *= push; y *= push; z = z * push - fm * 5;
-        }
-      }
-
-      if (drift) {
-        const s = seeds[i] * 100;
-        x += Math.sin(time * 0.42 + s) * amp;
-        y += Math.cos(time * 0.37 + s * 1.31) * amp * 0.9;
-        z += Math.sin(time * 0.29 + s * 0.77) * amp * 1.1;
-      }
-
-      positions[k] = x; positions[k + 1] = y; positions[k + 2] = z;
-
-      // activity relaxation
-      const a = acts[i];
-      acts[i] = a + (actTarget[i] - a) * Math.min(1, dt * 2.6);
-      if (actTarget[i] > 0.25) actTarget[i] = Math.max(0.05, actTarget[i] - dt * 0.55);
-      sizes[i] = baseSize[i] * (1 + state.burst * 0.5);
-    }
-    nodeGeo.attributes.position.needsUpdate = true;
-    nodeGeo.attributes.aAct.needsUpdate = true;
-    nodeGeo.attributes.aSize.needsUpdate = true;
-  }
-
-  function updateLinks() {
-    const fm = state.focusMix;
-    for (let l = 0; l < linkCount; l++) {
-      const i = linkPairs[l * 2], j = linkPairs[l * 2 + 1];
-      const o = l * 6;
-      linkPos[o] = positions[i * 3]; linkPos[o + 1] = positions[i * 3 + 1]; linkPos[o + 2] = positions[i * 3 + 2];
-      linkPos[o + 3] = positions[j * 3]; linkPos[o + 4] = positions[j * 3 + 1]; linkPos[o + 5] = positions[j * 3 + 2];
-      let a = 0.11 + 0.24 * Math.max(acts[i], acts[j]);
-      if (fm > 0.001) {
-        const hot = domainOf[i] === state.focus || domainOf[j] === state.focus;
-        a = hot ? a + fm * 0.34 : a * (1 - fm * 0.82);
-      }
-      linkAlpha[l * 2] = a; linkAlpha[l * 2 + 1] = a;
-    }
-    linkGeo.attributes.position.needsUpdate = true;
-    linkGeo.attributes.aAlpha.needsUpdate = true;
-  }
-
-  function updateFlows(dt) {
-    if (!FLOWS || !linkCount) return;
-    const fm = state.focusMix;
-    const density = 0.25 + smooth(state.phase) * 0.75;
-    for (let i = 0; i < FLOWS; i++) {
-      let li = flowLink[i];
-      if (li < 0 || li >= linkCount) {
-        if (Math.random() > density) { flowLife[i] = 0; continue; }
-        li = flowLink[i] = (Math.random() * linkCount) | 0;
-        flowT[i] = 0;
-      }
-      flowT[i] += dt * flowSpeed[i];
-      if (flowT[i] >= 1) {
-        const a = linkPairs[li * 2], b = linkPairs[li * 2 + 1];
-        actTarget[b] = 1; actTarget[a] = Math.max(actTarget[a], 0.4);
-        flowLink[i] = -1; flowLife[i] = 0;
-        continue;
-      }
-      const a = linkPairs[li * 2] * 3, b = linkPairs[li * 2 + 1] * 3;
-      const t = flowT[i];
-      flowPos[i * 3] = lerp(positions[a], positions[b], t);
-      flowPos[i * 3 + 1] = lerp(positions[a + 1], positions[b + 1], t);
-      flowPos[i * 3 + 2] = lerp(positions[a + 2], positions[b + 2], t);
-      let life = t;
-      if (fm > 0.001) {
-        const hot = domainOf[linkPairs[li * 2]] === state.focus || domainOf[linkPairs[li * 2 + 1]] === state.focus;
-        if (!hot) life = 0;
-      }
-      flowLife[i] = life;
-    }
-    flowGeo.attributes.position.needsUpdate = true;
-    flowGeo.attributes.aLife.needsUpdate = true;
-  }
-
-  function updateAgents(time) {
-    const p = state.phase;
-    const vis = smooth((p - 0.34) / 0.22) * (1 - smooth((p - 0.9) / 0.14) * 0.55);
-    for (let i = 0; i < agentMeshes.length; i++) {
-      const m = agentMeshes[i], u = m.userData;
-      const a = u.a + time * 0.19 * u.s;
-      const r = u.r * (1 - state.focusMix * 0.35);
-      m.position.set(Math.cos(a) * r, Math.sin(a) * r * 0.55 + Math.sin(time * 0.7 + i) * 0.9, Math.sin(a * 1.3) * 4.5);
-      m.rotation.x = time * 0.35 * u.s;
-      m.rotation.y = time * 0.28 + i;
-      const sc = 0.8 + vis * 0.5;
-      m.scale.setScalar(sc);
-      const alpha = vis * (0.55 + state.burst * 0.4) * state.presence * state.presence * (1 - state.theme * 0.35);
-      m.material.uniforms.uOpacity.value = alpha;
-      m.material.uniforms.uRim.value.copy(cBase);
-      m.material.uniforms.uColor.value.copy(cAccent);
-      u.wire.material.color.copy(cAccent);
-      u.wire.material.opacity = alpha * 0.5;
-    }
-  }
-
-  /* random firing: nodes talking to each other */
-  let fireAcc = 0;
-  function fireNodes(dt) {
-    if (reduced) return;
-    fireAcc += dt;
-    const every = 0.09;
-    while (fireAcc > every) {
-      fireAcc -= every;
-      const i = (Math.random() * NODES) | 0;
-      if (state.focus >= 0 && domainOf[i] !== state.focus && Math.random() < 0.75) continue;
-      actTarget[i] = 0.85 + Math.random() * 0.15;
-    }
-  }
-
-  /* ── loop ────────────────────────────────────────────────── */
-  let frameSamples = 0, frameAcc = 0, degraded = false;
 
   function frame() {
     raf = requestAnimationFrame(frame);
     if (!running) return;
     const dt = Math.min(clock.getDelta(), 0.05);
-    const time = clock.elapsedTime;
+    const t = clock.elapsedTime;
 
-    // eased state
-    state.phase += (state.phaseT - state.phase) * Math.min(1, dt * 3.4);
-    state.theme += (state.themeT - state.theme) * Math.min(1, dt * 2.6);
-    state.focusMix += (state.focusMixT - state.focusMix) * Math.min(1, dt * 3.8);
-    state.opacity += (state.opacityT - state.opacity) * Math.min(1, dt * 2.2);
-    state.presence += (state.presenceT - state.presence) * Math.min(1, dt * 1.9);
-    state.offsetX += (state.offsetXT - state.offsetX) * Math.min(1, dt * 1.6);
-    state.burst *= Math.max(0, 1 - dt * 1.6);
-    state.ptr.x += (state.pointer.x - state.ptr.x) * Math.min(1, dt * 2.4);
-    state.ptr.y += (state.pointer.y - state.ptr.y) * Math.min(1, dt * 2.4);
+    st.prog += (st.progT - st.prog) * Math.min(1, dt * 3.2);
+    st.ox += (st.oxT - st.ox) * Math.min(1, dt * 2.4);
+    st.oy += (st.oyT - st.oy) * Math.min(1, dt * 2.4);
+    st.sc += (st.scT - st.sc) * Math.min(1, dt * 2.4);
+    st.opacity += (st.opacityT - st.opacity) * Math.min(1, dt * 1.8);
+    st.dim += (st.dimT - st.dim) * Math.min(1, dt * 1.8);
+    st.ptr.x += (st.ptrT.x - st.ptr.x) * Math.min(1, dt * 2.6);
+    st.ptr.y += (st.ptrT.y - st.ptr.y) * Math.min(1, dt * 2.6);
+    st.accent.lerp(st.accentT, Math.min(1, dt * 1.6));
+    st.burst *= Math.max(0, 1 - dt * 1.8);
 
-    // colors follow the page theme
-    cBase.copy(PAL.darkBase).lerp(PAL.lightBase, state.theme);
-    cAccent.copy(PAL.darkAccent).lerp(PAL.lightAccent, state.theme);
-    cLine.copy(PAL.darkLine).lerp(PAL.lightLine, state.theme);
-    const wantNormal = state.theme > 0.55;
-    if (wantNormal !== (nodeMat.blending === THREE.NormalBlending)) {
-      const b = wantNormal ? THREE.NormalBlending : THREE.AdditiveBlending;
-      nodeMat.blending = b; linkMat.blending = b; flowMat.blending = b;
-      nodeMat.needsUpdate = linkMat.needsUpdate = flowMat.needsUpdate = true;
-      agentMeshes.forEach((m) => {
-        m.material.blending = b; m.material.needsUpdate = true;
-        m.userData.wire.material.blending = b; m.userData.wire.material.needsUpdate = true;
-      });
+    const p = st.prog;
+    const vis = st.opacity * st.dim;
+    const spin = reduced ? 0.6 : p * Math.PI * 4.2 + t * 0.06;
+    mark.rotation.set(
+      -0.22 + Math.sin(p * Math.PI * 2) * 0.4 + Math.sin(t * 0.35) * 0.05 - st.ptr.y * 0.25,
+      spin + st.ptr.x * 0.4,
+      Math.sin(p * Math.PI) * 0.22
+    );
+    const s = st.sc * (1 + st.burst * 0.06);
+    mark.scale.setScalar(s);
+    mark.position.set(st.ox + st.ptr.x * 0.35, st.oy - st.ptr.y * 0.25, 0);
+
+    halo.position.set(mark.position.x, mark.position.y, -3);
+    halo.scale.setScalar(13 * s);
+    haloMat.color.copy(st.accent);
+    haloMat.opacity = (0.3 + st.burst * 0.2) * vis;
+
+    rim.color.copy(st.accent);
+    markMat.sheenColor && markMat.sheenColor.copy(st.accent);
+    markMat.envMapIntensity = 1.85 + st.burst * 0.5;
+    markMat.color.lerpColors(BASE_TINT, st.accent, 0.18);
+
+    for (let i = 0; i < sats.length; i++) {
+      const m = sats[i], u = m.userData;
+      const a = u.a + (reduced ? 0 : t * u.sp) + p * 1.5;
+      m.position.set(
+        Math.cos(a) * u.r + st.ox * 0.6,
+        Math.sin(a * 0.8) * 1.6 + u.y + st.oy * 0.6,
+        Math.sin(a) * 2.4 - 1
+      );
+      m.rotation.x = t * u.spin;
+      m.rotation.y = t * u.spin * 0.7 + i;
+      m.material.opacity = vis * 0.75;
+      m.scale.setScalar(0.62 + Math.sin(t * 0.6 + i) * 0.06);
     }
-    flowMat.uniforms.uColor.value.copy(cAccent);
-    const vis = state.opacity * state.presence * (1 - state.theme * 0.24);
-    linkMat.uniforms.uOpacity.value = (state.theme > 0.55 ? 0.5 : 0.62) * vis;
-    nodeMat.uniforms.uOpacity.value = vis;
-    flowMat.uniforms.uOpacity.value = vis * 0.95;
-    nodeMat.uniforms.uTime.value = time;
 
-    fireNodes(dt);
-    updatePositions(dt, time);
+    camera.position.x += (st.ptr.x * 0.9 - camera.position.x) * Math.min(1, dt * 2);
+    camera.position.y += (-st.ptr.y * 0.7 - camera.position.y) * Math.min(1, dt * 2);
+    camera.lookAt(0, 0, 0);
 
-    // rebuild topology on a budget: the network keeps re-wiring itself,
-    // but never more than a few times a second (it is the one O(n^2) pass).
-    const bucket = Math.round(state.phase * 12) + (state.focus + 2) * 100;
-    const since = time - lastBuildTime;
-    if ((linksDirty && since > 0.12) || (bucket !== lastBuild && since > 0.3) || (!reduced && since > 1.6)) {
-      buildLinks(); lastBuildTime = time; lastBuild = bucket;
-    }
-    updateLinks();
-    updateFlows(dt);
-    updateAgents(time);
-
-    // camera: framing per chapter + parallax
-    const p = smooth(state.phase);
-    const zBase = [60, 50, 46][tier];
-    const z = zBase - p * 6 - state.focusMix * 8 + Math.sin(time * 0.12) * 0.7;
-    camera.position.x += (state.ptr.x * 4.2 - camera.position.x) * Math.min(1, dt * 2.2);
-    camera.position.y += (-state.ptr.y * 3.0 - camera.position.y) * Math.min(1, dt * 2.2);
-    camera.position.z += (z - camera.position.z) * Math.min(1, dt * 1.8);
-    camera.lookAt(state.ptr.x * 1.2, -state.ptr.y * 0.8, 0);
-    nodeMat.uniforms.uFocusDist.value = camera.position.z - state.focusMix * 4;
-
-    world.position.x = state.offsetX;
-    world.rotation.y = state.ptr.x * 0.24 + (reduced ? 0 : time * 0.022) + state.phase * 0.5;
-    world.rotation.x = -state.ptr.y * 0.18 + Math.sin(time * 0.09) * 0.03;
-
+    renderer.toneMappingExposure = 0.4 + vis * 0.7;
     renderer.render(scene, camera);
 
-    // adaptive quality
     if (!degraded) {
-      frameAcc += dt; frameSamples++;
-      if (frameSamples > 120) {
-        const avg = frameAcc / frameSamples;
-        if (avg > 0.026) {
+      acc += dt; frames++;
+      if (frames > 90) {
+        if (acc / frames > 0.028) {
           degraded = true;
-          dpr = Math.max(1, dpr * 0.75);
+          dpr = Math.max(1, dpr * 0.72);
           renderer.setPixelRatio(dpr);
-          nodeMat.uniforms.uPixel.value = dpr;
-          flowMat.uniforms.uPixel.value = dpr;
+          if (markMat.transmission) { markMat.transmission = 0; markMat.metalness = 0.9; markMat.needsUpdate = true; }
         }
-        frameAcc = 0; frameSamples = 0;
+        acc = 0; frames = 0;
       }
     }
   }
 
-  /* ── public api ──────────────────────────────────────────── */
   const api = {
-    start() { if (!raf) { clock.start(); raf = requestAnimationFrame(frame); } state.opacityT = 1; },
-    setPhase(p) { state.phaseT = clamp(p, 0, 1); },
-    setPresence(v) { state.presenceT = clamp(v, 0, 1); },
-    setOffset(x) { state.offsetXT = tier > 0 ? clamp(x, -14, 14) : 0; },
-    setTheme(t) { state.themeT = clamp(t, 0, 1); },
-    setFocus(domain) {
-      const idx = typeof domain === 'string' ? DOMAINS.indexOf(domain) : -1;
-      state.focus = idx;
-      state.focusMixT = idx >= 0 ? 1 : 0;
-      linksDirty = true;
-      if (idx >= 0) for (let i = 0; i < NODES; i++) if (domainOf[i] === idx) actTarget[i] = 0.95;
+    start() { if (!raf) { clock.start(); raf = requestAnimationFrame(frame); } st.opacityT = 1; },
+    setProgress(v) { st.progT = clamp(v, 0, 1); },
+    setAccent(hex) { st.accentT.set(hex); },
+    setDim(v) { st.dimT = clamp(v, 0.15, 1) * (tier === 0 ? 0.6 : 1); },
+    setPlacement(x, y, scale) {
+      // en móvil el isotipo pasa a ser fondo: centrado, más chico y más abajo
+      if (tier === 0) {
+        st.oxT = x * 0.16; st.oyT = y - 1.45; st.scT = scale * 0.55;
+      } else {
+        st.oxT = x * (tier === 1 ? 0.82 : 1); st.oyT = y; st.scT = scale * (tier === 1 ? 0.88 : 1);
+      }
     },
-    burst(strength = 1) {
-      state.burst = Math.min(1.4, state.burst + strength);
-      for (let i = 0; i < NODES; i++) if (Math.random() < 0.5) actTarget[i] = 0.9;
-      linksDirty = true;
-    },
-    setPointer(x, y) { state.pointer.x = clamp(x, -1, 1); state.pointer.y = clamp(y, -1, 1); },
+    setPointer(x, y) { st.ptrT.x = clamp(x, -1, 1); st.ptrT.y = clamp(y, -1, 1); },
+    burst(v = 1) { st.burst = Math.min(1.5, st.burst + v); },
     pause() { running = false; },
     resume() { running = true; clock.getDelta(); },
     resize() {
@@ -648,23 +291,12 @@ export function createNetwork(canvas, options = {}) {
     },
     dispose() {
       cancelAnimationFrame(raf); raf = 0;
-      nodeGeo.dispose(); linkGeo.dispose(); flowGeo.dispose(); agentGeo.dispose(); agentEdges.dispose();
-      nodeMat.dispose(); linkMat.dispose(); flowMat.dispose();
-      agentMeshes.forEach((m) => { m.material.dispose(); m.userData.wire.material.dispose(); });
-      renderer.dispose();
+      geo.dispose(); markMat.dispose(); haloMat.dispose();
+      satGeos.forEach((g) => g.dispose());
+      sats.forEach((m) => m.material.dispose());
+      env.dispose(); renderer.dispose();
     },
-    info: { nodes: NODES, maxLinks: MAX_LINKS, flows: FLOWS, tier }
+    tier
   };
-
-  buildLinks();
-  nodeMat.uniforms.uPixel.value = dpr;
-  flowMat.uniforms.uPixel.value = dpr;
   return api;
-}
-
-export function webglSupported() {
-  try {
-    const c = document.createElement('canvas');
-    return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
-  } catch (e) { return false; }
 }

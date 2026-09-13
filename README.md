@@ -1,92 +1,92 @@
 # Alphamilz · sitio web
 
 Sitio de una sola página para **Alphamilz**, agencia de inteligencia artificial aplicada a
-negocios. Español por defecto, inglés con un clic. Sin framework, sin build step: son archivos
-estáticos que se pueden publicar en cualquier hosting (Netlify, Vercel, Cloudflare Pages,
-GitHub Pages, un bucket de S3 o un Nginx).
+negocios. Español por defecto, inglés con un clic. Sin framework y sin build step: son
+archivos estáticos que se publican en cualquier hosting.
 
 ```
 index.html              página completa (ES en el markup, EN vía JS)
 llms.txt                descripción del negocio para agentes y modelos de lenguaje
 robots.txt              rastreadores de buscadores y de LLM permitidos
-sitemap.xml             una URL, con hreflang es/en
-site.webmanifest        PWA básica
+sitemap.xml             una URL con hreflang es/en
 assets/
-  css/main.css          sistema de diseño completo (tokens, tema oscuro/marfil, layout)
-  js/i18n.js            todo el copy en ES y EN + motor de diagnóstico del laboratorio
-  js/main.js            scroll, idioma, reveals, menú, cursor, laboratorio, arranque WebGL
-  js/scene.js           red de inteligencia en Three.js (nodos, enlaces, flujos, agentes)
-  fonts/                Plus Jakarta Sans, Inter, JetBrains Mono, Instrument Serif (subset latin)
-  img/                  isotipo, favicon y portada para redes sociales
-  vendor/               three.js r169 (build de módulo minificado)
+  css/main.css          sistema visual completo
+  js/i18n.js            todo el copy en ES y EN
+  js/main.js            scroll, idioma, menú, pills, WhatsApp y popup
+  js/scene.js           escena 3D: el isotipo extruido girando con el scroll
+  fonts/                Source Code Pro y Outfit (subset latin, variables)
+  img/                  isotipo, favicon y portada social
+  vendor/               three.js r169
 ```
 
 ## Cómo verlo en local
 
-Cualquier servidor estático sirve. Hace falta uno porque `main.js` es un módulo ES:
-
 ```bash
 npx http-server -p 8080 -c-1 .
-# o
-python3 -m http.server 8080
 ```
 
-Luego abre `http://localhost:8080`. `?lang=en` fuerza inglés, `?lang=es` fuerza español.
+Abre `http://localhost:8080`. `?lang=en` fuerza inglés, `?lang=es` fuerza español.
+
+## Marca
+
+Todo sale del toolkit:
+
+| Uso | Valor |
+|---|---|
+| Fondo | `#0B0D13` sobre la base de marca `#1A1F2D` |
+| Acento principal | Lima `#A6F700` |
+| Acento secundario | Violeta `#5200FF` |
+| Apoyos | Púrpura `#8645F9`, azul `#6CB7FF` |
+| Tipografía de sistema | Source Code Pro (títulos, etiquetas, botones) |
+| Tipografía de marca | Outfit (logotipo y párrafos) |
+| Motivos | Corchetes `[ ]`, pills, patrón de puntos |
+
+## La escena 3D
+
+`assets/js/scene.js` extruye el isotipo desde su propio path vectorial y lo renderiza con
+material cromado e iridiscencia, sobre un entorno de reflejos generado en canvas con los
+colores de la marca. Gira con el scroll (dos vueltas completas de arriba a abajo), cambia de
+color y de posición en cada sección, y lo acompañan pequeños objetos de vidrio.
+
+Cada sección declara su comportamiento en el HTML:
+
+```html
+<section data-accent="#5200FF" data-x="-4.6" data-y="0.2" data-scale="0.5" data-dim="0.42">
+```
+
+- `data-accent`: color de la sección (tiñe el isotipo, el halo y los detalles de la interfaz).
+- `data-x` / `data-y`: dónde se coloca el isotipo, en unidades de la escena.
+- `data-scale`: qué tan grande se ve.
+- `data-dim`: cuánto protagonismo cede para que el texto gane contraste.
+
+En móvil el isotipo pasa automáticamente a ser fondo: más chico, centrado y atenuado. Si el
+navegador no tiene WebGL, se muestra el isotipo en SVG con un brillo suave y todo lo demás
+sigue funcionando. Con `prefers-reduced-motion` se detienen los giros.
+
+## WhatsApp
+
+Un único número, `+52 81 8287 0885`, en `assets/js/main.js` (`WA_NUMBER`). Todos los enlaces
+marcados con `data-wa` se arman solos con el mensaje correcto según el idioma y, en la sección
+"Hacemos lo que necesitas", según el servicio elegido.
+
+- Botón flotante, visible después del primer scroll.
+- Popup de auditoría gratis a los 20 segundos, una vez por sesión. Se cierra con Escape,
+  clic afuera o "Ahora no", y no vuelve a aparecer si la persona ya se fue a WhatsApp.
 
 ## Antes de publicar
 
-Estos son los únicos puntos que dependen de datos reales de la agencia:
-
 1. **Logotipo.** `assets/img/isotype.svg` es una reconstrucción vectorial del isotipo hecha a
-   partir de la imagen que compartiste. Si tienes el SVG original, reemplaza ese archivo
-   (mismo `viewBox` o ajusta el que traiga) y el mismo path dentro de `index.html`
-   (aparece en el header, el footer, el preloader y el favicon).
-2. **Nombre y dominio.** El sitio usa `Alphamilz` y `https://alphamilz.com/` en canonical,
-   Open Graph, hreflang y JSON-LD. Si el dominio de producción fuera otro, hay que
-   cambiarlo también en `sitemap.xml`, `robots.txt` y `llms.txt`.
-3. **Redes.** El footer trae correo, WhatsApp y teléfono reales. Si quieres LinkedIn o
-   Instagram, dime las URL y las agrego en la columna de contacto.
-4. **Portada social.** `assets/img/og-cover.png` (1200×630) ya está generada; reemplázala si
-   cambia el mensaje principal.
-
-## Cómo está construido
-
-**Escena 3D.** `assets/js/scene.js` mantiene una sola nube de puntos (los nodos), una malla de
-líneas (las conexiones), una segunda nube (los datos en tránsito) y cinco sólidos de vidrio
-(los agentes). Cada nodo pertenece a un área de negocio y tiene cuatro posiciones objetivo:
-fragmentado, conectado, agentes en operación y sistema coordinado. El scroll interpola entre
-esas cuatro geometrías reales, no hace fundidos entre imágenes. La topología se recalcula sola
-cada pocos segundos, así que la red nunca se ve igual dos veces.
-
-**Enfoque por función.** Al pasar el cursor por una función de negocio, un servicio, un
-resultado o un agente, los nodos de esa área se reorganizan al frente, sus enlaces se
-iluminan y el resto de la red retrocede.
-
-**Tema.** Cada sección declara `data-scene-theme` (oscuro o marfil), `data-scene-phase`
-(momento de la narrativa) y `data-scene-presence` (cuánto protagonismo tiene la escena ahí).
-El fondo de la página y los colores de la red cambian juntos, y en las secciones con más texto
-la red se retira para que el contenido siempre gane en contraste.
-
-**Diagnóstico.** El campo del laboratorio corre en el navegador: compara el texto con ocho
-grupos de palabras clave y devuelve un conjunto de soluciones (agentes, automatizaciones,
-conocimiento, integraciones, analítica). No hay backend ni se envía nada a ningún servidor.
-
-**Rendimiento.** Tres llamadas de dibujo para toda la red. La densidad de nodos, el número de
-partículas y el `devicePixelRatio` se ajustan al ancho de pantalla, y si el promedio de frame
-se degrada el propio renderer baja resolución. El único cálculo pesado, el de vecinos
-cercanos, está limitado a unas pocas veces por segundo.
-
-**Si no hay WebGL** (o el navegador lo bloquea, o hay ahorro de datos activado), la página
-muestra una constelación estática en SVG y todo lo demás sigue funcionando. Con
-`prefers-reduced-motion` la narrativa deja de ser un scroll fijo y se lee como un documento
-normal.
-
-**Para modelos de lenguaje.** Todo el contenido está en el HTML (nada se carga por JS),
-con `Organization`, `ProfessionalService`, `OfferCatalog` y `FAQPage` en JSON-LD, además de
-`llms.txt`. Es el mismo trabajo que el sitio vende como servicio.
+   partir del toolkit. Si tienes el SVG original, reemplaza ese archivo y los paths inline de
+   `index.html` (header, footer, preloader y la escena 3D en `scene.js`).
+2. **Logos de clientes.** OXXO, Del Sol, Buffalo Wild Wings y 7-Eleven aparecen como nombres
+   tipográficos. Si tienes autorización para usar sus logotipos, mándalos en SVG y los
+   cambiamos en la lista `.logos` de `index.html`.
+3. **Dominio.** Está puesto `https://alphamilz.com/` en canonical, Open Graph, hreflang,
+   JSON-LD, `sitemap.xml`, `robots.txt` y `llms.txt`.
+4. **Redes.** Si quieres LinkedIn o Instagram en el footer, hay lugar en la columna de contacto.
 
 ## Accesibilidad
 
-Navegación completa por teclado (las pestañas de funciones responden a flechas), foco visible,
-`prefers-reduced-motion` y `prefers-contrast` respetados, enlace para saltar al contenido,
-textos alternativos y roles ARIA en los componentes interactivos.
+Navegación por teclado completa, foco visible, popup con foco atrapado y cierre con Escape,
+`prefers-reduced-motion` respetado, enlace para saltar al contenido y roles ARIA en el diálogo
+y los controles.
