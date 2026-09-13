@@ -101,7 +101,8 @@ body.loaded .preloader{opacity:0;visibility:hidden}
 .header.is-solid{background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);border-bottom-color:var(--line-2)}
 .header__in{width:var(--wrap);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
 .brand{display:flex;align-items:center;gap:.55rem}
-.brand__mark{width:20px;color:var(--ink);transition:color .4s,transform .6s var(--ease)}
+.brand__mark{display:block;width:20px;color:var(--ink);transition:color .4s,transform .6s var(--ease)}
+.brand__mark svg{width:100%;height:auto}
 .brand:hover .brand__mark{color:var(--lime);transform:rotate(-6deg)}
 .brand__word{font-family:var(--sans);font-weight:600;font-size:1.02rem;letter-spacing:-.03em}
 .brand__mark--lg{width:34px;color:var(--lime)}

@@ -212,7 +212,9 @@ export function createScene(canvas, options = {}) {
 
     const p = st.prog;
     const vis = st.opacity * st.dim;
-    const spin = reduced ? 0.6 : p * Math.PI * 4.2 + t * 0.06;
+    // el giro depende del scroll, no del reloj: así cada sección
+    // siempre encuadra el isotipo en el mismo ángulo
+    const spin = reduced ? 0.35 : p * Math.PI * 4 + Math.sin(t * 0.22) * 0.07;
     mark.rotation.set(
       -0.22 + Math.sin(p * Math.PI * 2) * 0.4 + Math.sin(t * 0.35) * 0.05 - st.ptr.y * 0.25,
       spin + st.ptr.x * 0.4,
