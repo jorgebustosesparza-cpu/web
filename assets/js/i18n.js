@@ -11,7 +11,6 @@ window.ALPHA_I18N = (function () {
     'hero.lede': 'Automatizamos lo repetitivo, conectamos tu información y construimos las herramientas que a tu equipo le hacen falta.',
     'hero.cta1': 'Auditoría gratis', 'hero.cta2': 'Ver servicios',
     'hero.scroll': 'Desplaza',
-    'clients.label': 'Marcas que ya confiaron',
 
     'services.eyebrow': 'Servicios', 'services.title': 'Qué hacemos',
     'services.lede': 'Ponemos la IA dentro de tu operación, no al lado. Donde ya trabaja tu equipo.',
@@ -87,7 +86,6 @@ window.ALPHA_I18N = (function () {
     'hero.lede': 'We automate the repetitive work, connect your information and build the tools your team is missing.',
     'hero.cta1': 'Free audit', 'hero.cta2': 'See services',
     'hero.scroll': 'Scroll',
-    'clients.label': 'Brands that already trusted us',
 
     'services.eyebrow': 'Services', 'services.title': 'What we do',
     'services.lede': 'We put AI inside your operation, not beside it. Where your team already works.',
