@@ -55,6 +55,7 @@ function applyLang(next, { store = true } = {}) {
     b.classList.toggle('is-on', on);
     b.setAttribute('aria-pressed', String(on));
   });
+  if (typeof resplit === 'function') $$('[data-split]').forEach(resplit);
   refreshWa();
   if (store) { try { localStorage.setItem('alphamilz-lang', lang); } catch (e) { /* modo privado */ } }
 }
@@ -106,8 +107,63 @@ $$('.lang__b').forEach((b) => b.addEventListener('click', () => applyLang(b.data
   if (reduced) finish(); else requestAnimationFrame(tick);
 })();
 
-/* ── reveals ─────────────────────────────────────────────────── */
+/* ── aparición de texto ──────────────────────────────────────── */
+/* Los titulares se parten en palabras dentro de una máscara, así que al
+   entrar en pantalla suben una por una en lugar de aparecer de golpe. */
+const SPLIT = '.sec__title, .statement, .cta__title, .hero__title .ln, .price__grid h3, .svc__card h3';
+
+function splitWords(el) {
+  if (el.dataset.split === 'done' || reduced) return;
+  const frag = document.createDocumentFragment();
+  let i = 0;
+  const wrap = (node) => {
+    const w = document.createElement('span');
+    w.className = 'w';
+    const inner = document.createElement('span');
+    inner.className = 'wi';
+    inner.style.setProperty('--i', i++);
+    inner.appendChild(node);
+    w.appendChild(inner);
+    frag.appendChild(w);
+  };
+  Array.from(el.childNodes).forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.textContent.split(/(\s+)/).forEach((tok) => {
+        if (!tok) return;
+        if (!tok.trim()) frag.appendChild(document.createTextNode(tok));
+        else wrap(document.createTextNode(tok));
+      });
+    } else {
+      wrap(node.cloneNode(true));
+    }
+  });
+  el.textContent = '';
+  el.appendChild(frag);
+  el.dataset.split = 'done';
+}
+
+function splitAll() {
+  $$(SPLIT).forEach(splitWords);
+}
+function unwrap(el) {
+  el.querySelectorAll('.w').forEach((w) => {
+    const inner = w.firstElementChild;
+    if (!inner) return w.remove();
+    while (inner.firstChild) w.parentNode.insertBefore(inner.firstChild, w);
+    w.remove();
+  });
+  el.normalize();
+}
+function resplit(el) {
+  // tras cambiar de idioma el texto se reescribe: deshacemos y volvemos a partir
+  if (!el.dataset.split) return;
+  unwrap(el);
+  el.dataset.split = '';
+  splitWords(el);
+}
+
 (function reveals() {
+  splitAll();
   const items = $$('[data-reveal]').filter((el) => !el.closest('.hero'));
   if (!('IntersectionObserver' in window) || reduced) return items.forEach((el) => el.classList.add('is-in'));
   const groups = new Map();
@@ -120,8 +176,17 @@ $$('.lang__b').forEach((b) => b.addEventListener('click', () => applyLang(b.data
     if (!e.isIntersecting) return;
     e.target.classList.add('is-in');
     io.unobserve(e.target);
-  }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  }), { threshold: 0, rootMargin: '0px 0px -18% 0px' });
   items.forEach((el) => io.observe(el));
+
+  // los titulares que no llevan data-reveal propio se animan solos
+  const solo = $$(SPLIT).filter((el) => !el.closest('.hero') && !el.hasAttribute('data-reveal'));
+  const io2 = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('is-in');
+    io2.unobserve(e.target);
+  }), { threshold: 0, rootMargin: '0px 0px -18% 0px' });
+  solo.forEach((el) => io2.observe(el));
 })();
 
 /* ── menú ────────────────────────────────────────────────────── */
