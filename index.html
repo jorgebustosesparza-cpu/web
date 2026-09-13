@@ -156,13 +156,13 @@
 
 <div class="menu" id="menu" hidden>
   <nav class="menu__nav" aria-label="Navegación móvil">
-    <a href="#servicios"><i class="mono">01</i><span data-i18n="nav.services">Servicios</span></a>
-    <a href="#necesitas"><i class="mono">02</i><span data-i18n="need.eyebrow">A la medida</span></a>
-    <a href="#precios"><i class="mono">03</i><span data-i18n="price.eyebrow">Precios</span></a>
-    <a href="#clientes"><i class="mono">04</i><span data-i18n="nav.work">Clientes</span></a>
-    <a href="#proceso"><i class="mono">05</i><span data-i18n="nav.process">Proceso</span></a>
-    <a href="#enfoque"><i class="mono">06</i><span data-i18n="nav.approach">Enfoque</span></a>
-    <a href="#contacto"><i class="mono">07</i><span data-i18n="nav.contact">Contacto</span></a>
+    <a href="#servicios"><span data-i18n="nav.services">Servicios</span></a>
+    <a href="#necesitas"><span data-i18n="need.eyebrow">A la medida</span></a>
+    <a href="#precios"><span data-i18n="price.eyebrow">Precios</span></a>
+    <a href="#clientes"><span data-i18n="nav.work">Clientes</span></a>
+    <a href="#proceso"><span data-i18n="nav.process">Proceso</span></a>
+    <a href="#enfoque"><span data-i18n="nav.approach">Enfoque</span></a>
+    <a href="#contacto"><span data-i18n="nav.contact">Contacto</span></a>
   </nav>
   <a class="pill pill--lime menu__cta" href="#contacto" data-wa>
     <span data-i18n="nav.cta">Auditoría gratis</span>
@@ -175,14 +175,14 @@
 <section class="hero" id="hero" data-accent="#A6F700" data-x="3.9" data-y="0.05" data-scale="0.9" data-dim="1">
   <div class="wrap hero__in">
     <p class="eyebrow" data-reveal><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Agencia de IA aplicada</span></p>
-    <h1 class="hero__title">
+    <h1 class="hero__title" data-par="0.045">
       <span class="ln" data-i18n="hero.t1">IA que trabaja</span>
       <span class="ln"><span data-i18n="hero.t2">para</span> <b class="brk" data-i18n="hero.t3">tu empresa</b></span>
     </h1>
-    <p class="hero__lede" data-reveal data-i18n="hero.lede">
+    <p class="hero__lede" data-reveal data-par="0.075" data-i18n="hero.lede">
       Automatizamos el trabajo repetitivo, conectamos tu información y construimos las herramientas que tu equipo necesita.
     </p>
-    <div class="hero__cta" data-reveal>
+    <div class="hero__cta" data-reveal data-par="0.1">
       <a class="pill pill--lime pill--lg" href="#contacto" data-wa data-magnetic>
         <span data-i18n="hero.cta1">Auditoría gratis</span>
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -204,45 +204,39 @@
 
 <section class="sec services" id="servicios" data-accent="#5200FF" data-x="-4.6" data-y="0.2" data-scale="0.5" data-dim="0.42">
   <div class="wrap">
-    <header class="sec__head">
-      <p class="eyebrow" data-reveal><i class="num mono">01</i><span data-i18n="services.eyebrow">Servicios</span></p>
+    <header class="sec__head" data-par="0.06">
+      <p class="eyebrow" data-reveal><span data-i18n="services.eyebrow">Servicios</span></p>
       <h2 class="sec__title" data-reveal data-i18n="services.title">Qué hacemos</h2>
       <p class="sec__lede" data-reveal data-i18n="services.lede">Cinco formas de poner la IA a trabajar dentro de tu operación.</p>
     </header>
 
     <ul class="svc">
       <li class="svc__card" data-reveal tabindex="0">
-        <span class="svc__n mono">01</span>
         <h3 data-i18n="s1.t">Implementación de IA</h3>
         <p data-i18n="s1.d">Agentes que hacen el trabajo repetitivo de tu equipo.</p>
         <ul class="tags mono"><li data-i18n="s1.a">Agentes</li><li data-i18n="s1.b">Conocimiento</li><li data-i18n="s1.c">Integraciones</li></ul>
       </li>
       <li class="svc__card" data-reveal tabindex="0">
-        <span class="svc__n mono">02</span>
         <h3 data-i18n="s2.t">Automatizaciones</h3>
         <p data-i18n="s2.d">WhatsApp, correo, llamadas y procesos corriendo solos 24/7.</p>
         <ul class="tags mono"><li data-i18n="s2.a">WhatsApp</li><li data-i18n="s2.b">Correo</li><li data-i18n="s2.c">Llamadas</li></ul>
       </li>
       <li class="svc__card" data-reveal tabindex="0">
-        <span class="svc__n mono">03</span>
         <h3 data-i18n="s3.t">Desarrollo de aplicaciones</h3>
         <p data-i18n="s3.d">Apps web y móviles a la medida, conectadas a tu operación.</p>
         <ul class="tags mono"><li data-i18n="s3.a">Web</li><li data-i18n="s3.b">Móvil</li><li data-i18n="s3.c">Dashboards</li></ul>
       </li>
       <li class="svc__card" data-reveal tabindex="0">
-        <span class="svc__n mono">04</span>
         <h3 data-i18n="s4.t">Webs para búsqueda en LLM</h3>
         <p data-i18n="s4.d">Sitios que ChatGPT, Gemini y Claude entienden y recomiendan.</p>
         <ul class="tags mono"><li data-i18n="s4.a">GEO</li><li data-i18n="s4.b">Datos estructurados</li><li data-i18n="s4.c">llms.txt</li></ul>
       </li>
       <li class="svc__card" data-reveal tabindex="0">
-        <span class="svc__n mono">05</span>
         <h3 data-i18n="s5.t">Video con IA</h3>
         <p data-i18n="s5.d">Producción generativa para campañas y contenido a escala.</p>
         <ul class="tags mono"><li data-i18n="s5.a">Campañas</li><li data-i18n="s5.b">Producto</li><li data-i18n="s5.c">Social</li></ul>
       </li>
       <li class="svc__card svc__card--cta" data-reveal>
-        <span class="svc__n mono">06</span>
         <h3 data-i18n="svc.cta.t">¿No sabes por dónde empezar?</h3>
         <p data-i18n="svc.cta.d">Te lo decimos en 15 minutos, sin costo.</p>
         <a class="pill pill--lime" href="#contacto" data-wa>
@@ -256,11 +250,11 @@
 
 <section class="sec need" id="necesitas" data-accent="#8645F9" data-x="5.2" data-y="-0.1" data-scale="0.5" data-dim="0.45">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">02</i><span data-i18n="need.eyebrow">A la medida</span></p>
-    <h2 class="sec__title need__title" data-reveal>
+    <p class="eyebrow" data-reveal><span data-i18n="need.eyebrow">A la medida</span></p>
+    <h2 class="sec__title need__title" data-reveal data-par="0.06">
       <span data-i18n="need.t1">Hacemos lo que</span> <b class="brk" data-i18n="need.t2">necesitas</b>
     </h2>
-    <p class="mono need__hint" data-reveal data-i18n="need.hint">Elige por dónde empezar</p>
+    <p class="mono need__hint" data-reveal data-par="0.09" data-i18n="need.hint">Elige por dónde empezar</p>
     <ul class="need__pills" data-reveal>
       <li><button type="button" class="pill pill--pick is-on" data-need="ia" data-topic="Implementación de IA" data-i18n="s1.t">Implementación de IA</button></li>
       <li><button type="button" class="pill pill--pick" data-need="auto" data-topic="Automatizaciones" data-i18n="s2.t">Automatizaciones</button></li>
@@ -281,8 +275,8 @@
 
 <section class="sec price" id="precios" data-accent="#8645F9" data-x="4.6" data-y="0.1" data-scale="0.44" data-dim="0.34">
   <div class="wrap">
-    <header class="sec__head">
-      <p class="eyebrow" data-reveal><i class="num mono">03</i><span data-i18n="price.eyebrow">Precios</span></p>
+    <header class="sec__head" data-par="0.06">
+      <p class="eyebrow" data-reveal><span data-i18n="price.eyebrow">Precios</span></p>
       <h2 class="sec__title" data-reveal data-i18n="price.title">Sin cotizaciones misteriosas</h2>
       <p class="sec__lede" data-reveal data-i18n="price.lede">Precios de arranque. El alcance final sale del diagnóstico, que no cuesta nada.</p>
     </header>
@@ -321,35 +315,32 @@
 
 <section class="sec work" id="clientes" data-accent="#6CB7FF" data-x="-4.4" data-y="0" data-scale="0.4" data-dim="0.4">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">04</i><span data-i18n="nav.work">Clientes</span></p>
-    <ul class="logos" data-reveal>
-      <li><span>OXXO</span></li>
-      <li><span>Del Sol</span></li>
-      <li><span>Buffalo Wild Wings</span></li>
-      <li><span>7-Eleven</span></li>
+    <p class="eyebrow" data-reveal><span data-i18n="nav.work">Clientes</span></p>
+    <ul class="logos" data-reveal data-par="0.05">
+      <li><img src="assets/img/clients/femsa.svg" data-treat="mono" alt="FEMSA" loading="lazy" data-name="FEMSA"></li>
+      <li><img src="assets/img/clients/oxxo.svg" alt="OXXO" loading="lazy" data-name="OXXO"></li>
+      <li><img src="assets/img/clients/uber-eats.svg" data-treat="mono" alt="Uber Eats" loading="lazy" data-name="Uber Eats"></li>
+      <li><img src="assets/img/clients/coca-cola.svg" data-treat="mono" alt="Coca-Cola" loading="lazy" data-name="Coca-Cola"></li>
     </ul>
   </div>
 </section>
 
 <section class="sec process" id="proceso" data-accent="#A6F700" data-x="-4.2" data-y="0.1" data-scale="0.5" data-dim="0.5">
   <div class="wrap">
-    <header class="sec__head">
-      <p class="eyebrow" data-reveal><i class="num mono">05</i><span data-i18n="process.eyebrow">Proceso</span></p>
+    <header class="sec__head" data-par="0.06">
+      <p class="eyebrow" data-reveal><span data-i18n="process.eyebrow">Proceso</span></p>
       <h2 class="sec__title" data-reveal data-i18n="process.title">Cómo entramos</h2>
     </header>
     <ol class="steps">
       <li data-reveal>
-        <span class="steps__n mono">01</span>
         <h3 data-i18n="p1.t">Diagnóstico</h3>
         <p data-i18n="p1.d">Una sesión. Salimos con el mapa de lo que sí conviene automatizar.</p>
         </li>
       <li data-reveal>
-        <span class="steps__n mono">02</span>
         <h3 data-i18n="p2.t">Diseño e integración</h3>
         <p data-i18n="p2.d">Construimos sobre las herramientas que tu equipo ya usa.</p>
         </li>
       <li data-reveal>
-        <span class="steps__n mono">03</span>
         <h3 data-i18n="p3.t">Producción</h3>
         <p data-i18n="p3.d">Lo dejamos corriendo, medido y con tu gente capacitada.</p>
         </li>
@@ -359,12 +350,12 @@
 
 <section class="sec phil" id="enfoque" data-accent="#EAF3FF" data-x="3.6" data-y="0" data-scale="0.72" data-dim="0.85">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">06</i><span data-i18n="phil.eyebrow">Enfoque</span></p>
-    <h2 class="statement" data-reveal>
+    <p class="eyebrow" data-reveal><span data-i18n="phil.eyebrow">Enfoque</span></p>
+    <h2 class="statement" data-reveal data-par="0.07">
       <span data-i18n="phil.t1">La IA debe resolver problemas,</span>
       <b class="brk" data-i18n="phil.t2">no crear nuevos.</b>
     </h2>
-    <p class="phil__lede" data-reveal data-i18n="phil.lede">
+    <p class="phil__lede" data-reveal data-par="0.11" data-i18n="phil.lede">
       Empezamos por el proceso que duele y el número que quieres mover. Nada de tecnología suelta.
     </p>
   </div>
@@ -372,9 +363,9 @@
 
 <section class="sec faq" id="faq" data-accent="#5200FF" data-x="-3.8" data-y="0" data-scale="0.44" data-dim="0.4">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><i class="num mono">07</i><span data-i18n="faq.eyebrow">Dudas</span></p>
+    <p class="eyebrow" data-reveal><span data-i18n="faq.eyebrow">Dudas</span></p>
     <h2 class="sec__title" data-reveal data-i18n="faq.title">Lo que nos preguntan</h2>
-    <div class="faq__list">
+    <div class="faq__list" data-par="0.04">
       <details data-reveal open>
         <summary><span data-i18n="faq.q1">¿Por dónde empezamos?</span><i aria-hidden="true"></i></summary>
         <p data-i18n="faq.a1">Por una auditoría gratis de 15 minutos. Revisamos tu operación y te decimos qué conviene automatizar primero.</p>
@@ -397,12 +388,12 @@
 
 <section class="sec cta" id="contacto" data-accent="#A6F700" data-x="0" data-y="-0.55" data-scale="0.95" data-dim="0.72">
   <div class="wrap cta__in">
-    <h2 class="cta__title" data-reveal>
+    <h2 class="cta__title" data-reveal data-par="0.06">
       <span data-i18n="cta.t1">Listo para tomar</span>
       <b class="brk" data-i18n="cta.t2">el paso alpha</b>
     </h2>
-    <p class="cta__copy" data-reveal data-i18n="cta.copy">Auditoría gratis de 15 minutos. Sin presentación de ventas.</p>
-    <div class="cta__row" data-reveal>
+    <p class="cta__copy" data-reveal data-par="0.1" data-i18n="cta.copy">Auditoría gratis de 15 minutos. Sin presentación de ventas.</p>
+    <div class="cta__row" data-reveal data-par="0.14">
       <a class="pill pill--lime pill--lg" href="https://wa.me/528182870885" data-wa data-magnetic>
         <span data-i18n="cta.wa">Escríbenos por WhatsApp</span>
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -140,6 +140,17 @@ function setMenu(open) {
 burger.addEventListener('click', () => setMenu(!menuOpen));
 $$('#menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
+/* ── parallax de texto ───────────────────────────────────────── */
+const parallax = reduced ? [] : $$('[data-par]').map((el) => ({ el, k: parseFloat(el.dataset.par) || 0.06 }));
+function runParallax(vh) {
+  for (const p of parallax) {
+    const r = p.el.getBoundingClientRect();
+    if (r.bottom < -200 || r.top > vh + 200) continue;
+    const fromCenter = r.top + r.height / 2 - vh / 2;
+    p.el.style.translate = '0 ' + (-fromCenter * p.k).toFixed(1) + 'px';
+  }
+}
+
 /* ── scroll: progreso, acento y colocación de la escena ──────── */
 const sections = $$('[data-accent]');
 const stage = $('#stage');
@@ -151,6 +162,7 @@ function onFrame() {
   const max = Math.max(1, document.documentElement.scrollHeight - vh);
   const p = clamp(y / max, 0, 1);
   if (scene) scene.setProgress(p);
+  runParallax(vh);
 
   header.classList.toggle('is-solid', y > 30);
   header.classList.toggle('is-hidden', y > lastY && y > vh * 0.8 && !menuOpen);
@@ -202,6 +214,18 @@ window.addEventListener('resize', () => { request(); if (scene) scene.resize(); 
     if (scene) scene.burst(0.8);
   }));
 })();
+
+/* ── clientes: el nombre en texto mientras no esté el logotipo ── */
+$$('.logos img').forEach((img) => {
+  const swap = () => {
+    const span = document.createElement('span');
+    span.className = 'fallback';
+    span.textContent = img.dataset.name || img.alt;
+    img.replaceWith(span);
+  };
+  if (img.complete && img.naturalWidth === 0) swap();
+  else img.addEventListener('error', swap, { once: true });
+});
 
 /* ── popup de auditoría (20 s) ───────────────────────────────── */
 (function audit() {

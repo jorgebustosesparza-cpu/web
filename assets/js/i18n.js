@@ -8,13 +8,13 @@ window.ALPHA_I18N = (function () {
 
     'hero.eyebrow': 'Agencia de IA aplicada',
     'hero.t1': 'IA que trabaja', 'hero.t2': 'para', 'hero.t3': 'tu empresa',
-    'hero.lede': 'Automatizamos el trabajo repetitivo, conectamos tu información y construimos las herramientas que tu equipo necesita.',
+    'hero.lede': 'Automatizamos lo repetitivo, conectamos tu información y construimos las herramientas que a tu equipo le hacen falta.',
     'hero.cta1': 'Auditoría gratis', 'hero.cta2': 'Ver servicios',
     'hero.scroll': 'Desplaza',
-    'clients.label': 'Marcas que han confiado en nosotros',
+    'clients.label': 'Marcas que ya confiaron',
 
     'services.eyebrow': 'Servicios', 'services.title': 'Qué hacemos',
-    'services.lede': 'Cinco formas de poner la IA a trabajar dentro de tu operación.',
+    'services.lede': 'Ponemos la IA dentro de tu operación, no al lado. Donde ya trabaja tu equipo.',
     's1.t': 'Implementación de IA', 's1.d': 'Agentes que hacen el trabajo repetitivo de tu equipo.',
     's1.a': 'Agentes', 's1.b': 'Conocimiento', 's1.c': 'Integraciones',
     's2.t': 'Automatizaciones', 's2.d': 'WhatsApp, correo, llamadas y procesos corriendo solos 24/7.',
@@ -28,7 +28,7 @@ window.ALPHA_I18N = (function () {
     'svc.cta.t': '¿No sabes por dónde empezar?', 'svc.cta.d': 'Te lo decimos en 15 minutos, sin costo.',
 
     'need.eyebrow': 'A la medida', 'need.t1': 'Hacemos lo que', 'need.t2': 'necesitas',
-    'need.hint': 'Elige por dónde empezar',
+    'need.hint': 'Dinos por dónde empezamos',
     'need.cta': 'Hablar de esto por WhatsApp',
     'need.ia': 'La IA entra donde más duele: identificamos el proceso, lo automatizamos y lo dejamos corriendo.',
     'need.auto': 'Tus mensajes, correos y llamadas atendidos al instante, sin que nadie esté encima.',
@@ -42,8 +42,8 @@ window.ALPHA_I18N = (function () {
     'p2.t': 'Diseño e integración', 'p2.d': 'Construimos sobre las herramientas que tu equipo ya usa.',
     'p3.t': 'Producción', 'p3.d': 'Lo dejamos corriendo, medido y con tu gente capacitada.',
 
-    'price.eyebrow': 'Precios', 'price.title': 'Sin cotizaciones misteriosas',
-    'price.lede': 'Precios de arranque. El alcance final sale del diagnóstico, que no cuesta nada.',
+    'price.eyebrow': 'Precios', 'price.title': 'Lo que cuesta empezar',
+    'price.lede': 'Estos son los pisos. El número final lo define el alcance, y eso lo vemos en el diagnóstico.',
     'price.from': 'desde',
     'price.1.t': 'Páginas web', 'price.1.v': '$5,000', 'price.1.d': 'Sitio a la medida, listo para buscadores y para LLM.',
     'price.2.t': 'Automatización de WhatsApp', 'price.2.v': '$2,000', 'price.2.d': 'Responde, da seguimiento y registra sin que nadie esté encima.',
@@ -52,7 +52,7 @@ window.ALPHA_I18N = (function () {
     'price.cta': 'Cotizar por WhatsApp',
 
     'phil.eyebrow': 'Enfoque', 'phil.t1': 'La IA debe resolver problemas,', 'phil.t2': 'no crear nuevos.',
-    'phil.lede': 'Empezamos por el proceso que duele y el número que quieres mover. Nada de tecnología suelta.',
+    'phil.lede': 'Empezamos por el proceso que duele y por el número que quieres mover. Nada de tecnología suelta.',
 
     'faq.eyebrow': 'Dudas', 'faq.title': 'Lo que nos preguntan',
     'faq.q1': '¿Por dónde empezamos?', 'faq.a1': 'Por una auditoría gratis de 15 minutos. Revisamos tu operación y te decimos qué conviene automatizar primero.',
@@ -84,13 +84,13 @@ window.ALPHA_I18N = (function () {
 
     'hero.eyebrow': 'Applied AI agency',
     'hero.t1': 'AI that works', 'hero.t2': 'for', 'hero.t3': 'your business',
-    'hero.lede': 'We automate the repetitive work, connect your information and build the tools your team actually needs.',
+    'hero.lede': 'We automate the repetitive work, connect your information and build the tools your team is missing.',
     'hero.cta1': 'Free audit', 'hero.cta2': 'See services',
     'hero.scroll': 'Scroll',
-    'clients.label': 'Brands that have trusted us',
+    'clients.label': 'Brands that already trusted us',
 
     'services.eyebrow': 'Services', 'services.title': 'What we do',
-    'services.lede': 'Five ways to put AI to work inside your operation.',
+    'services.lede': 'We put AI inside your operation, not beside it. Where your team already works.',
     's1.t': 'AI implementation', 's1.d': 'Agents that take the repetitive work off your team.',
     's1.a': 'Agents', 's1.b': 'Knowledge', 's1.c': 'Integrations',
     's2.t': 'Automation', 's2.d': 'WhatsApp, email, calls and processes running on their own 24/7.',
@@ -104,7 +104,7 @@ window.ALPHA_I18N = (function () {
     'svc.cta.t': 'Not sure where to start?', 'svc.cta.d': 'We tell you in 15 minutes, at no cost.',
 
     'need.eyebrow': 'Tailored', 'need.t1': 'We do what', 'need.t2': 'you need',
-    'need.hint': 'Pick where to start',
+    'need.hint': 'Tell us where we start',
     'need.cta': 'Talk about this on WhatsApp',
     'need.ia': 'AI goes where it hurts: we find the process, automate it and leave it running.',
     'need.auto': 'Messages, email and calls answered instantly, with nobody chasing them.',
@@ -118,8 +118,8 @@ window.ALPHA_I18N = (function () {
     'p2.t': 'Design and integration', 'p2.d': 'We build on the tools your team already uses.',
     'p3.t': 'Production', 'p3.d': 'We leave it running, measured, with your people trained.',
 
-    'price.eyebrow': 'Pricing', 'price.title': 'No mystery quotes',
-    'price.lede': 'Starting prices. The final scope comes out of the diagnosis, which costs nothing.',
+    'price.eyebrow': 'Pricing', 'price.title': 'What it costs to start',
+    'price.lede': 'These are the floors. The final number comes from the scope, and that comes out of the diagnosis.',
     'price.from': 'from',
     'price.1.t': 'Websites', 'price.1.v': '$5,000', 'price.1.d': 'A custom site, ready for search engines and for LLMs.',
     'price.2.t': 'WhatsApp automation', 'price.2.v': '$2,000', 'price.2.d': 'Answers, follows up and logs without anyone chasing it.',
