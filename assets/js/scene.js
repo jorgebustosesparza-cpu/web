@@ -288,6 +288,10 @@ export function createScene(canvas, options = {}) {
       m.scale.setScalar(0.62 + Math.sin(t * 0.6 + i) * 0.06);
     }
 
+    key.position.set(4 + st.ptr.x * 7, 6 - st.ptr.y * 5, 8);
+    rim.position.set(-6 + st.ptr.x * 5, -2 - st.ptr.y * 3.5, -4);
+    fill.position.set(-5 + st.ptr.x * 4, 4 - st.ptr.y * 3, 6);
+
     camera.position.x += (st.ptr.x * 0.9 - camera.position.x) * Math.min(1, dt * 2);
     camera.position.y += (-st.ptr.y * 0.7 - camera.position.y) * Math.min(1, dt * 2);
     camera.lookAt(0, 0, 0);

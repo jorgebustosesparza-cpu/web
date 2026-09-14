@@ -75,8 +75,10 @@ body.scene-ready .stage canvas{opacity:1}
   background-size:26px 26px;
   -webkit-mask-image:radial-gradient(120% 90% at 50% 40%,#000 25%,transparent 78%);
   mask-image:radial-gradient(120% 90% at 50% 40%,#000 25%,transparent 78%)}
-.stage__glow{position:absolute;inset:0;transition:background .9s var(--ease);
-  background:radial-gradient(46% 42% at var(--gx,72%) var(--gy,45%),color-mix(in srgb,var(--accent) 22%,transparent),transparent 70%)}
+.stage__glow{position:absolute;inset:0;
+  background:
+    radial-gradient(38% 34% at var(--gx,68%) var(--gy,42%),color-mix(in srgb,var(--accent) 26%,transparent),transparent 68%),
+    radial-gradient(70% 60% at var(--gx,68%) var(--gy,42%),color-mix(in srgb,var(--accent) 9%,transparent),transparent 72%)}
 .stage__still{position:absolute;inset:0;display:none;place-items:center}
 body.no-webgl .stage__still{display:grid}
 .still__mark{width:min(46vw,420px);color:var(--lime);opacity:.5;filter:drop-shadow(0 0 60px color-mix(in srgb,var(--lime) 45%,transparent));

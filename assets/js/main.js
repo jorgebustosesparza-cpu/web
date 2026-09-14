@@ -205,6 +205,33 @@ function setMenu(open) {
 burger.addEventListener('click', () => setMenu(!menuOpen));
 $$('#menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
+/* ── la luz del fondo sigue al cursor ────────────────────────── */
+const glow = { x: 0.68, y: 0.42, tx: 0.68, ty: 0.42, raf: 0, seen: false };
+function paintGlow() {
+  stage.style.setProperty('--gx', (glow.x * 100).toFixed(1) + '%');
+  stage.style.setProperty('--gy', (glow.y * 100).toFixed(1) + '%');
+}
+function glowLoop(now) {
+  glow.raf = 0;
+  // suavizado por tiempo, no por frame: se siente igual en cualquier equipo
+  const dt = Math.min((now - (glow.last || now)) / 1000, 0.1);
+  glow.last = now;
+  const k = 1 - Math.pow(0.0006, dt);
+  glow.x += (glow.tx - glow.x) * k;
+  glow.y += (glow.ty - glow.y) * k;
+  paintGlow();
+  if (Math.abs(glow.tx - glow.x) > 0.001 || Math.abs(glow.ty - glow.y) > 0.001) {
+    glow.raf = requestAnimationFrame(glowLoop);
+  }
+}
+function moveGlow(px, py) {
+  glow.seen = true;
+  glow.tx = clamp(px, 0, 1);
+  glow.ty = clamp(py, 0, 1);
+  if (reduced) { glow.x = glow.tx; glow.y = glow.ty; return paintGlow(); }
+  if (!glow.raf) { glow.last = 0; glow.raf = requestAnimationFrame(glowLoop); }
+}
+
 /* ── parallax de texto ───────────────────────────────────────── */
 const parallax = reduced ? [] : $$('[data-par]').map((el) => ({ el, k: parseFloat(el.dataset.par) || 0.06 }));
 function runParallax(vh) {
@@ -228,6 +255,12 @@ function onFrame() {
   const p = clamp(y / max, 0, 1);
   if (scene) scene.setProgress(p);
   runParallax(vh);
+  if (!glow.seen) {
+    glow.tx = 0.5 + Math.sin(p * Math.PI * 2) * 0.22;
+    glow.ty = 0.3 + p * 0.4;
+    glow.x = glow.tx; glow.y = glow.ty;
+    paintGlow();
+  }
 
   header.classList.toggle('is-solid', y > 30);
   header.classList.toggle('is-hidden', y > lastY && y > vh * 0.8 && !menuOpen);
@@ -245,8 +278,6 @@ function onFrame() {
     const accent = sec.dataset.accent || '#A6F700';
     const x = parseFloat(sec.dataset.x || '0');
     document.documentElement.style.setProperty('--accent', accent);
-    stage.style.setProperty('--gx', x > 0.5 ? '72%' : x < -0.5 ? '28%' : '50%');
-    stage.style.setProperty('--gy', '46%');
     if (scene) {
       scene.setAccent(accent);
       scene.setPlacement(x, parseFloat(sec.dataset.y || '0'), parseFloat(sec.dataset.scale || '1'));
@@ -338,10 +369,15 @@ $$('.logos img').forEach((img) => {
 
 /* ── puntero, magnéticos, varios ─────────────────────────────── */
 window.addEventListener('pointermove', (e) => {
-  if (scene) scene.setPointer((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1);
+  const nx = e.clientX / window.innerWidth, ny = e.clientY / window.innerHeight;
+  if (scene) scene.setPointer(nx * 2 - 1, ny * 2 - 1);
+  moveGlow(nx, ny);
 }, { passive: true });
 window.addEventListener('touchmove', (e) => {
-  if (scene && e.touches[0]) scene.setPointer((e.touches[0].clientX / window.innerWidth) * 2 - 1, (e.touches[0].clientY / window.innerHeight) * 2 - 1);
+  if (!e.touches[0]) return;
+  const nx = e.touches[0].clientX / window.innerWidth, ny = e.touches[0].clientY / window.innerHeight;
+  if (scene) scene.setPointer(nx * 2 - 1, ny * 2 - 1);
+  moveGlow(nx, ny);
 }, { passive: true });
 
 if (fine && !reduced) {
