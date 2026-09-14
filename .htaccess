@@ -10,6 +10,12 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
+# Con despliegue por Git el repositorio queda dentro de public_html:
+# nada de exponer .git ni los archivos de trabajo
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.gitignore$
+RedirectMatch 404 (?i)/readme\.md$
+
 # Tipos de archivo
 AddType font/woff2 .woff2
 AddType image/svg+xml .svg
