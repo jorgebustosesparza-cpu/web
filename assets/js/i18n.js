@@ -68,7 +68,7 @@ window.ALPHA_I18N = (function () {
     'wa.topic': 'Hola Alphamilz, me interesa',
 
     'footer.tag': 'IA aplicada a negocios.', 'footer.nav': 'Sitio', 'footer.contact': 'Contacto',
-    'footer.machines': 'Para máquinas', 'footer.social': 'Redes', 'footer.rights': 'Todos los derechos reservados.'
+    'footer.machines': 'Para máquinas', 'footer.social': 'Redes', 'footer.blog': 'Blog', 'footer.rights': 'Todos los derechos reservados.'
   };
 
   const en = {
@@ -139,7 +139,7 @@ window.ALPHA_I18N = (function () {
     'wa.topic': 'Hi Alphamilz, I am interested in',
 
     'footer.tag': 'Applied AI for business.', 'footer.nav': 'Site', 'footer.contact': 'Contact',
-    'footer.machines': 'For machines', 'footer.social': 'Social', 'footer.rights': 'All rights reserved.'
+    'footer.machines': 'For machines', 'footer.social': 'Social', 'footer.blog': 'Blog', 'footer.rights': 'All rights reserved.'
   };
 
   return { es, en };
