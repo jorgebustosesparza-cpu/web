@@ -41,7 +41,7 @@ window.ALPHA_I18N = (function () {
     'p3.t': 'Producción', 'p3.d': 'Lo dejamos corriendo, medido y con tu gente capacitada.',
 
     'price.eyebrow': 'Precios',
-    'price.lede': 'Estos son los pisos. El número final lo define el alcance, y eso lo vemos en el diagnóstico.',
+    'price.lede': 'Aquí empieza cada proyecto. Lo demás depende de qué tan lejos lo quieras llevar.',
     'price.from': 'desde',
     'price.1.t': 'Páginas web', 'price.1.d': 'Sitio a la medida, listo para buscadores y para LLM.',
     'price.2.t': 'Automatización de WhatsApp', 'price.2.d': 'Responde, da seguimiento y registra sin que nadie esté encima.',
@@ -68,7 +68,7 @@ window.ALPHA_I18N = (function () {
     'wa.topic': 'Hola Alphamilz, me interesa',
 
     'footer.tag': 'IA aplicada a negocios.', 'footer.nav': 'Sitio', 'footer.contact': 'Contacto',
-    'footer.machines': 'Para máquinas', 'footer.rights': 'Todos los derechos reservados.'
+    'footer.machines': 'Para máquinas', 'footer.social': 'Redes', 'footer.rights': 'Todos los derechos reservados.'
   };
 
   const en = {
@@ -112,7 +112,7 @@ window.ALPHA_I18N = (function () {
     'p3.t': 'Production', 'p3.d': 'We leave it running, measured, with your people trained.',
 
     'price.eyebrow': 'Pricing',
-    'price.lede': 'These are the floors. The final number comes from the scope, and that comes out of the diagnosis.',
+    'price.lede': 'This is where every project starts. The rest depends on how far you want to take it.',
     'price.from': 'from',
     'price.1.t': 'Websites', 'price.1.d': 'A custom site, ready for search engines and for LLMs.',
     'price.2.t': 'WhatsApp automation', 'price.2.d': 'Answers, follows up and logs without anyone chasing it.',
@@ -139,7 +139,7 @@ window.ALPHA_I18N = (function () {
     'wa.topic': 'Hi Alphamilz, I am interested in',
 
     'footer.tag': 'Applied AI for business.', 'footer.nav': 'Site', 'footer.contact': 'Contact',
-    'footer.machines': 'For machines', 'footer.rights': 'All rights reserved.'
+    'footer.machines': 'For machines', 'footer.social': 'Social', 'footer.rights': 'All rights reserved.'
   };
 
   return { es, en };

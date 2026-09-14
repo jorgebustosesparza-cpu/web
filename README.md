@@ -85,7 +85,10 @@ marcados con `data-wa` se arman solos con el mensaje correcto según el idioma y
    `index.html` y en `llms.txt`. Si cambian, hay que tocar los tres.
 4. **Dominio.** Está puesto `https://alphamilz.com/` en canonical, Open Graph, hreflang,
    JSON-LD, `sitemap.xml`, `robots.txt` y `llms.txt`.
-5. **Redes.** Si quieres LinkedIn o Instagram en el footer, hay lugar en la columna de contacto.
+5. **Redes.** El footer lleva Instagram (`instagram.com/alphamilz`) y TikTok
+   (`tiktok.com/@alphamilz`). Verifica que el usuario de TikTok sea ese; si es otro,
+   cámbialo en `index.html` (columna Redes del footer y el bloque `sameAs` del JSON-LD)
+   y en `llms.txt`.
 
 ## Accesibilidad
 
