@@ -240,11 +240,11 @@ export function createScene(canvas, options = {}) {
     const t = clock.elapsedTime;
 
     st.prog += (st.progT - st.prog) * Math.min(1, dt * 3.2);
-    st.ox += (st.oxT - st.ox) * Math.min(1, dt * 2.4);
-    st.oy += (st.oyT - st.oy) * Math.min(1, dt * 2.4);
-    st.sc += (st.scT - st.sc) * Math.min(1, dt * 2.4);
+    st.ox += (st.oxT - st.ox) * Math.min(1, dt * 3.2);
+    st.oy += (st.oyT - st.oy) * Math.min(1, dt * 3.2);
+    st.sc += (st.scT - st.sc) * Math.min(1, dt * 3.2);
     st.opacity += (st.opacityT - st.opacity) * Math.min(1, dt * 1.8);
-    st.dim += (st.dimT - st.dim) * Math.min(1, dt * 1.8);
+    st.dim += (st.dimT - st.dim) * Math.min(1, dt * 5);
     st.ptr.x += (st.ptrT.x - st.ptr.x) * Math.min(1, dt * 2.6);
     st.ptr.y += (st.ptrT.y - st.ptr.y) * Math.min(1, dt * 2.6);
     st.accent.lerp(st.accentT, Math.min(1, dt * 1.6));

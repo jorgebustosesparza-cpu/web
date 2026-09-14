@@ -36,7 +36,8 @@ window.ALPHA_I18N = (function () {
     'need.video': 'Piezas de video listas para campaña, en días y no en meses.',
     'need.mkt': 'Contenido, segmentación y reportes automáticos alrededor de tu cliente real.',
 
-    'process.eyebrow': 'Proceso', 'process.title': 'Cómo entramos',
+    'process.eyebrow': 'Proceso',
+    'process.title': 'Cómo entramos',
     'p1.t': 'Diagnóstico', 'p1.d': 'Una sesión. Salimos con el mapa de lo que sí conviene automatizar.',
     'p2.t': 'Diseño e integración', 'p2.d': 'Construimos sobre las herramientas que tu equipo ya usa.',
     'p3.t': 'Producción', 'p3.d': 'Lo dejamos corriendo, medido y con tu gente capacitada.',

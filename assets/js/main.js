@@ -110,7 +110,7 @@ $$('.lang__b').forEach((b) => b.addEventListener('click', () => applyLang(b.data
 /* ── aparición de texto ──────────────────────────────────────── */
 /* Los titulares se parten en palabras dentro de una máscara, así que al
    entrar en pantalla suben una por una en lugar de aparecer de golpe. */
-const SPLIT = '.sec__title, .statement, .cta__title, .hero__title .ln, .price__grid h3, .svc__card h3';
+const SPLIT = '.lead, .statement, .cta__title, .hero__title .ln, .index__name, .rate__name, .steps h3';
 
 function splitWords(el) {
   if (el.dataset.split === 'done' || reduced) return;
