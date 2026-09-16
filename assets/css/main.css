@@ -164,7 +164,7 @@ main{position:relative;z-index:1}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--lime);position:relative}
 .dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--lime);opacity:.5;animation:ping 2.4s var(--ease) infinite}
 @keyframes ping{0%{transform:scale(.7);opacity:.7}70%,100%{transform:scale(2);opacity:0}}
-.brk{font-weight:700;font-style:normal;position:relative;white-space:nowrap}
+.brk{font-weight:700;font-style:normal;position:relative}
 .brk::before,.brk::after{color:var(--lime);font-weight:400}
 .brk::before{content:'[';margin-right:.06em}
 .brk::after{content:']';margin-left:.06em}
@@ -178,17 +178,21 @@ main{position:relative;z-index:1}
   max-width:26ch;margin-bottom:clamp(2.4rem,5vw,4.2rem);text-wrap:balance}
 .lead--tight{max-width:18ch;margin-bottom:clamp(1.2rem,2.6vw,1.8rem)}
 
-[data-reveal]{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1.1s var(--ease);
-  transition-delay:calc(var(--d,0) * 90ms)}
-[data-reveal].is-in{opacity:1;transform:none}
+[data-reveal]{opacity:0;transform:translateY(62px);filter:blur(6px);
+  transition:opacity .9s var(--ease),transform 1.15s var(--ease),filter .9s var(--ease);
+  transition-delay:calc(var(--d,0) * 110ms)}
+[data-reveal].is-in{opacity:1;transform:none;filter:none}
 [data-par]{will-change:translate}
 
 /* palabras enmascaradas: al entrar en pantalla suben una por una */
 .w{display:inline-block;overflow:hidden;vertical-align:bottom;
   padding-bottom:.14em;margin-bottom:-.14em;padding-right:.03em;margin-right:-.03em}
-.wi{display:inline-block;transform:translateY(115%);
-  transition:transform 1.05s var(--ease);transition-delay:calc(var(--i,0) * 60ms)}
+.wi{display:inline-block;transform:translateY(112%) rotate(3.5deg);transform-origin:0 100%;
+  transition:transform 1.1s var(--ease);transition-delay:calc(var(--i,0) * 75ms)}
 .is-in > .wi,.is-in .w > .wi{transform:none}
+
+/* las etiquetas de sección se quedan atrás a propósito */
+.col__side{will-change:translate}
 
 /* ── hero ──────────────────────────────────────────────────── */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;
@@ -284,6 +288,9 @@ main{position:relative;z-index:1}
 .phil{padding-block:clamp(7rem,15vw,14rem)}
 .statement{font-size:clamp(1.9rem,1rem + 4vw,4.6rem);font-weight:500;letter-spacing:-.055em;line-height:1.02;max-width:20ch}
 .statement b{display:block;font-weight:700;margin-top:.1em}
+/* en pantallas angostas el titular baja de tamaño para que la frase
+   entre completa y el corchete de cierre no quede solo en un renglón */
+@media (max-width:520px){.statement{font-size:clamp(1.5rem,.8rem + 3.1vw,2.1rem);max-width:none}}
 .phil__lede{margin-top:clamp(1.5rem,3vw,2.4rem);max-width:48ch;color:var(--ink-2);font-size:clamp(1rem,.95rem + .4vw,1.25rem)}
 
 /* ── faq ───────────────────────────────────────────────────── */

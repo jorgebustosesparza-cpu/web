@@ -221,6 +221,84 @@ export function createScene(canvas, options = {}) {
     sats.push(mesh);
   }
 
+  /* ── polvo de marca: campo de puntos con profundidad ───────── */
+  const DUST = tier === 0 ? 240 : tier === 1 ? 520 : 900;
+  const dustPos = new Float32Array(DUST * 3);
+  const dustSeed = new Float32Array(DUST);
+  for (let i = 0; i < DUST; i++) {
+    dustPos[i * 3] = (Math.random() - 0.5) * 34;
+    dustPos[i * 3 + 1] = (Math.random() - 0.5) * 22;
+    dustPos[i * 3 + 2] = -2 - Math.random() * 16;
+    dustSeed[i] = Math.random() * Math.PI * 2;
+  }
+  const dustGeo = new THREE.BufferGeometry();
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+  const dotTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(255,255,255,1)');
+    rg.addColorStop(0.4, 'rgba(255,255,255,.5)');
+    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+  })();
+  const dustMat = new THREE.PointsMaterial({
+    size: 0.11, map: dotTex, transparent: true, opacity: 0,
+    depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+  });
+  const dust = new THREE.Points(dustGeo, dustMat);
+  scene.add(dust);
+
+  /* ── nudo de luz al fondo ──────────────────────────────────── */
+  const knotGeo = new THREE.TorusKnotGeometry(7.4, 0.055, tier === 0 ? 120 : 260, 6, 2, 3);
+  const knotMat = new THREE.MeshBasicMaterial({
+    color: new THREE.Color('#A6F700'), transparent: true, opacity: 0,
+    depthWrite: false, blending: THREE.AdditiveBlending
+  });
+  const knot = new THREE.Mesh(knotGeo, knotMat);
+  knot.position.z = -11;
+  scene.add(knot);
+
+  /* ── malla icosaédrica: estructura lejana ──────────────────── */
+  const cageGeo = new THREE.IcosahedronGeometry(13, 1);
+  const cageMat = new THREE.MeshBasicMaterial({
+    color: new THREE.Color('#5200FF'), wireframe: true, transparent: true,
+    opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending
+  });
+  const cage = new THREE.Mesh(cageGeo, cageMat);
+  cage.position.z = -15;
+  scene.add(cage);
+
+  /* ── bandada: isotipos planos flotando en profundidad ──────── */
+  const FLOCK = tier === 0 ? 4 : tier === 1 ? 7 : 11;
+  const flatGeo = new THREE.ShapeGeometry(markShapes(), tier === 0 ? 6 : 12);
+  flatGeo.center();
+  flatGeo.scale(0.0011, 0.0011, 0.0011);
+  const flockMat = new THREE.MeshBasicMaterial({
+    transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide
+  });
+  const flock = new THREE.InstancedMesh(flatGeo, flockMat, FLOCK);
+  flock.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  const flockData = [];
+  const flockColor = new THREE.Color();
+  for (let i = 0; i < FLOCK; i++) {
+    flockData.push({
+      x: (Math.random() - 0.5) * 26,
+      y: (Math.random() - 0.5) * 16,
+      z: -6 - Math.random() * 12,
+      sp: 0.1 + Math.random() * 0.3,
+      tilt: Math.random() * Math.PI * 2,
+      sc: 0.45 + Math.random() * 0.75
+    });
+    flockColor.set(i % 3 === 0 ? '#A6F700' : i % 3 === 1 ? '#5200FF' : '#8CA8D8');
+    flock.setColorAt(i, flockColor);
+  }
+  if (flock.instanceColor) flock.instanceColor.needsUpdate = true;
+  scene.add(flock);
+  const dummy = new THREE.Object3D();
+
   /* ── estado ────────────────────────────────────────────────── */
   const st = {
     prog: 0, progT: 0,
@@ -288,6 +366,39 @@ export function createScene(canvas, options = {}) {
       m.scale.setScalar(0.62 + Math.sin(t * 0.6 + i) * 0.06);
     }
 
+    /* capas de fondo: se mueven a distinta velocidad que el isotipo,
+       que es lo que da la sensación de profundidad al hacer scroll */
+    dust.position.y = p * 9;
+    dust.position.x = st.ptr.x * 1.4;
+    dust.rotation.z = p * 0.35 + t * 0.008;
+    dustMat.opacity = vis * 0.55;
+    dustMat.color.copy(st.accent).lerp(BASE_TINT, 0.45);
+
+    knot.rotation.set(t * 0.07 + p * 1.2, t * 0.11 - p * 2.1, p * 0.8);
+    knot.position.set(st.ptr.x * -1.8, 2 - p * 14, -11);
+    knotMat.color.copy(st.accent);
+    knotMat.opacity = vis * (0.11 + st.burst * 0.08);
+
+    cage.rotation.set(-p * 1.6, t * 0.04 + p * 0.9, 0);
+    cage.position.set(st.ptr.x * -2.6, -1 + p * 6, -15);
+    cageMat.opacity = vis * 0.07;
+
+    for (let i = 0; i < FLOCK; i++) {
+      const f = flockData[i];
+      const drift = t * f.sp;
+      dummy.position.set(
+        f.x + Math.sin(drift + f.tilt) * 2.2 + st.ptr.x * 1.1,
+        f.y + Math.cos(drift * 0.7) * 1.4 + p * 11 - 5.5,
+        f.z
+      );
+      dummy.rotation.set(Math.sin(drift * 0.5) * 0.5, drift * 0.9 + f.tilt, p * 2.4 + f.tilt);
+      dummy.scale.setScalar(f.sc);
+      dummy.updateMatrix();
+      flock.setMatrixAt(i, dummy.matrix);
+    }
+    flock.instanceMatrix.needsUpdate = true;
+    flockMat.opacity = vis * 0.2;
+
     key.position.set(4 + st.ptr.x * 7, 6 - st.ptr.y * 5, 8);
     rim.position.set(-6 + st.ptr.x * 5, -2 - st.ptr.y * 3.5, -4);
     fill.position.set(-5 + st.ptr.x * 4, 4 - st.ptr.y * 3, 6);
@@ -339,6 +450,10 @@ export function createScene(canvas, options = {}) {
       cancelAnimationFrame(raf); raf = 0;
       geo.dispose(); markMat.dispose(); haloMat.dispose();
       satGeos.forEach((g) => g.dispose());
+      dustGeo.dispose(); dustMat.dispose(); dotTex.dispose();
+      knotGeo.dispose(); knotMat.dispose();
+      cageGeo.dispose(); cageMat.dispose();
+      flatGeo.dispose(); flockMat.dispose(); flock.dispose();
       sats.forEach((m) => m.material.dispose());
       env.dispose(); renderer.dispose();
     },

@@ -114,31 +114,39 @@ const SPLIT = '.lead, .statement, .cta__title, .hero__title .ln, .index__name, .
 
 function splitWords(el) {
   if (el.dataset.split === 'done' || reduced) return;
-  const frag = document.createDocumentFragment();
   let i = 0;
-  const wrap = (node) => {
+  const wrap = (text) => {
     const w = document.createElement('span');
     w.className = 'w';
     const inner = document.createElement('span');
     inner.className = 'wi';
     inner.style.setProperty('--i', i++);
-    inner.appendChild(node);
+    inner.appendChild(document.createTextNode(text));
     w.appendChild(inner);
-    frag.appendChild(w);
+    return w;
   };
-  Array.from(el.childNodes).forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent.split(/(\s+)/).forEach((tok) => {
-        if (!tok) return;
-        if (!tok.trim()) frag.appendChild(document.createTextNode(tok));
-        else wrap(document.createTextNode(tok));
-      });
-    } else {
-      wrap(node.cloneNode(true));
-    }
-  });
+  // Baja por el árbol en lugar de tratar cada hijo como una sola palabra:
+  // un <b class="brk"> con varias palabras dentro no cabría en un móvil,
+  // porque la máscara es inline-block y no puede partirse en dos renglones.
+  const walk = (node) => {
+    const frag = document.createDocumentFragment();
+    Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        child.textContent.split(/(\s+)/).forEach((tok) => {
+          if (!tok) return;
+          frag.appendChild(tok.trim() ? wrap(tok) : document.createTextNode(tok));
+        });
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        const shell = child.cloneNode(false); // conserva clase y pseudoelementos
+        shell.appendChild(walk(child));
+        frag.appendChild(shell);
+      }
+    });
+    return frag;
+  };
+  const out = walk(el);
   el.textContent = '';
-  el.appendChild(frag);
+  el.appendChild(out);
   el.dataset.split = 'done';
 }
 
@@ -239,7 +247,9 @@ function runParallax(vh) {
     const r = p.el.getBoundingClientRect();
     if (r.bottom < -200 || r.top > vh + 200) continue;
     const fromCenter = r.top + r.height / 2 - vh / 2;
-    p.el.style.translate = '0 ' + (-fromCenter * p.k).toFixed(1) + 'px';
+    // el tope evita que un desplazamiento grande despegue el texto de su sección
+    const d = clamp(-fromCenter * p.k, -170, 170);
+    p.el.style.translate = '0 ' + d.toFixed(1) + 'px';
   }
 }
 
